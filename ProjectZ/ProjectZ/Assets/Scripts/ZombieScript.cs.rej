@@ -1,0 +1,11 @@
+diff a/ProjectZ/ProjectZ/Assets/Scripts/ZombieScript.cs b/ProjectZ/ProjectZ/Assets/Scripts/ZombieScript.cs	(rejected hunks)
+@@ -4,7 +4,8 @@
+ 
+ public class ZombieScript : MonoBehaviour
+ {
+-    public enum zombieClass { walker, runner, mutank }
++
++	public enum zombieClass { walker, runner, mutank }
+     private SpriteRenderer elSprite;
+     public GameObject elCirculo;
+     public zombieClass tipo;
