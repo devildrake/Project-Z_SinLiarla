@@ -105,7 +105,7 @@ namespace Assets.Scripts
             currentText = gameObject.GetComponentInChildren<Text>();
             eventList = new Evento[numEvents];
             eventList[0] = CrearEvento(5);
-            eventList[1] = CrearEvento(2);
+            eventList[1] = CrearEvento(5);
             eventList[2] = CrearEvento(2);
             eventList[3] = CrearEvento(2);
             eventList[4] = CrearEvento(5);
@@ -124,7 +124,12 @@ namespace Assets.Scripts
                 eventList[0].messages[4] = "Debería montarme alguna IA para no hablar solo..";
 
                 eventList[1].messages[0] = "Vaaale, parece que el movimiento funciona correctamente";
-                eventList[1].messages[1] = "Veamos como de eficiente puede ser un zombie controlado contra una persona..";
+                eventList[1].messages[1] = "Veamos como de eficiente pueden ser unos zombies controlados contra una persona normal..";
+                eventList[1].messages[2] = "Y de paso probamos el mutank..";
+                eventList[1].messages[3] = "Como se nota que ese de la izquierda es el mutank.. estúpidamente grandes.. heh heh heh..";
+                eventList[1].messages[4] = "Y con ese enorme brazo desproporcionado ";
+
+
 
                 eventList[2].messages[0] = "Heh heh heh.. no tenía ninguna posibilidad.. y ahora tengo dos..";
                 eventList[2].messages[1] = "Ahora toca probar contra un soldadito";

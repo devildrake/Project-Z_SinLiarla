@@ -12,8 +12,6 @@ public class Event1Script : MonoBehaviour {
         gameLogic = GameLogicScript.gameLogic;
         spawner = GameObject.FindGameObjectWithTag("SpecialSpawner");
         hasHappened = new bool[10];
-
-
     }
 
     // Update is called once per frame
@@ -40,6 +38,7 @@ public class Event1Script : MonoBehaviour {
                         gameLogic.SpawnVillager(spawner.GetComponent<EdificioCreaSoldiers>().spawnPoint+spawner.gameObject.transform.position);
                         gameLogic.SpawnWalker(new Vector3(2.5f, 0.0249f, -9.5f));
                         gameLogic.SpawnWalker(new Vector3(6f, 0.0249f, -9.5f));
+                        gameLogic.SpawnMutank(new Vector3(-0.5f, 0.0249f, -9.5f));
                         hasHappened[1] = true;
                     }
                     else
