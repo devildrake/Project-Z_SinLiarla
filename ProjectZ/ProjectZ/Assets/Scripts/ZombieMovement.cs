@@ -151,7 +151,6 @@ public class ZombieMovement : MonoBehaviour
                     moving = false;
                     wasCommanded = false;
                     gameObject.GetComponent<ZombieScript>().hasArrived = true;
-                    Debug.Log("ArrivedAtDestination");
                     if (gameObject.GetComponent<ZombieScript>().goBarricade)
                         LookTowards(gameObject.GetComponent<ZombieScript>().barricada.transform.position);
                     gameObject.GetComponent<ZombieScript>().canAttack = true;

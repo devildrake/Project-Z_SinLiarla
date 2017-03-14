@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MinaActivacion : MonoBehaviour {
-    private bool active;
+    public bool active;
     public bool blown;
     public float timeToExplode;
     public float counter;
@@ -24,4 +24,13 @@ public class MinaActivacion : MonoBehaviour {
             }
         }
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Zn")
+        {
+            Debug.Log("Time's ticking");
+            active = true;
+        }
+    }
 }
