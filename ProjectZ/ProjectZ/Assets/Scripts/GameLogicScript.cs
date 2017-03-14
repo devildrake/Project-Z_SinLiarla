@@ -151,7 +151,7 @@ public class GameLogicScript : MonoBehaviour
 
         eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
 
-        eventManager.SetEvents(eventos,10);
+        //eventManager.SetEvents(eventos,10);
 
         elPathfinder = GameObject.FindGameObjectWithTag("A*");
 
@@ -204,7 +204,13 @@ public class GameLogicScript : MonoBehaviour
             eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
 
         }
-        else {
+
+        if (elPausaScript == null) {
+            elPausaScript = FindObjectOfType<PausaCanvasScript>();
+        }
+
+        else
+        {
             for (int i = 0; i < 10; i++)
             {
                 eventos[i] = eventManager.eventList[i].hasHappened;
