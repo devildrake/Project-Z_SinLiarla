@@ -45,7 +45,7 @@ public class MinaEffect : MonoBehaviour {
                 }
 
                 if (blown){
-                    particleScript.detonate = true; //Esto activa las particulas y sonidos del otro script.
+                   
                     foreach (GameObject z in zombiesEnRango){
                         if (z.GetComponent<ZombieScript>().tipo != ZombieScript.zombieClass.runner){
                             z.GetComponent<ZombieScript>().health -= mineDmg;
@@ -57,6 +57,7 @@ public class MinaEffect : MonoBehaviour {
                     Dissappear();
                 }else if (active){
                     Debug.Log("Time's ticking");
+                    particleScript.detonate = true; //Esto activa las particulas y sonidos del otro script.
 
                     counter += Time.deltaTime;
                     if (counter >= timeToExplode){
