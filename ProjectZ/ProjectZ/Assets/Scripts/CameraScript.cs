@@ -12,7 +12,7 @@ public class CameraScript : MonoBehaviour
     const int CAMERA_MOVE_MARGINY = 50;
 
     //Limites de movimiento de camara
-    const int TOPLIMIT = 20;
+    const int TOPLIMIT = 10;
     const int BOTLIMIT = -20;
     const int RIGHTLIMIT = 36;
     const int LEFTLIMIT = -36;

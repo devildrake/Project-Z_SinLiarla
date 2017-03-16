@@ -11,7 +11,6 @@ namespace Assets.Scripts
         //Y un booleano que hace las veces de pause pero justo por debajo de este.
 
         //BOOLEANO TEMPORAL A BORRAR, SOLO ES PARA PRUEBAS DE FUNCIONALIDAD O PARA UN PRIMER EVENTO DEL JUEGO
-        bool once = false;
 
 
         //Referencia al InputHandler
@@ -108,7 +107,7 @@ namespace Assets.Scripts
             eventList[1] = CrearEvento(5);
             eventList[2] = CrearEvento(2);
             eventList[3] = CrearEvento(2);
-            eventList[4] = CrearEvento(5);
+            eventList[4] = CrearEvento(1);
             eventList[5] = CrearEvento(5);
             eventList[6] = CrearEvento(2);
             eventList[7] = CrearEvento(2);
@@ -127,7 +126,7 @@ namespace Assets.Scripts
                 eventList[1].messages[1] = "Veamos como de eficiente pueden ser unos zombies controlados contra una persona normal..";
                 eventList[1].messages[2] = "Y de paso probamos el mutank..";
                 eventList[1].messages[3] = "Como se nota que ese de la izquierda es el mutank.. estúpidamente grandes.. heh heh heh..";
-                eventList[1].messages[4] = "Y con ese enorme brazo desproporcionado ";
+                eventList[1].messages[4] = "Y con ese enorme brazo desproporcionado..";
 
 
 
@@ -136,6 +135,8 @@ namespace Assets.Scripts
 
                 eventList[3].messages[0] = "Bueno.. parece que todo esta en orden..";
                 eventList[3].messages[1] = "Hora de salir de aquí..";
+
+                eventList[4].messages[0] = "Hmm.. los runners deberian poder pasar ese campo de minas sin problemas";
 
             }
             else
@@ -152,11 +153,6 @@ namespace Assets.Scripts
 
         void Update()
         {
-            if (!once)
-            {
-                once = true;
-                activateEvent(0);
-            }
 
             if (onEvent && currentEvent.isHappening)
             {

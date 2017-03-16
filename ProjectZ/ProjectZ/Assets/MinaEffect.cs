@@ -22,7 +22,7 @@ public class MinaEffect : MonoBehaviour {
         blown = false;
         counter = 0;
         timeToExplode = particleScript.beep.length + 0.2f; //Despues de los pitidos de la detonacion explota con un pequeño margen de error para hacer coincidir las particulas
-        rangoActivacion = 0.35f;
+        rangoActivacion = 0.4f;
         mineDmg = 50;
     }
 
