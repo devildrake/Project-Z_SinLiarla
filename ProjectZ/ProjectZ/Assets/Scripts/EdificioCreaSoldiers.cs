@@ -16,6 +16,7 @@ public class EdificioCreaSoldiers : MonoBehaviour {
     public Vector3[] posiciones;
     public bool isBlocked;
     public GameObject blocker;
+    public GameObject spawnPointObject;
 
     // Use this for initialization
     void Start () {
@@ -34,7 +35,8 @@ public class EdificioCreaSoldiers : MonoBehaviour {
         posiciones[1].y = 0.3859999f;
         posiciones[0].y = 0.3859999f;
 
-        spawnPoint = new Vector3(-0.05f, 0.5390003f, 2.081f);
+        //spawnPoint = gameObject.transform.position+ new Vector3(-3.719f, 0.539f, -4.338f);
+        spawnPoint = spawnPointObject.transform.position;
 
         villager = Resources.Load("VillagerObject") as GameObject;
         spawnTimer = 0f;

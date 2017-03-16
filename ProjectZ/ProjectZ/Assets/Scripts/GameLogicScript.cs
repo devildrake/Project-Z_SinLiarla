@@ -84,7 +84,7 @@ public class GameLogicScript : MonoBehaviour
 
     #region MetodosDeAparicion
 
-    public void SpawnVillager(Vector3 unaPos, Vector3 patrolPos) {
+    public void SpawnVillager(Vector3 patrolPos,Vector3 unaPos ) {
         GameObject villagerToSpawn = Instantiate(villager, unaPos, Quaternion.identity) as GameObject;
         GameObject anEmptyGameObject = new GameObject();
         villagerToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.villager;
