@@ -10,6 +10,7 @@ public class MinaEffect : MonoBehaviour {
     public float timeToExplode;
     public float counter;
     public float rangoActivacion;
+    public bool stop;
     GameLogicScript gameLogic;
     private Detonate particleScript;
     
@@ -25,50 +26,68 @@ public class MinaEffect : MonoBehaviour {
         mineDmg = 50;
     }
 
-    void Dissappear() {
+    public void Dissappear() {
         Destroy(gameObject);
     }
 
-    // Update is called once per frame
-    void Update(){
-        if (!gameLogic.eventManager.onEvent){
-            if (!gameLogic.isPaused){
-                foreach (GameObject z in zombiesEnRango){
-                    if (!z.GetComponent<ZombieScript>().isAlive || z.GetComponent<ZombieScript>() == null){
-                        zombiesEnRango.Remove(z);
-                    }
-                    else if(!active){
-                        if (gameLogic.CalcularDistancia(gameObject, z) <= rangoActivacion){
-                            active = true;
-                        }
-                    }
-                }
-
-                if (blown){
-                   
-                    foreach (GameObject z in zombiesEnRango){
-                        if (z.GetComponent<ZombieScript>().tipo != ZombieScript.zombieClass.runner){
-                            z.GetComponent<ZombieScript>().health -= mineDmg;
-                        }
-                        else{
-                            Debug.Log("Dat Runner Got hurt Gurl");
-                        }
-                    }
-                    Dissappear();
-                }else if (active){
-                    Debug.Log("Time's ticking");
-                    particleScript.detonate = true; //Esto activa las particulas y sonidos del otro script.
-
-                    counter += Time.deltaTime;
-                    if (counter >= timeToExplode){
-                        blown = true;
-                        Debug.Log("Allahuakbar");
-                    }
-                }
-            }
+    bool IsNotAlive(GameObject z)
+    {
+        if (z.GetComponent<ZombieScript>() != null)
+        {
+            return !z.GetComponent<ZombieScript>().isAlive;
+        }
+        else
+        {
+            return !z.GetComponent<VillagerScript>().isAlive;
         }
     }
 
+    // Update is called once per frame
+    void Update()
+{
+        zombiesEnRango.RemoveAll(IsNotAlive);
+            if (!gameLogic.eventManager.onEvent){
+            if (!stop)
+            {
+                if (!gameLogic.isPaused)
+                {
+                    foreach (GameObject z in zombiesEnRango)
+                    {
+                        if (!active)
+                        {
+                            if (gameLogic.CalcularDistancia(gameObject, z) <= rangoActivacion)
+                            {
+                                active = true;
+                            }
+                        }
+                    }
+                }
+                    if (blown){
+                        foreach (GameObject z in zombiesEnRango){
+                            if (z.GetComponent<ZombieScript>().tipo != ZombieScript.zombieClass.runner)
+                            {
+                                z.GetComponent<ZombieScript>().health -= mineDmg;
+                            }
+                            else
+                            {
+                                Debug.Log("Dat Runner Got hurt Gurl");
+                            }
+                        }
+                        GetComponent<MeshFilter>().mesh = null;
+                        stop = true;
+                    }
+                    else if (active){
+                        particleScript.detonate = true; //Esto activa las particulas y sonidos del otro script.
+
+                        counter += Time.deltaTime;
+                        if (counter >= timeToExplode){
+                            blown = true;
+                        }
+                    }
+                }
+            }
+        
+    }
     private void OnTriggerEnter(Collider other){
         if (other.tag == "Zn") {
             zombiesEnRango.Add(other.gameObject);

@@ -100,7 +100,7 @@ public class ZombieScript : MonoBehaviour
                 attack = 10;
                 defense = 10;
                 attackSpeed = 1f;
-                movSpeed = 5f;
+                movSpeed = 2f;
                 theAttackRange = 0.8f;
                 break;
             case zombieClass.runner:
@@ -108,7 +108,7 @@ public class ZombieScript : MonoBehaviour
                 attack = 5;
                 defense = 10;
                 attackSpeed = 1.5f;
-                movSpeed = 6f;
+                movSpeed = 3f;
                 theAttackRange = 0.8f;
                 break;
             case zombieClass.mutank:
@@ -117,7 +117,7 @@ public class ZombieScript : MonoBehaviour
                 attack = 20;
                 defense = 10;
                 attackSpeed = 0.5f;
-                movSpeed = 3f;
+                movSpeed = 1f;
                 theAttackRange = 1f;
                 break;
         }
