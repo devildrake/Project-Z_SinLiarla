@@ -18,10 +18,9 @@ public class Event2Script : MonoBehaviour {
     void Update () {
         if (gameLogic == null)
         {
-
             gameLogic = GameLogicScript.gameLogic;
         }
-        else if(!gameLogic.eventManager.eventList[4].hasHappened)
+        else if(!gameLogic.eventManager.eventList[4].hasHappened&&!hasHappened[0])
         {
             gameLogic.eventManager.activateEvent(4);
         }

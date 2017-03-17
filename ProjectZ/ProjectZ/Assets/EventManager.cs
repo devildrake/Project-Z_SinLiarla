@@ -138,6 +138,7 @@ namespace Assets.Scripts
 
                 eventList[4].messages[0] = "Hmm.. los runners deberian poder pasar ese campo de minas sin problemas";
 
+                eventList[5].messages[0] = "Torretas eeh.. y estas ya tienen a sus operarios.. bueno ahora los mutanks podran lucirse..";
             }
             else
             {
