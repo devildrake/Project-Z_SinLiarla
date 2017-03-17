@@ -1,0 +1,158 @@
+fileFormatVersion: 2
+guid: dda970e2fb872cc4d9410fdf40d20db9
+timeCreated: 1489749878
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: pinchoBueni
+    100004: pinchoBueni001
+    100006: pinchoBueni002
+    100008: pinchoBueni003
+    100010: pinchoBueni004
+    100012: pinchoBueni005
+    100014: pinchoBueni006
+    100016: pinchoBueni007
+    100018: "travesa\xF1o"
+    100020: X006
+    100022: X007
+    100024: X008
+    100026: X009
+    100028: X010
+    100030: X011
+    100032: X012
+    400000: //RootNode
+    400002: pinchoBueni
+    400004: pinchoBueni001
+    400006: pinchoBueni002
+    400008: pinchoBueni003
+    400010: pinchoBueni004
+    400012: pinchoBueni005
+    400014: pinchoBueni006
+    400016: pinchoBueni007
+    400018: "travesa\xF1o"
+    400020: X006
+    400022: X007
+    400024: X008
+    400026: X009
+    400028: X010
+    400030: X011
+    400032: X012
+    2300000: pinchoBueni
+    2300002: pinchoBueni001
+    2300004: pinchoBueni002
+    2300006: pinchoBueni003
+    2300008: pinchoBueni004
+    2300010: pinchoBueni005
+    2300012: pinchoBueni006
+    2300014: pinchoBueni007
+    2300016: "travesa\xF1o"
+    2300018: X006
+    2300020: X007
+    2300022: X008
+    2300024: X009
+    2300026: X010
+    2300028: X011
+    2300030: X012
+    3300000: pinchoBueni
+    3300002: pinchoBueni001
+    3300004: pinchoBueni002
+    3300006: pinchoBueni003
+    3300008: pinchoBueni004
+    3300010: pinchoBueni005
+    3300012: pinchoBueni006
+    3300014: pinchoBueni007
+    3300016: "travesa\xF1o"
+    3300018: X006
+    3300020: X007
+    3300022: X008
+    3300024: X009
+    3300026: X010
+    3300028: X011
+    3300030: X012
+    4300000: "travesa\xF1o"
+    4300002: X006
+    4300004: X007
+    4300006: X008
+    4300008: X009
+    4300010: X010
+    4300012: X011
+    4300014: X012
+    4300016: pinchoBueni
+    4300018: pinchoBueni001
+    4300020: pinchoBueni002
+    4300022: pinchoBueni003
+    4300024: pinchoBueni004
+    4300026: pinchoBueni005
+    4300028: pinchoBueni006
+    4300030: pinchoBueni007
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
