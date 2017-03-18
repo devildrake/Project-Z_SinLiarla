@@ -8,8 +8,8 @@ public class Detonate : MonoBehaviour {
     public bool playing;
     public bool hasBeenActive;
     public bool hasExploded;
-    [HideInInspector]public bool detonate;
-    [HideInInspector]public AudioClip boom, beep;
+    public bool detonate;
+    public AudioClip boom, beep;
 
 
 	// Use this for initialization
@@ -17,8 +17,8 @@ public class Detonate : MonoBehaviour {
         hasBeenActive = hasExploded = false;
         exp = GetComponentInChildren<ParticleSystem>();
         aud = GetComponent<AudioSource>();
-        boom = Resources.Load<AudioClip>("sfx/explosion_1");
-        beep = Resources.Load<AudioClip>("sfx/beeps");
+        //boom = Resources.Load<AudioClip>(".sfx/explosion_1");
+        //beep = Resources.Load<AudioClip>(".sfx/beeps");
 	}
 
     void StopBoom(){

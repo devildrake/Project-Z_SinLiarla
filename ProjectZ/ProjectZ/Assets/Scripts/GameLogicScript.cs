@@ -368,13 +368,19 @@ public class GameLogicScript : MonoBehaviour
     //Un método que devuelve un booleano de forma ineficiente para no tener que escribir todo el codigo de negación
     bool IsNotAlive(GameObject z)
     {
-        if (z.GetComponent<ZombieScript>() != null)
+        if (z != null)
         {
-            return !z.GetComponent<ZombieScript>().isAlive;
-        }
-        else
+            if (z.GetComponent<ZombieScript>() != null)
+            {
+                return !z.GetComponent<ZombieScript>().isAlive;
+            }
+            else
+            {
+                return !z.GetComponent<VillagerScript>().isAlive;
+            }
+        }else
         {
-            return !z.GetComponent<VillagerScript>().isAlive;
+            return true;
         }
     }
 

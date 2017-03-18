@@ -12,16 +12,19 @@ public class MinaEffect : MonoBehaviour {
     public float rangoActivacion;
     public bool stop;
     GameLogicScript gameLogic;
-    private Detonate particleScript;
+    public Detonate particleScript;
     
     // Use this for initialization
     void Start () {
         gameLogic = GameLogicScript.gameLogic;
-        particleScript = gameObject.GetComponentInChildren<Detonate>();
+        //particleScript = gameObject.GetComponentInChildren<Detonate>();
         active = false;
         blown = false;
         counter = 0;
-        timeToExplode = particleScript.beep.length + 0.2f; //Despues de los pitidos de la detonacion explota con un pequeño margen de error para hacer coincidir las particulas
+        timeToExplode = particleScript.beep.length + 0.2f;
+        //Despues de los pitidos de la detonacion 
+        //explota con un pequeño margen de error
+        //para hacer coincidir las particulas
         rangoActivacion = 0.4f;
         mineDmg = 50;
     }
