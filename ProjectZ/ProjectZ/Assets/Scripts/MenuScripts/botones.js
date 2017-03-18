@@ -1,13 +1,12 @@
 ﻿public function BotonJugar(){
 	
-	Application.LoadLevel("ProbandoQuads");
+	Application.LoadLevel("Tutorial1");
 	
 }
 
 public function BotonMenu(){
 	
-    Debug.Log("Change");
-    Application.LoadLevel("AlphaMenu");
+    Application.LoadLevel("Menu");
 	
 }
 
