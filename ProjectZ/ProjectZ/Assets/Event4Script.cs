@@ -20,7 +20,7 @@ public class Event4Script : MonoBehaviour {
         camara.mode = 1;
 
         camara.SetPos(new Vector3(-35.0f,9.9f,2.93594f));
-
+        camara.SetOrgPos();
     }
 
     // Update is called once per frame

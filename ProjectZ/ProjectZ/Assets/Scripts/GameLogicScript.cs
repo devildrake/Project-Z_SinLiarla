@@ -6,6 +6,7 @@ using Pathfinding;
 public class GameLogicScript : MonoBehaviour
 {
     public static GameLogicScript gameLogic;
+    public CameraScript camara;
     public int currentLevel;
     /*Este código está pensado para manejar la lógica de selección y movimiento de los zombies, así como el listado de estos 
      y de los villagers en partida*/
@@ -149,6 +150,8 @@ public class GameLogicScript : MonoBehaviour
             eventos[i] = false;
         }
 
+        camara = FindObjectOfType<CameraScript>();
+
         eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
 
         //eventManager.SetEvents(eventos,10);
@@ -225,6 +228,14 @@ public class GameLogicScript : MonoBehaviour
 
         if (!isPaused)
         {
+
+            if (-_keptSelectedZombies.Count != 0)
+            {
+                camara.objetoAFocusear = _keptSelectedZombies[0];
+            }else
+            {
+                camara.objetoAFocusear = null;
+            }
 
             if (!eventManager.onEvent) { 
 
@@ -434,7 +445,7 @@ public class GameLogicScript : MonoBehaviour
                     _selectionOrigin = hit.point;
 
                     //Creamos el cuadro de selección instanciandolo a partir de un prefab
-                    _selectionBox = GameObject.Instantiate(Resources.Load("SelectionBox")) as GameObject;
+                    _selectionBox = Instantiate(Resources.Load("SelectionBox")) as GameObject;
                     _selectionBox.GetComponent<GUITexture>().pixelInset = new Rect(_input._mousePosition.x, _input._mousePosition.y, 1, 1);
                 }
             }

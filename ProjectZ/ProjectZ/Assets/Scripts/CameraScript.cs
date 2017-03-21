@@ -7,6 +7,7 @@ public class CameraScript : MonoBehaviour
     //CONSTANTES DE CÁMARA
     //Velocidad de movimiento de la cámara
     const float CAMERA_SPEED = 20.0f;
+    public GameObject objetoAFocusear;
     //Margen de pantalla donde se podrá mover la cámara situando allí el ratón
     const int CAMERA_MOVE_MARGINX = 100;
     const int CAMERA_MOVE_MARGINY = 50;
@@ -33,12 +34,16 @@ public class CameraScript : MonoBehaviour
 
     void Start()
     {
-
-        originalPos = gameObject.transform.position;
+        SetOrgPos();
         targetObject = GameObject.FindGameObjectWithTag("Ground");
         //Guardamos la referencia al input en nuestra clase
         gameLogic = GameLogicScript.gameLogic;
         _input = gameLogic.GetComponent<InputHandlerScript>();
+    }
+
+    public void SetOrgPos()
+    {
+        originalPos = gameObject.transform.position;
     }
 
     public void SetPos(Vector3 t)
@@ -46,12 +51,33 @@ public class CameraScript : MonoBehaviour
         gameObject.transform.position = t;
     }
 
+    public float GetPos(GameObject z,int wh)
+    {
+        float smth = 0;
+        switch (wh)
+        {
+            case 0:
+                smth = z.transform.position.x;
+                break;
+            case 1:
+                smth = z.transform.position.y;
+                break;
+            case 2:
+                smth = z.transform.position.z;
+                break;
+        }
+        return smth;
+    }
+
     void Update()
     {
         if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
-            if (_input._centerCamera) {
+            if (_input._centerCamera&&objetoAFocusear==null) {
                 gameObject.transform.position = originalPos;
+            }else if (_input._centerCamera)
+            {
+                gameObject.transform.position = new Vector3(GetPos(objetoAFocusear,0),GetPos(gameObject,1),GetPos(objetoAFocusear,2));
             }
 
 
