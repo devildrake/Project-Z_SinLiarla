@@ -11,11 +11,12 @@ public class CameraScript : MonoBehaviour
     const int CAMERA_MOVE_MARGINX = 100;
     const int CAMERA_MOVE_MARGINY = 50;
 
+    public int mode;
     //Limites de movimiento de camara
-    const int TOPLIMIT = 10;
-    const int BOTLIMIT = -20;
-    const int RIGHTLIMIT = 36;
-    const int LEFTLIMIT = -36;
+    public int TOPLIMIT = 10;
+    public int BOTLIMIT = -20;
+    public int RIGHTLIMIT = 36;
+    public int LEFTLIMIT = -36;
 
     //Posicion original de la camara
     Vector3 originalPos;
@@ -24,14 +25,25 @@ public class CameraScript : MonoBehaviour
     GameObject targetObject;
     //Manejador de input
     InputHandlerScript _input;
-    
+
+    private void Awake()
+    {
+        mode = 0;
+    }
+
     void Start()
     {
+
         originalPos = gameObject.transform.position;
         targetObject = GameObject.FindGameObjectWithTag("Ground");
         //Guardamos la referencia al input en nuestra clase
         gameLogic = GameLogicScript.gameLogic;
         _input = gameLogic.GetComponent<InputHandlerScript>();
+    }
+
+    public void SetPos(Vector3 t)
+    {
+        gameObject.transform.position = t;
     }
 
     void Update()
@@ -69,36 +81,75 @@ public class CameraScript : MonoBehaviour
     {
         cameraVector = new Vector3();
 
-        if (_input._zoomIn&&gameObject.transform.position.y>4)
+        if (mode == 0)
         {
-            _input._zoomIn = false;
-            cameraVector.y = 0;
-            cameraVector.y-=5;
-        }
-        else if (_input._zoomOut&&gameObject.transform.position.y<9)
-        {
-            _input._zoomOut = false;
-            cameraVector.y = 0;
-            cameraVector.y+=5;
-        }
 
-        if ((_input._mousePosition.x < CAMERA_MOVE_MARGINX) && (gameObject.transform.position.x - targetObject.transform.position.x) > LEFTLIMIT) 
-        {
-            cameraVector.x = -CAMERA_SPEED;
-        }
-        else if ((_input._mousePosition.x > (Screen.width - CAMERA_MOVE_MARGINX))&& (gameObject.transform.position.x - targetObject.transform.position.x)<RIGHTLIMIT)
-        {
-            cameraVector.x = CAMERA_SPEED;
-        }
+            if (_input._zoomIn && gameObject.transform.position.y > 4)
+            {
+                _input._zoomIn = false;
+                cameraVector.y = 0;
+                cameraVector.y -= 5;
+            }
+            else if (_input._zoomOut && gameObject.transform.position.y < 9)
+            {
+                _input._zoomOut = false;
+                cameraVector.y = 0;
+                cameraVector.y += 5;
+            }
 
-        if (_input._mousePosition.y < CAMERA_MOVE_MARGINY && (gameObject.transform.position.z - targetObject.transform.position.z) > BOTLIMIT)
-      
+            if ((_input._mousePosition.x < CAMERA_MOVE_MARGINX) && (gameObject.transform.position.x - targetObject.transform.position.x) > LEFTLIMIT)
+            {
+                cameraVector.x = -CAMERA_SPEED;
+            }
+            else if ((_input._mousePosition.x > (Screen.width - CAMERA_MOVE_MARGINX)) && (gameObject.transform.position.x - targetObject.transform.position.x) < RIGHTLIMIT)
+            {
+                cameraVector.x = CAMERA_SPEED;
+            }
+
+            if (_input._mousePosition.y < CAMERA_MOVE_MARGINY && (gameObject.transform.position.z - targetObject.transform.position.z) > BOTLIMIT)
+
+            {
+                cameraVector.z = -CAMERA_SPEED;
+            }
+            else if ((_input._mousePosition.y > (Screen.height - CAMERA_MOVE_MARGINY)) && (gameObject.transform.position.z - targetObject.transform.position.z) < TOPLIMIT)
+            {
+                cameraVector.z = CAMERA_SPEED;
+            }
+        }else
         {
-            cameraVector.z = -CAMERA_SPEED;
-        }
-        else if ((_input._mousePosition.y > (Screen.height - CAMERA_MOVE_MARGINY))&& (gameObject.transform.position.z - targetObject.transform.position.z) < TOPLIMIT)
-        {
-            cameraVector.z = CAMERA_SPEED;
+
+            if (_input._zoomIn && gameObject.transform.position.y > 4)
+            {
+                _input._zoomIn = false;
+                cameraVector.y = 0;
+                cameraVector.y -= 5;
+            }
+            else if (_input._zoomOut && gameObject.transform.position.y < 9)
+            {
+                _input._zoomOut = false;
+                cameraVector.y = 0;
+                cameraVector.y += 5;
+            }
+
+            if ((_input._mousePosition.x < CAMERA_MOVE_MARGINX) && (gameObject.transform.position.z - targetObject.transform.position.z) < LEFTLIMIT)
+            {
+                cameraVector.z = CAMERA_SPEED;
+            }
+            else if ((_input._mousePosition.x > (Screen.width - CAMERA_MOVE_MARGINX)) && (gameObject.transform.position.z - targetObject.transform.position.z) > RIGHTLIMIT)
+            {
+                cameraVector.z = -CAMERA_SPEED;
+            }
+
+            if (_input._mousePosition.y < CAMERA_MOVE_MARGINY && (gameObject.transform.position.x - targetObject.transform.position.x) > BOTLIMIT)
+
+            {
+                cameraVector.x = -CAMERA_SPEED;
+            }
+            else if ((_input._mousePosition.y > (Screen.height - CAMERA_MOVE_MARGINY)) && (gameObject.transform.position.x - targetObject.transform.position.x) < TOPLIMIT)
+            {
+                cameraVector.x = CAMERA_SPEED;
+            }
+
         }
     }
 }
