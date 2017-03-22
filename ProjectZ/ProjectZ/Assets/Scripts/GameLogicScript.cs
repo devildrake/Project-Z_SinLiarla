@@ -8,6 +8,7 @@ public class GameLogicScript : MonoBehaviour
     public static GameLogicScript gameLogic;
     public CameraScript camara;
     public int currentLevel;
+    int defeatCounter;
     /*Este código está pensado para manejar la lógica de selección y movimiento de los zombies, así como el listado de estos 
      y de los villagers en partida*/
     /*Se hace una referencia general al InputHandler
@@ -144,6 +145,7 @@ public class GameLogicScript : MonoBehaviour
 
     void Start()
     {
+        defeatCounter = 0;
         eventos = new bool[10];
         
         for(int i = 0; i < 10; i++) {
@@ -202,6 +204,12 @@ public class GameLogicScript : MonoBehaviour
 
     void Update()
     {
+        if(_zombies.Count == 0)
+        {
+            defeatCounter++;
+            Application.LoadLevel(currentLevel);
+        }
+
         if (eventManager == null)
         {
             eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
