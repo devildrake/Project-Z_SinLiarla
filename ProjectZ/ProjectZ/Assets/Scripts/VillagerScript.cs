@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class VillagerScript : MonoBehaviour {
     GameLogicScript gameLogic;
 
-    public enum humanClass { villager, soldier }
+    public enum humanClass { villager, soldier, Turret }
     public VisionRangeScript laVision;
     AttackRangeScript elAtaque;
     public bool moving = false;
@@ -47,8 +47,12 @@ public class VillagerScript : MonoBehaviour {
 	private GameObject Latas;
     // Use this for initialization
 
+
+
     void Start()
     {
+		
+
         distanciaAlerta = 20;
         gameLogic = GameLogicScript.gameLogic;
         hasAlerted = alerted = false;
@@ -86,6 +90,15 @@ public class VillagerScript : MonoBehaviour {
                 movSpeed = 2;
                 render.material.color += Color.green;
                 break;
+			case humanClass.Turret:
+				theAttackRange = 6;
+				health = 100;
+				attack = 20;
+				defense = 20;
+				attackSpeed = 2.5f;
+				movSpeed = 0;
+				render.material.color += Color.red;
+				break;
         }
         if (patrolPointObject == null)
         {
@@ -185,6 +198,7 @@ public class VillagerScript : MonoBehaviour {
                     villagerAttack.Attack(laVision.closestZombie);
                     villagerMovement.moving = false;
                     // AttackEnemy();
+
                 }
                 else if (!laVision.enemyInSight && !goingToCheck)
                 {

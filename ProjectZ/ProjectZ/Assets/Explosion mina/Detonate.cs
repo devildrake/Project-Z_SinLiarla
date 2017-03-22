@@ -72,8 +72,6 @@ public class Detonate : MonoBehaviour {
             {
                 if (!aud.isPlaying)
                     aud.UnPause();
-                //if (Input.GetKeyDown(KeyCode.Space))
-                //    detonate = true;
 
                 if (detonate && !hasBeenActive)
                 {
