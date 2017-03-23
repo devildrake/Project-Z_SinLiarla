@@ -201,23 +201,43 @@ public class GameLogicScript : MonoBehaviour
         elPathfinder.GetComponent<AstarPath>().Scan();
     }
 
+    void ClearLists()
+    {
+        _bases.Clear();
+        _barricadas.Clear();
+        _villagers.Clear();
+        _zombies.Clear();
+        _keptSelectedZombies.Clear();
+        _selectedZombies.Clear();
+    }
 
     void Update()
     {
         if(_zombies.Count == 0)
         {
             defeatCounter++;
-            Application.LoadLevel(currentLevel);
+            ClearLists();
+            Application.LoadLevel("EscenaInter");
+        }
+
+        if (camara == null)
+        {
+            camara = FindObjectOfType<CameraScript>();
+        }
+
+        if (elPathfinder == null)
+        {
+            elPathfinder = GameObject.FindGameObjectWithTag("A*");
+        }
+
+        if (elPausaScript == null) {
+            elPausaScript = FindObjectOfType<PausaCanvasScript>();
         }
 
         if (eventManager == null)
         {
             eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
 
-        }
-
-        if (elPausaScript == null) {
-            elPausaScript = FindObjectOfType<PausaCanvasScript>();
         }
 
         else
@@ -229,7 +249,7 @@ public class GameLogicScript : MonoBehaviour
         }
 
         //Por encima de todo lo demás se maneja el booleano del pausado
-        if (!eventManager.onEvent&&Input.GetKeyDown(KeyCode.Escape)) {
+        if (eventManager!=null&&!eventManager.onEvent&&Input.GetKeyDown(KeyCode.Escape)) {
             changePause();
         }
 
@@ -240,7 +260,7 @@ public class GameLogicScript : MonoBehaviour
             if (-_keptSelectedZombies.Count != 0)
             {
                 camara.objetoAFocusear = _keptSelectedZombies[0];
-            }else
+            }else if(camara!=null)
             {
                 camara.objetoAFocusear = null;
             }

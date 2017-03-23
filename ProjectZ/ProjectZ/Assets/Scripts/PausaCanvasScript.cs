@@ -26,6 +26,8 @@ public class PausaCanvasScript : MonoBehaviour {
             menuPausa.SetActive(true);
         }else
         {
+            confirmacionA.SetActive(false);
+            confirmacionB.SetActive(false);
             menuPausa.SetActive(false);
                 
         }

@@ -3,8 +3,9 @@ using System.Collections;
 
 public class EdificioCreaSoldiers : MonoBehaviour {
     public bool isSpecial;
-    GameObject villager;
+    //GameObject villager;
     public bool alert;
+    public bool alertColor;
     public float spawnTimer;
     public float spawnTime;
     public GameLogicScript gameLogic;
@@ -20,7 +21,8 @@ public class EdificioCreaSoldiers : MonoBehaviour {
     // Use this for initialization
     void Start () {
         gameLogic = GameLogicScript.gameLogic;
-        //gameLogic._bases.Add(gameObject);
+
+        gameLogic._bases.Add(gameObject);
 
         isBlocked = false;
         amount = 4;
@@ -37,12 +39,11 @@ public class EdificioCreaSoldiers : MonoBehaviour {
         posiciones[0].y = 0.3859999f;
 
         //spawnPoint = gameObject.transform.position+ new Vector3(-3.719f, 0.539f, -4.338f);
-        spawnPoint = spawnPointObject.transform.position;
 
-        villager = Resources.Load("VillagerObject") as GameObject;
+        //villager = Resources.Load("VillagerObject") as GameObject;
         spawnTimer = 0f;
         spawnTime = 4f;
-        alert = false;
+        alert = alertColor = false;
 
 
 	}
@@ -50,6 +51,8 @@ public class EdificioCreaSoldiers : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        spawnPoint = spawnPointObject.transform.position;
+
         if (gameLogic == null) {
             gameLogic = GameLogicScript.gameLogic;
             }
@@ -67,10 +70,17 @@ public class EdificioCreaSoldiers : MonoBehaviour {
 
                 if (alert && amount > 0 && !isBlocked)
                 {
+                    if (!alertColor)
+                    {
+                        alertColor = true;
+                       // GetComponent<MeshRenderer>().material.color = Color.red;
+                    }
                     spawnTimer += Time.deltaTime;
                     if (spawnTime <= spawnTimer)
                     {
-                        spawn(Random.Range(0, 1));
+                        //spawn(Random.Range(0, 1));
+                        gameLogic.SpawnSoldier(spawnPoint+new Vector3(Random.Range(-1,1),0,Random.Range(-1,0)));
+                        counter++;
                         amount--;
                         spawnTimer = 0;
                     }
@@ -78,20 +88,20 @@ public class EdificioCreaSoldiers : MonoBehaviour {
             }
         }
     }
-    void spawn(int tipo) {
-        switch (tipo) {
-            case 0: //VILLAGER
-                GameObject villager2 = Instantiate(villager, posiciones[counter], Quaternion.identity) as GameObject;
-                villager2.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.villager;
-                gameLogic._villagers.Add(villager2);
-                counter++;
-                break;
-            case 1: //SOLDADO
-                GameObject soldier = Instantiate(villager, posiciones[counter], Quaternion.identity) as GameObject;
-                soldier.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
-                gameLogic._villagers.Add(soldier);
-                counter++;
-                break;
-        }
-    }
+    //void spawn(int tipo) {
+    //    switch (tipo) {
+    //        case 0: //VILLAGER
+    //            GameObject villager2 = Instantiate(villager, gameObject.transform.position+posiciones[counter], Quaternion.identity) as GameObject;
+    //            villager2.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.villager;
+    //            gameLogic._villagers.Add(villager2);
+    //            counter++;
+    //            break;
+    //        case 1: //SOLDADO
+    //            GameObject soldier = Instantiate(villager, gameObject.transform.position + posiciones[counter], Quaternion.identity) as GameObject;
+    //            soldier.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
+    //            gameLogic._villagers.Add(soldier);
+    //            counter++;
+    //            break;
+    //    }
+    //}
 }

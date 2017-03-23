@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Detonate : MonoBehaviour {
     private ParticleSystem exp;
-    private AudioSource aud;
+    public AudioSource aud;
     public bool playing;
     public bool hasBeenActive;
     public bool hasExploded;
@@ -17,12 +17,12 @@ public class Detonate : MonoBehaviour {
         hasBeenActive = hasExploded = false;
         exp = GetComponentInChildren<ParticleSystem>();
         aud = GetComponent<AudioSource>();
+        aud.clip = beep;
         //boom = Resources.Load<AudioClip>(".sfx/explosion_1");
         //beep = Resources.Load<AudioClip>(".sfx/beeps");
 	}
 
     void StopBoom(){
-        Debug.Log("StopSounding");
         aud.Stop();
         gameObject.GetComponentInParent<MinaEffect>().Dissappear();
     }
@@ -37,7 +37,6 @@ public class Detonate : MonoBehaviour {
         {
             if (!GameLogicScript.gameLogic.isPaused)
             {
-                Debug.Log("Boom");
                 aud.clip = boom;
                 exp.Play();
                 aud.Play();
@@ -53,7 +52,8 @@ public class Detonate : MonoBehaviour {
             if (!GameLogicScript.gameLogic.isPaused)
             {
                 aud.Play();
-                if (!hasExploded)
+
+                if (!hasExploded&&aud.clip!=null)
                 {
                     Invoke("Explode", aud.clip.length);
                     hasExploded = true;

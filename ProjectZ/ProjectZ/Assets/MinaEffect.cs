@@ -66,6 +66,8 @@ public class MinaEffect : MonoBehaviour {
                     }
                 }
                     if (blown){
+
+
                         foreach (GameObject z in zombiesEnRango){
                             if (z.GetComponent<ZombieScript>().tipo != ZombieScript.zombieClass.runner)
                             {
@@ -85,7 +87,12 @@ public class MinaEffect : MonoBehaviour {
                         counter += Time.deltaTime;
                         if (counter >= timeToExplode){
                             blown = true;
+                        Debug.Log(gameLogic._bases.Count);
+                        foreach (GameObject b in gameLogic._bases)
+                        {
+                            b.GetComponent<EdificioCreaSoldiers>().alert = true;
                         }
+                    }
                     }
                 }
             }
