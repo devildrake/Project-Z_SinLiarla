@@ -12,7 +12,7 @@ public class VillagerAttack : MonoBehaviour
     public GameLogicScript gameLogic;
     Animator elAnimator;
     private GameObject Latas;
-
+    float initSpeedAn;
     // Use this for initialization
     void Start()
     {
@@ -21,6 +21,7 @@ public class VillagerAttack : MonoBehaviour
         zombieToAttack = null;
         theVillager = GetComponent<VillagerScript>();
         elRango = gameObject.GetComponentInChildren<AttackRangeScript>();
+        initSpeedAn = elAnimator.speed;
     }
 
     public void Attack(GameObject aZombie)
@@ -63,6 +64,10 @@ public class VillagerAttack : MonoBehaviour
     {
         if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
+            if (elAnimator.speed == 0)
+            {
+                elAnimator.speed = initSpeedAn;
+            }
             if (attacking)
             {
                 if (zombieToAttack != null)
@@ -84,6 +89,9 @@ public class VillagerAttack : MonoBehaviour
             {
                 attacking = false;
             }
+        }else
+        {
+            elAnimator.speed = 0;
         }
     }
 }

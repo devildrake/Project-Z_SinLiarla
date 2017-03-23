@@ -38,7 +38,7 @@ public class VillagerScript : MonoBehaviour
     public int patrolType;
     public bool hasAlerted;
     public bool alerted;
-
+    float initSpeedAn;
 
 
     List<GameObject> _nearbyPartners;
@@ -69,7 +69,7 @@ public class VillagerScript : MonoBehaviour
         villagerMovement = GetComponent<VillagerMovement>();
         villagerAttack = GetComponent<VillagerAttack>();
         hasTransformed = false;
-
+        initSpeedAn = elAnimator.speed;
         Renderer render = this.gameObject.GetComponentInChildren<Renderer>();
 
         switch (tipo)
@@ -206,7 +206,10 @@ public class VillagerScript : MonoBehaviour
         if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
 
-
+            if (elAnimator.speed == 0)
+            {
+                elAnimator.speed = initSpeedAn;
+            }
 
 
             groundPos.x = transform.position.x;
@@ -291,6 +294,8 @@ public class VillagerScript : MonoBehaviour
             elAnimator.SetBool("isAlive", false);
             Destroy(gameObject, 3.0f);
         }
+        }else{
+            elAnimator.speed = 0;
         }
     }
 

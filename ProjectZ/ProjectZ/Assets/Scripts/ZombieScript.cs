@@ -339,8 +339,7 @@ public class ZombieScript : MonoBehaviour
         }
         else
         {
-
-            //elAnimator.speed = 0;
+            elAnimator.speed = 0;
         }
     }
 
