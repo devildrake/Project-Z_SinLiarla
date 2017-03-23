@@ -10,14 +10,14 @@ public class VillagerAttack : MonoBehaviour
     public AttackRangeScript elRango;
     public float attackTimer = 0;
     public GameLogicScript gameLogic;
-
+    Animator elAnimator;
     private GameObject Latas;
 
     // Use this for initialization
     void Start()
     {
         gameLogic = GameLogicScript.gameLogic;
-
+        elAnimator = gameObject.GetComponent<Animator>();
         zombieToAttack = null;
         theVillager = GetComponent<VillagerScript>();
         elRango = gameObject.GetComponentInChildren<AttackRangeScript>();
@@ -41,6 +41,7 @@ public class VillagerAttack : MonoBehaviour
     // Update is called once per frame
     void takeDamageColor()
     {
+        elAnimator.SetBool("isHit", true);
         Component[] renders = zombieToAttack.GetComponentsInChildren(typeof(Renderer));
         foreach (Renderer render in renders)
         {

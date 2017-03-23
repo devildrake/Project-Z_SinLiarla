@@ -72,14 +72,15 @@ public class GameLogicScript : MonoBehaviour
 
 
     //public Vector3 posicionBase1;
-
+    
     GameObject zombie;
     GameObject walker;
+    GameObject soldier;
     GameObject mutank;
     GameObject runner; //por ahora los runner usarán el modelo que estaba ya
     GameObject selectedBarricade;
     GameObject villager;
-    GameObject baseHumana;
+   // GameObject baseHumana;
     public bool[] eventos;
 
     public Assets.Scripts.EventManager eventManager;
@@ -101,10 +102,20 @@ public class GameLogicScript : MonoBehaviour
         _villagers.Add(villagerToSpawn);
     }
 
+    public void SpawnSoldier(Vector3 patrolPos, Vector3 unaPos)
+    {
+        GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
+        GameObject anEmptyGameObject = new GameObject();
+        soldierToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
+        anEmptyGameObject.transform.position = patrolPos;
+        _villagers.Add(soldierToSpawn);
+        soldierToSpawn.GetComponent<VillagerScript>().patrolPointObject = anEmptyGameObject;
+    }
+
     public void SpawnSoldier(Vector3 unaPos) {
-        GameObject villagerToSpawn = Instantiate(villager, unaPos, Quaternion.identity) as GameObject;
-        villagerToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
-        _villagers.Add(villagerToSpawn);
+        GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
+        soldierToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
+        _villagers.Add(soldierToSpawn);
     }
 
 
@@ -178,13 +189,13 @@ public class GameLogicScript : MonoBehaviour
         _villagers = new List<GameObject>();
 
         //Se cargan los prefabs
-        zombie = Resources.Load("ZombieObject") as GameObject;
         walker = Resources.Load("WalkerObject") as GameObject;
-        runner = zombie;
+        runner = Resources.Load("RunnerObject") as GameObject;
         mutank = Resources.Load("MutankObject") as GameObject;
+        villager = Resources.Load("VillagerObjectDef") as GameObject;
+        soldier = Resources.Load("SoldierObject")as GameObject;
 
-        villager = Resources.Load("VillagerObject") as GameObject;
-        baseHumana = Resources.Load("OriginadorSoldados") as GameObject;
+        //baseHumana = Resources.Load("OriginadorSoldados") as GameObject;
 
         //GameObject base1 = Instantiate(baseHumana, posicionBase1, Quaternion.identity) as GameObject;
 
@@ -201,7 +212,7 @@ public class GameLogicScript : MonoBehaviour
         elPathfinder.GetComponent<AstarPath>().Scan();
     }
 
-    void ClearLists()
+    public void ClearLists()
     {
         _bases.Clear();
         _barricadas.Clear();
@@ -436,14 +447,14 @@ public class GameLogicScript : MonoBehaviour
         foreach (GameObject v in _villagers) {
             if (!v.GetComponent<VillagerScript>().isAlive && !v.GetComponent<VillagerScript>().hasTransformed) {
                 int que = Random.Range(0, 20);
-
+                v.GetComponent<VillagerScript>().hasTransformed = true;
                 if (que < 10)
                 {
                     SpawnWalker(v.transform.position);
                 }
                 else if (que < 16)
                 {
-                    SpawnWalker(v.transform.position);
+                    SpawnRunner(v.transform.position);
                 }
                 else {
                     SpawnMutank(v.transform.position);

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class ZombieScript : MonoBehaviour
 {
 
-	public enum zombieClass { walker, runner, mutank }
+    public enum zombieClass { walker, runner, mutank }
     Animator elAnimator;
     private SpriteRenderer elSprite;
     public GameObject elCirculo;
@@ -61,18 +61,20 @@ public class ZombieScript : MonoBehaviour
         return isAlive;
     }
 
-    public void attackBarricade(GameObject laBarricada) {
+    public void attackBarricade(GameObject laBarricada)
+    {
         ResetStuff("command");
         Debug.Log("AttackBarricade");
         Debug.Log(laBarricada);
         goBarricade = true;
-        barricada = laBarricada.GetComponentInParent<BarricadaScript>();        
+        barricada = laBarricada.GetComponentInParent<BarricadaScript>();
     }
-    
+
     void Start()
     {
         gameLogic = GameLogicScript.gameLogic;
-        if (!gameLogic._zombies.Contains(gameObject)) {
+        if (!gameLogic._zombies.Contains(gameObject))
+        {
             gameLogic._zombies.Add(gameObject);
         }
         attackToggle = true;
@@ -81,20 +83,21 @@ public class ZombieScript : MonoBehaviour
         elAnimator = gameObject.GetComponent<Animator>();
         elAnimator.SetBool("moviendose", false);
 
-    originalPos = gameObject.transform.position;
+        originalPos = gameObject.transform.position;
         groundPos.y = originalPos.y;
 
         elMovimiento = gameObject.GetComponent<ZombieMovement>();
         elSprite = GetComponentInChildren<SpriteRenderer>();
         elCirculo = elSprite.gameObject;
-		elCirculo.gameObject.GetComponent<SpriteRenderer> ().color = Color.green;
+        elCirculo.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
         canMove = canAttack = true;
         laVision = gameObject.GetComponentInChildren<VisionRangeZombie>();
         elAtaqueRange = gameObject.GetComponentInChildren<AttackRangeZombie>();
         confirmAlive = isAlive = true;
         initSpeedAn = elAnimator.speed;
 
-        switch (tipo) {
+        switch (tipo)
+        {
             case zombieClass.walker:
                 health = 100;
                 attack = 10;
@@ -130,8 +133,10 @@ public class ZombieScript : MonoBehaviour
         moving = true;
     }*/
     // Update is called once per frame
-    void heightCheck() {
-        if (gameObject.transform.position.y > originalPos.y) {
+    void heightCheck()
+    {
+        if (gameObject.transform.position.y > originalPos.y)
+        {
 
             gameObject.transform.position = groundPos;
         }
@@ -141,11 +146,11 @@ public class ZombieScript : MonoBehaviour
     {
         if (orden == "command")
         {
-            GetComponent<ZombieAttack>().attacking = goBarricade = hasArrived = movingToEnemy = elMovimiento.countedOnce = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack =  false ;
+            GetComponent<ZombieAttack>().attacking = goBarricade = hasArrived = movingToEnemy = elMovimiento.countedOnce = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
         }
         else if (orden == "NoEnemies")
         {
-            GetComponent<ZombieAttack>().attacking = movingToEnemy = elMovimiento.countedOnce = elMovimiento.moving = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false ;
+            GetComponent<ZombieAttack>().attacking = movingToEnemy = elMovimiento.countedOnce = elMovimiento.moving = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
             hasArrived = true;
             Debug.Log("NoEnemies");
         }
@@ -153,20 +158,23 @@ public class ZombieScript : MonoBehaviour
 
     void Update()
     {
+
         if (!gameLogic._zombies.Contains(gameObject) && isAlive)
         {
             gameLogic._zombies.Add(gameObject);
 
         }
 
-        if (!gameLogic.isPaused&&!gameLogic.eventManager.onEvent)
+        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
 
-            if (elMovimiento.wasCommanded) {
+            if (elMovimiento.wasCommanded)
+            {
                 ResetStuff("command");
             }
 
-            if (elAnimator.speed == 0) {
+            if (elAnimator.speed == 0)
+            {
                 elAnimator.speed = initSpeedAn;
             }
 
@@ -206,6 +214,7 @@ public class ZombieScript : MonoBehaviour
 
             if (elMovimiento.moving) //Codigo que pone true el booleano del animador "moviendose" cuando moving es true
             {
+                elAnimator.SetBool("spawn", false);
                 elAnimator.SetBool("moviendose", true);
             }
             else
@@ -229,7 +238,8 @@ public class ZombieScript : MonoBehaviour
                 }
                 else if (goBarricade)
                 {
-                    if (barricada != null) { 
+                    if (barricada != null)
+                    {
                         if (gameLogic.CalcularDistancia(barricada.gameObject, gameObject) > theAttackRange)
                         {
                             if (!barricada._atacantes.Contains(gameObject))
@@ -253,8 +263,8 @@ public class ZombieScript : MonoBehaviour
                                 barricada.loseHp();
                             }
                         }
+                    }
                 }
-            }
                 //Código de que hace el zombie normalmente
                 if (isSelected)
                 {
@@ -269,7 +279,8 @@ public class ZombieScript : MonoBehaviour
             }
             else
             {
-                Destroy(gameObject, 0.3f);
+                elAnimator.SetBool("isAlive", false);
+                Destroy(gameObject, 4.0f);
             }
 
             if (!elMovimiento.wasCommanded)
@@ -281,7 +292,7 @@ public class ZombieScript : MonoBehaviour
                     {
                         if (canAttack)
                         {
-                            if (canMove&&attackToggle)
+                            if (canMove && attackToggle)
                             {
                                 if (laVision.closestEnemy != null)
                                 {
@@ -296,19 +307,24 @@ public class ZombieScript : MonoBehaviour
 
                                         movingToEnemy = true;
                                         elMovimiento.MoveTo(laVision.closestEnemy.transform.position);
+
                                     }
                                 }
-                                else {
+                                else
+                                {
                                     movingToEnemy = false;
+                                    elAnimator.SetBool("atacando", false);
                                 }
                             }
                         }
                     }
                 }
             }
-            else {
+            else
+            {
                 canMove = false;
                 movingToEnemy = false;
+                elAnimator.SetBool("atacando", false);
             }
             //color vida
             if (health / maxHealth * 100 <= 20)
@@ -321,9 +337,11 @@ public class ZombieScript : MonoBehaviour
                 elCirculo.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
             }
         }
-        else {
-            elAnimator.speed = 0;
+        else
+        {
+
+            //elAnimator.speed = 0;
         }
     }
-	
+
 }

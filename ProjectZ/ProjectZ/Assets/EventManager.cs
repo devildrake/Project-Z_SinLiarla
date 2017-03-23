@@ -108,11 +108,11 @@ namespace Assets.Scripts
             eventList[2] = CrearEvento(2);
             eventList[3] = CrearEvento(2);
             eventList[4] = CrearEvento(1);
-            eventList[5] = CrearEvento(5);
-            eventList[6] = CrearEvento(2);
-            eventList[7] = CrearEvento(2);
-            eventList[8] = CrearEvento(5);
-            eventList[9] = CrearEvento(5);
+            eventList[5] = CrearEvento(1);
+            eventList[6] = CrearEvento(1);
+            eventList[7] = CrearEvento(1);
+            eventList[8] = CrearEvento(1);
+            eventList[9] = CrearEvento(1);
 
             if (language == 0)
             {
@@ -123,9 +123,9 @@ namespace Assets.Scripts
                 eventList[0].messages[4] = "Debería montarme alguna IA para no hablar solo..";
 
                 eventList[1].messages[0] = "Vaaale, parece que el movimiento funciona correctamente";
-                eventList[1].messages[1] = "Veamos como de eficiente pueden ser unos zombies controlados contra una persona normal..";
+                eventList[1].messages[1] = "Veamos cuanto tardan mis queridos podridos en acabar con un superviviente..";
                 eventList[1].messages[2] = "Y de paso probamos el mutank..";
-                eventList[1].messages[3] = "Como se nota que ese de la izquierda es el mutank.. estúpidamente grandes.. heh heh heh..";
+                eventList[1].messages[3] = "Aah.. Como se nota que ese de la izquierda es el mutank.. estúpidamente grandes.. heh heh heh..";
                 eventList[1].messages[4] = "Y con ese enorme brazo desproporcionado..";
 
 
@@ -138,7 +138,10 @@ namespace Assets.Scripts
 
                 eventList[4].messages[0] = "Hmm.. los runners deberian poder pasar ese campo de minas sin problemas";
 
-                eventList[5].messages[0] = "Torretas eeh.. y estas ya tienen a sus operarios.. bueno ahora los mutanks podran lucirse..";
+                eventList[5].messages[0] = "Parece que los runners estan en forma.. heheheh";
+
+                eventList[6].messages[0] = "Los supervivientes le han cogido demasiado cariño a las minas..";
+
             }
             else
             {
@@ -170,6 +173,7 @@ namespace Assets.Scripts
                     else
                     {
                         endCurrentEvent();
+                        _input._continue = false;
                     }
                 }
 

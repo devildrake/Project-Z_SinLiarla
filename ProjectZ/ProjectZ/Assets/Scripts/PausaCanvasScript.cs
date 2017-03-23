@@ -10,6 +10,7 @@ public class PausaCanvasScript : MonoBehaviour {
     // Use this for initialization
     void Start() {
         gameLogic = GameLogicScript.gameLogic;
+        gameLogic.elPausaScript = this;
         menuPausa = GameObject.FindGameObjectWithTag("Pause");
         menuPausa.SetActive(false);
 

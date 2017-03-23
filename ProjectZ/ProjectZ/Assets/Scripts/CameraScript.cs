@@ -77,7 +77,7 @@ public class CameraScript : MonoBehaviour
                 gameObject.transform.position = originalPos;
             }else if (_input._centerCamera)
             {
-                gameObject.transform.position = new Vector3(GetPos(objetoAFocusear,0),GetPos(gameObject,1),GetPos(objetoAFocusear,2));
+                gameObject.transform.position = new Vector3(GetPos(objetoAFocusear,0),GetPos(gameObject,1),GetPos(objetoAFocusear,2)-5);
             }
 
 

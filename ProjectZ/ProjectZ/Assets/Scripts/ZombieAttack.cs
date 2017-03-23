@@ -4,7 +4,7 @@ using System.Collections;
 public class ZombieAttack : MonoBehaviour
 {
     GameLogicScript gameLogic;
-
+    Animator elAnimator;
     public bool attacking;
     public bool atHuman;
     public bool atBarricade;
@@ -15,7 +15,7 @@ public class ZombieAttack : MonoBehaviour
     void Start()
     {
         gameLogic = GameLogicScript.gameLogic;
-
+        elAnimator = gameObject.GetComponent<Animator>();
         atHuman = false;
         atBarricade = false;
         enemyToAttack = null;
@@ -49,20 +49,24 @@ public class ZombieAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gameLogic.isPaused&&!gameLogic.eventManager.onEvent)
+        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
             if (attacking)
             {
+
                 if (atHuman)
                 {
                     if (enemyToAttack != null && gameObject.GetComponentInChildren<AttackRangeZombie>().enemyInRange)
                     {
+
                         if (attackTimer < GetComponent<ZombieScript>().attackSpeed)
                         {
+                            elAnimator.SetBool("atacando", true);
                             attackTimer += Time.deltaTime;
                         }
                         else
                         {
+                            elAnimator.SetBool("atacando", true);
                             enemyToAttack.health -= enemyToAttack.attack;
                             attackTimer = 0;
                         }
@@ -86,5 +90,6 @@ public class ZombieAttack : MonoBehaviour
                 }
             }
         }
+
     }
 }

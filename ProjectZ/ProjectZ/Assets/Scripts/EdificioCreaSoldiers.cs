@@ -17,6 +17,7 @@ public class EdificioCreaSoldiers : MonoBehaviour {
     public bool isBlocked;
     public GameObject blocker;
     public GameObject spawnPointObject;
+    Renderer render;
 
     // Use this for initialization
     void Start () {
@@ -44,9 +45,9 @@ public class EdificioCreaSoldiers : MonoBehaviour {
         spawnTimer = 0f;
         spawnTime = 4f;
         alert = alertColor = false;
+        render = gameObject.GetComponentInChildren<Renderer>();
 
-
-	}
+    }
 
     // Update is called once per frame
     void Update()
@@ -73,7 +74,9 @@ public class EdificioCreaSoldiers : MonoBehaviour {
                     if (!alertColor)
                     {
                         alertColor = true;
-                       // GetComponent<MeshRenderer>().material.color = Color.red;
+                        render.material.color += Color.red;
+
+                        // GetComponent<MeshRenderer>().material.color = Color.red;
                     }
                     spawnTimer += Time.deltaTime;
                     if (spawnTime <= spawnTimer)
