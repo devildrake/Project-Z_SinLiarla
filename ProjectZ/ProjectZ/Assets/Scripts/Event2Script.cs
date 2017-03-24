@@ -10,8 +10,7 @@ public class Event2Script : MonoBehaviour {
 
     private void Awake()
     {
-        gameLogic = GameLogicScript.gameLogic;
-        gameLogic.ClearLists();
+
     }
 
     void Start () {
@@ -21,9 +20,13 @@ public class Event2Script : MonoBehaviour {
         gameLogic.camara.gameObject.transform.position = new Vector3(0.6264908f, 6.3f, -14.65801f);
         gameLogic.currentLevel = 2;
         gameLogic.camara.SetOrgPos();
-        if(gameLogic.eventManager!=null)
-        gameLogic.eventManager.eventList[0].hasHappened = gameLogic.eventManager.eventList[1].hasHappened = gameLogic.eventManager.eventList[2].hasHappened = gameLogic.eventManager.eventList[3].hasHappened = true;
-    else
+        gameLogic.ClearLists();
+        if (gameLogic.eventManager != null)
+        {
+            gameLogic.eventManager.eventList[0].hasHappened = gameLogic.eventManager.eventList[1].hasHappened = gameLogic.eventManager.eventList[2].hasHappened = gameLogic.eventManager.eventList[3].hasHappened = true;
+
+        }
+        else
         {
             cFind = true;
         }

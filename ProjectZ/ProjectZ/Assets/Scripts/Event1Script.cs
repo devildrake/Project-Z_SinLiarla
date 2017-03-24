@@ -12,17 +12,13 @@ public class Event1Script : MonoBehaviour {
     // Use this for initialization
     void Start() {
         gameLogic = GameLogicScript.gameLogic;
+        gameLogic.ClearLists();
         spawner = GameObject.FindGameObjectWithTag("SpecialSpawner");
         hasHappened = new bool[4];
         gameLogic.currentLevel = 1;
 
     }
 
-    private void Awake()
-    {
-        gameLogic = GameLogicScript.gameLogic;
-        gameLogic.ClearLists();
-    }
     // Update is called once per frame
     void Update()
     {
