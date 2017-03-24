@@ -28,16 +28,18 @@ public class ZombieMTest : MonoBehaviour {
 				RaycastHit hit;
 				//Create a Ray on the tapped / clicked position
 				Ray ray;
-				//for unity editor
-				#if UNITY_EDITOR
-				ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-				//for touch device
-		/*		#elif (UNITY_ANDROID || UNITY_IPHONE || UNITY_WP8)
-			ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);*/
-				#endif
+                //for unity editor
 
-				//Check if the ray hits any collider
-				if (Physics.Raycast (ray, out hit)) {
+                //              #if UNITY_EDITOR
+
+                //		ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+                //		//for touch device
+                ///*		#elif (UNITY_ANDROID || UNITY_IPHONE || UNITY_WP8)
+                //	ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);*/
+                //		#endif
+                ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position); 
+                //Check if the ray hits any collider
+                if (Physics.Raycast (ray, out hit)) {
 					//set a flag to indicate to move the gameobject
 					flag = true;
 					//save the click / tap position

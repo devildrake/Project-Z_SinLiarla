@@ -65,12 +65,10 @@ public class InputHandlerScript : MonoBehaviour
         {
             // scroll up
             _zoomIn = true;
-            Debug.Log("ScrollUP");
         }
         else if (d < 0f)
         {
             // scroll down
-            Debug.Log("ScrollDown");
             _zoomOut = true;
         }
 

@@ -64,8 +64,6 @@ public class ZombieScript : MonoBehaviour
     public void attackBarricade(GameObject laBarricada)
     {
         ResetStuff("command");
-        Debug.Log("AttackBarricade");
-        Debug.Log(laBarricada);
         goBarricade = true;
         barricada = laBarricada.GetComponentInParent<BarricadaScript>();
     }

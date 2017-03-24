@@ -72,7 +72,10 @@ public class MouseInput : MonoBehaviour {
                 
             }
             */
-
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Application.LoadLevel(1); 
+            }
             //Raton sobre boton nueva partida
             if ((Input.mousePosition.x > 1048 && Input.mousePosition.y < 660) && (Input.mousePosition.x < 1640 && Input.mousePosition.y > 540))
             {

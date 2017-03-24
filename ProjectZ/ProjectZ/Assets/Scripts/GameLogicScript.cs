@@ -318,8 +318,9 @@ public class GameLogicScript : MonoBehaviour
 #if UNITY_EDITOR
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 #endif
+                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                if (Physics.Raycast(ray, out hit, 80, mascaraRompible))
+                    if (Physics.Raycast(ray, out hit, 80, mascaraRompible))
                 {
                     selectedBarricade = hit.collider.gameObject;
                     selectedBarricade.GetComponentInParent<BarricadaScript>().ShowCircle(true);
@@ -342,13 +343,13 @@ public class GameLogicScript : MonoBehaviour
                 //Se crea la variable de rayo
                 Ray ray;
 
-                //Al ser el editor de unity se utiliza esta funcion para el Rayo
+                    //Al ser el editor de unity se utiliza esta funcion para el Rayo
 
 #if UNITY_EDITOR
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 #endif
+                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                if (Physics.Raycast(ray, out hit, 80, mascaraRompible)) {
+                    if (Physics.Raycast(ray, out hit, 80, mascaraRompible)) {
                     GameObject laBarricada = hit.collider.gameObject;
                     foreach (GameObject z in _keptSelectedZombies)
                     {
