@@ -9,10 +9,10 @@ public class VillagerScript : MonoBehaviour
     public enum humanClass { villager, soldier,turret }
     public VisionRangeScript laVision;
     AttackRangeScript elAtaque;
-    public bool moving = false;
     public Vector3 targetPosition;
     public float movementLinearSpeed;
     public int health;
+    public int maxHealth;
     public int attack;
     public int defense;
     public float movSpeed;
@@ -102,6 +102,9 @@ public class VillagerScript : MonoBehaviour
                 render.material.color = Color.red;
                 break;
         }
+
+        maxHealth = health;
+
         if (patrolPointObject == null)
         {
             switch (patrolType)
@@ -197,6 +200,13 @@ public class VillagerScript : MonoBehaviour
     }
     void Update()
     {
+        if (!villagerMovement.moving)
+        {
+            elAnimator.SetBool("moviendose", villagerMovement.moving);
+            elAnimator.SetBool("correr", villagerMovement.moving);
+
+        }
+
 
         if (!gameLogic._villagers.Contains(gameObject)&&confirmAlive)
         {
@@ -223,8 +233,28 @@ public class VillagerScript : MonoBehaviour
             {
                 if (runAway)
                 {
-                    movSpeed = 1.2f;
-                    villagerMovement.MoveTo(gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPoint);
+                    if (gameObject.transform.position != gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject.transform.position)
+                    {
+
+                        movSpeed = 1.2f;
+                        goingToPat = false;
+                        villagerMovement.MoveTo(gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject.transform.position);
+                        elAnimator.SetBool("correr", true);
+                        freeRoam = false;
+                        Debug.Log("Huyendo");
+
+
+                        if (tipo == humanClass.villager)
+                        {
+                            if (health != maxHealth)
+                            {
+                                canMove = false;
+                                elAnimator.SetBool("isHit", true);
+                                elAnimator.SetBool("moviendose", false);
+                                elAnimator.SetBool("correr", false);
+                            }
+                        }
+                    }
                 }
                 else { 
                     if (patrolPointObject != null && patrolPoint != patrolPointObject.transform.position)
@@ -245,11 +275,24 @@ public class VillagerScript : MonoBehaviour
                                 villagerMovement.MoveTo(laVision.closestZombie.transform.position);
                             }
                         }
-                        else
+                        else if (tipo == humanClass.villager)
                         {
                             runAway = true;
                         }
                     }
+
+                    if (tipo == humanClass.villager)
+                    {
+                        if (health != maxHealth)
+                        {
+                            canMove = false;
+                            elAnimator.SetBool("isHit", true);
+                            elAnimator.SetBool("moviendose",false);
+                            elAnimator.SetBool("correr", false);
+
+                        }
+                    }
+
                     if (elAtaque.enemyInRange)
                     {
                         canMove = false;

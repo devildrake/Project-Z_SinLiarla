@@ -224,6 +224,7 @@ public class GameLogicScript : MonoBehaviour
 
     void Update()
     {
+
         if(_zombies.Count == 0)
         {
             defeatCounter++;
@@ -283,6 +284,7 @@ public class GameLogicScript : MonoBehaviour
             {
                 foreach (GameObject t in _keptSelectedZombies)
                 {
+                        if(t.GetComponent<ZombieScript>()!=null)
                     t.GetComponent<ZombieScript>().attackToggle = true;
                 }
             }
@@ -315,9 +317,9 @@ public class GameLogicScript : MonoBehaviour
 
                 //Al ser el editor de unity se utiliza esta funcion para el Rayo
 
-#if UNITY_EDITOR
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-#endif
+//#if UNITY_EDITOR
+//                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+//#endif
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                     if (Physics.Raycast(ray, out hit, 80, mascaraRompible))
@@ -345,8 +347,8 @@ public class GameLogicScript : MonoBehaviour
 
                     //Al ser el editor de unity se utiliza esta funcion para el Rayo
 
-#if UNITY_EDITOR
-#endif
+//#if UNITY_EDITOR
+//#endif
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                     if (Physics.Raycast(ray, out hit, 80, mascaraRompible)) {

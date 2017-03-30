@@ -8,23 +8,20 @@ public class Event2Script : MonoBehaviour {
     bool cFind;
     // Use this for initialization
 
-    private void Awake()
-    {
-
-    }
 
     void Start () {
         cFind = false;
         hasHappened = new bool[3];
         gameLogic = GameLogicScript.gameLogic;
-        gameLogic.camara.gameObject.transform.position = new Vector3(0.6264908f, 6.3f, -14.65801f);
-        gameLogic.currentLevel = 2;
-        gameLogic.camara.SetOrgPos();
+
+
         gameLogic.ClearLists();
-        if (gameLogic.eventManager != null)
+        if (gameLogic.eventManager != null&&gameLogic.camara!=null)
         {
             gameLogic.eventManager.eventList[0].hasHappened = gameLogic.eventManager.eventList[1].hasHappened = gameLogic.eventManager.eventList[2].hasHappened = gameLogic.eventManager.eventList[3].hasHappened = true;
-
+            gameLogic.camara.gameObject.transform.position = new Vector3(0.6264908f, 6.3f, -14.65801f);
+            gameLogic.currentLevel = 2;
+            gameLogic.camara.SetOrgPos();
         }
         else
         {
@@ -38,7 +35,10 @@ public class Event2Script : MonoBehaviour {
         {
             cFind = false;
             gameLogic = GameLogicScript.gameLogic;
-            gameLogic.eventManager.eventList[0].hasHappened = gameLogic.eventManager.eventList[1].hasHappened = gameLogic.eventManager.eventList[2].hasHappened = gameLogic.eventManager.eventList[3].hasHappened = true; 
+            gameLogic.eventManager.eventList[0].hasHappened = gameLogic.eventManager.eventList[1].hasHappened = gameLogic.eventManager.eventList[2].hasHappened = gameLogic.eventManager.eventList[3].hasHappened = true;
+            gameLogic.camara.gameObject.transform.position = new Vector3(0.6264908f, 6.3f, -14.65801f);
+            gameLogic.currentLevel = 2;
+            gameLogic.camara.SetOrgPos();
         }
 
         if (gameLogic == null)

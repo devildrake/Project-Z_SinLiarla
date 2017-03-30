@@ -81,21 +81,9 @@ public class VillagerMovement : MonoBehaviour
     }
 
 
-    //IEnumerator buscarCamino(float tiempo)
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(tiempo);
-    //        buscador.StartPath(transform.position, targetPosition, MetodoCamino);
-    //    }
-
-    //}
-
-
-
-
     void Update()
     {
+        
         if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
 
@@ -110,7 +98,7 @@ public class VillagerMovement : MonoBehaviour
                     //LlegaAlFinal
                     moving = false;
                     gameObject.GetComponent<VillagerScript>().goingToCheck = false;
-
+                    Debug.Log("FinalAlcanzado");
                     //startedMoving = false;
                     return;
                 }

@@ -7,7 +7,7 @@ public class Event1Script : MonoBehaviour {
     public GameObject spawner;
     public bool[] hasHappened;
     bool once = false;
-
+    bool cFind;
     public GameObject[] objetosZona = new GameObject[3];
     // Use this for initialization
     void Start() {
@@ -15,16 +15,34 @@ public class Event1Script : MonoBehaviour {
         gameLogic.ClearLists();
         spawner = GameObject.FindGameObjectWithTag("SpecialSpawner");
         hasHappened = new bool[4];
-        gameLogic.currentLevel = 1;
-
+        if (gameLogic.eventManager != null && gameLogic.camara != null)
+        {
+            gameLogic.currentLevel = 1;
+            gameLogic.camara.gameObject.transform.position = new Vector3(4.330669f, 6.3f, -12.29557f);
+            gameLogic.camara.SetOrgPos();
+        }
+        else
+        {
+            cFind = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (gameLogic == null)
         {
             gameLogic = GameLogicScript.gameLogic;
+        }
+
+        if (cFind)
+        {
+            cFind = false;
+            gameLogic.currentLevel = 1;
+            gameLogic = GameLogicScript.gameLogic;
+            gameLogic.camara.gameObject.transform.position = new Vector3(4.330669f, 6.3f, -12.78199f);
+            gameLogic.camara.SetOrgPos();
         }
 
         if (!once)
@@ -47,6 +65,7 @@ public class Event1Script : MonoBehaviour {
                         }
 
                         gameLogic.SpawnVillager(spawner.GetComponent<EdificioCreaSoldiers>().spawnPoint);
+                        gameLogic._villagers[0].GetComponent<VillagerScript>().patrolPointObject = spawner.GetComponent<EdificioCreaSoldiers>().specialPatrolPoint;
                         gameLogic.SpawnWalker(new Vector3(2.5f, 0.0249f, -9.5f));
                         gameLogic.SpawnWalker(new Vector3(6f, 0.0249f, -9.5f));
                         gameLogic.SpawnMutank(new Vector3(-0.5f, 0.0249f, -9.5f));
@@ -59,10 +78,10 @@ public class Event1Script : MonoBehaviour {
                             objetosZona[i].GetComponent<ZonaTutorial>().DestroyThis();
                         }
                         gameLogic = GameLogicScript.gameLogic;
-                        gameLogic.SpawnSoldier(spawner.GetComponent<EdificioCreaSoldiers>().spawnPoint);
+                        gameLogic.SpawnVillager(spawner.GetComponent<EdificioCreaSoldiers>().spawnPoint);
                         gameLogic._villagers[0].GetComponent<VillagerScript>().patrolPointObject = spawner.GetComponent<EdificioCreaSoldiers>().specialPatrolPoint;
-                        gameLogic.SpawnWalker(new Vector3(2.5f, 0.0249f, -9.5f));
-                        gameLogic.SpawnWalker(new Vector3(6f, 0.0249f, -9.5f));
+                        //gameLogic.SpawnWalker(new Vector3(2.5f, 0.0249f, -9.5f));
+                        //gameLogic.SpawnWalker(new Vector3(6f, 0.0249f, -9.5f));
                         hasHappened[1] = true;
                     }
                 }
@@ -75,8 +94,8 @@ public class Event1Script : MonoBehaviour {
 
             if (gameLogic.eventManager.eventList[2].hasHappened&& !hasHappened[2] && !gameLogic.isPaused && !gameLogic.eventManager.onEvent)
             {
-                gameLogic.SpawnSoldier(spawner.GetComponent<EdificioCreaSoldiers>().spawnPoint);
-                hasHappened[2] = true;
+            gameLogic.SpawnSoldier(spawner.GetComponent<EdificioCreaSoldiers>().specialPatrolPoint.transform.position, spawner.GetComponent<EdificioCreaSoldiers>().spawnPoint);
+            hasHappened[2] = true;
             }
             
         if (gameLogic.eventos[2] && !gameLogic.eventos[3] && gameLogic._villagers.Count == 0)
