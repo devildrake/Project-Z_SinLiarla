@@ -3,11 +3,10 @@ using System.Collections;
 using Pathfinding;
 public class VillagerMovement : MonoBehaviour
 {
+    GameLogicScript gameLogic;//INSTANCIA DEL SINGLETON GAMELOGIC
 
-    GameLogicScript gameLogic;
 
-
-    public bool moving;
+    public bool moving;//BOOLEANO QUE GESTIONA SI ESTA EN MOVIMIENTO
     public Vector3 targetPosition;
     private Path camino;
     private Seeker buscador;
@@ -118,10 +117,6 @@ public class VillagerMovement : MonoBehaviour
                 {
                     puntoActual++;
                     return;
-                }
-                else
-                {
-
                 }
 
             }

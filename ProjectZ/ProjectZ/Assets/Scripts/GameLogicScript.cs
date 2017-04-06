@@ -1,25 +1,31 @@
-﻿using UnityEngine;
+﻿/*Este código está pensado para manejar la lógica de selección y movimiento de los zombies, así como el listado de estos 
+ y de los villagers en partida*/
+/*Se hace una referencia general al InputHandler
+*/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 
+
+
 public class GameLogicScript : MonoBehaviour
 {
-    public static GameLogicScript gameLogic;
-    public CameraScript camara;
-    public int currentLevel;
-    int defeatCounter;
-    /*Este código está pensado para manejar la lógica de selección y movimiento de los zombies, así como el listado de estos 
-     y de los villagers en partida*/
-    /*Se hace una referencia general al InputHandler
-     * Referencias Temporales-> ZombieScript: Cambiar el tipo de zombie que se esta creando
-                               *VillagerScript: Cambiar el tipo de villager que se esta creando
-                               *ZombieMovement: Triggerear el booleano de que se le ha dado orden de movimiento y el boolean 
-                               *Que genera el movimiento
-                               */
 
-    public bool isPaused;
-    public PausaCanvasScript elPausaScript;
+
+
+    public static GameLogicScript gameLogic;    //SINGLETON, es una variable estatica que se asigna al primer GameLogicScript que ejecute
+    public CameraScript camara; //INSTANCIA DE LA CAMARA
+    public int currentLevel;    //INTEGER QUE MANTIENE TRACK DEL NIVEL, SE UTILIZA PARA RECARGAR NIVEL O MODIFICAR NIVEL
+
+    int defeatCounter;          //CONTADOR DE DERROTAS
+    
+    public bool isPaused;   //BOOLEANO GENERAL QUE SUSTITUYE AL TIMESCALE = 0
+
+
+    public PausaCanvasScript elPausaScript; //INSTANCIA DEL SCRIPT DE PAUSADO DE LA ESCENA, SE CARGA EN CADA CAMBIO DE ESCENA
+
     //Vector que en su momento representara el punto destino de los zombies que se mueven
     private Vector3 endPoint;
     
@@ -35,14 +41,11 @@ public class GameLogicScript : MonoBehaviour
     //Mascara para los zombies (mask2)
     public LayerMask mascaraZombies;
 
-
-    //Mascara para las casas (mask3)
-    public LayerMask mascaraCasas;
     //Referenca al script de inputs
 
     public LayerMask mascaraRompible;
 
-    InputHandlerScript _input;
+    InputHandlerScript _input;//INSTANCIA DEL INPUT HANDLER,SE CARGA EN CADA CAMBIO DE ESCENA
 
     //Listas de zombies: Existentes, seleccionados en un momento y los que se quedan en la lista tras terminar la selección
     public List<GameObject> _zombies;
@@ -68,24 +71,24 @@ public class GameLogicScript : MonoBehaviour
    // public Vector3 position2;
    // public Vector3 position3;
 
-    public GameObject elPathfinder;
-
-
-    //public Vector3 posicionBase1;
+    public GameObject elPathfinder; //INSTANCIA DEL OBJETO DEL PATHFINDER
     
-    GameObject walker;
-    GameObject soldier;
-    GameObject mutank;
-    GameObject runner; //por ahora los runner usarán el modelo que estaba ya
-    GameObject selectedBarricade;
-    GameObject villager;
-   // GameObject baseHumana;
-    public bool[] eventos;
+    GameObject walker;  //"PUNTERO" AL PREFAB DEL WALKER
+    GameObject soldier; //"PUNTERO" AL PREFAB DEL SOLDIER
+    GameObject mutank;  //"PUNTERO" AL PREFAB DEL MUTANK
+    GameObject runner;  //"PUNTERO" AL PREFAB DEL RNUNER
 
-    public Assets.Scripts.EventManager eventManager;
+    GameObject selectedBarricade;//"PUNTERO" A LA BARRICADA SOBRE LA CUAL SE HACE CLICK PARA MOSTRAR SU VIDA
+
+    GameObject villager;//"PUNTERO" AL PREFAB DEL VILLAGER
+
+    public bool[] eventos;  //LISTADO BOOLEANOS QUE MANEJA LOS EVENTOS, AQUÍ VAN TODOS LO BOOLEANOS, LOS SCRIPTS INDIVIDAULES DE LAS ESCENAS USAN ESTO
+
+    public Assets.Scripts.EventManager eventManager; //INSTANCIA DE LA CLASE EVENTMANAGER
 
     #region MetodosDeAparicion
 
+//METODOS DE SPAWNEADO DE PERSONAJES DEL JUEGO, LOS HUMANOS TIENEN EL METODO SOBRECARGADO PARA PODER MANDARLES UNA POSICION ESPECFÍCIA DE PATRUYA
     public void SpawnVillager(Vector3 patrolPos,Vector3 unaPos ) {
         GameObject villagerToSpawn = Instantiate(villager, unaPos, Quaternion.identity) as GameObject;
         GameObject anEmptyGameObject = new GameObject();
@@ -133,6 +136,8 @@ public class GameLogicScript : MonoBehaviour
     }
     #endregion
 
+    //EN EL AWAKE DEL GAMELOGIC SE COMPRUEBA SI EL SINGLETON ESTA ASIGNADO Y EN CASO DE NO ESTARLO SE
+    //ASIGNA LA INSTANCIA ACTUAL, EN CASO CONTRADO, SE AUTODESTRUYE
     void Awake()
     {
         if (gameLogic == null)
@@ -145,6 +150,7 @@ public class GameLogicScript : MonoBehaviour
         }
     }
 
+    //INICIALIZA LAS VARIABLES PERTINENTES Y ASIGNA LOS PREFABS Y LAS INSTANCIAS DE LOS OBJETOS ESPECIALES (PAUSESCRIPT,PATHFINDER)
     void Start()
     {
         defeatCounter = 0;
@@ -190,6 +196,7 @@ public class GameLogicScript : MonoBehaviour
         elPathfinder.GetComponent<AstarPath>().Scan();
     }
 
+    //VACIA TODAS LISTAS
     public void ClearLists()
     {
         _bases.Clear();
@@ -200,9 +207,14 @@ public class GameLogicScript : MonoBehaviour
         _selectedZombies.Clear();
     }
 
+    
     void Update()
     {
 
+        //COMPRUEBA SI LAS INSTANCIAS DE LOS OBJETOS ESPECIALES SON NULAS, EN CASO DE SERLO, LAS REASIGNA
+        //COMPRUEBA SI NO QUEDAN ZOMBIES, EN CUYO CASO, SE CONSIDERA QUE EL JUGADOR HA PERDIDO, SE REINICIA EL NIVEL PASANDO POR ESCENAINTER Y SE AUMENTA EL
+        //CONTADOR DE DERROTAS
+        
         if(_zombies.Count == 0)
         {
             defeatCounter++;
@@ -243,7 +255,12 @@ public class GameLogicScript : MonoBehaviour
             changePause();
         }
 
+        //EN CASO DE QUE NO ESTE PAUSADO, EL FUNCONAMIENTO NORMAL CONSISTE EN ACTUALIZAR LAS SELECCIONES Y REALIZAR LOS RAYCASTS EN FUNCION DEL CLICK IZQUIERDO
+        //EL CLICK DERECHO MUEVE A LOS ZOMBIES SELECCIONADOS HACIA LA POSICION SOBRE LA CUAL SE HACE CLICK DERECHO
 
+        //LA VARIABLE QUE ES EL OBJETO SOBRE EL CUAL LA CAMARA SE CONCENTRA ES EL ZOMBIE EN LA POSICION 0 DE LA LISTA DE _keptSelectedZombies
+
+        //LA TECLA A Y S VARÍAN EL TOGGLE DE ATAQUE QUE CONSISTE EN DETERMINAR SI LOS ZOMBIES DEBEN O NO ATACAR A LOS HUMANOS CERCANOS AL ACABAR SU MOVIMIENTO
         if (!isPaused)
         {
 
@@ -384,10 +401,6 @@ public class GameLogicScript : MonoBehaviour
             }
         }
         }
-        else
-        {
-
-        }
 
     }
 
@@ -419,6 +432,7 @@ public class GameLogicScript : MonoBehaviour
     public float CalcularDistancia(GameObject a,GameObject b) { 
         return (a.transform.position - b.transform.position).magnitude;
     }
+
     //El codigo adicional que modifica las listas de zombies y villagers en funcion de una funcion que comprueba si estan vivos o no
     void UpdateSelection2()
     {

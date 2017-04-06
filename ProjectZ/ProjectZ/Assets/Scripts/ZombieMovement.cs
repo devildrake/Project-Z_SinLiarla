@@ -63,9 +63,10 @@ public class ZombieMovement : MonoBehaviour
         }
     }
 
-    /*Método llamado desde gameLogic cuando se da ordenes a los zombies y desde zombieScript cuando hay enemigos cerca y pueden atacarles
-    Este comprueba si ha habido cambio en la posición objetivo del zombie y en caso de haberlo habido, establece el nuevo camino, a la par que 
-    varia el comportamiento en función de si es una orden del jugador o si lo hace el zombie por "voluntad propia" y activa el booleano moving*/
+    //Método llamado desde gameLogic cuando se da ordenes a los zombies y desde zombieScript cuando hay enemigos cerca y pueden atacarles
+    //Este comprueba si ha habido cambio en la posición objetivo del zombie y en caso de haberlo habido, establece el nuevo camino, a la par que 
+    //varia el comportamiento en función de si es una orden del jugador o si lo hace el zombie por "voluntad propia" y activa el booleano moving
+
     public void MoveTo(Vector3 newTargetPosition)
     {
         if (wasCommanded)
@@ -100,15 +101,17 @@ public class ZombieMovement : MonoBehaviour
 
     }
 
+    //METODO QUE COLOCA AL ZOMBIE MIRANDO HACIA DONDE VA, Y CORRIGE LA ROTACION EN X
     public void LookTowards(Vector3 where) {
         gameObject.transform.LookAt(where);
         gameObject.transform.eulerAngles = new Vector3(0, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
-    } 
+    }
 
-    /*La función update se llama una vez por frame, y todo lo sucedido en ella depende del booleano isPaused de gameLogic
-     Maneja el contador de forma independiente al resto de la función, el cuenta siempre que haya enemigos en rango y el zombie
-     se este moviendo hacia ellos, tambien se dedica a mover al zombie y aumentar el contador de puntos (pasos) del camino
-         */
+    //La función update se llama una vez por frame, y todo lo sucedido en ella depende del booleano isPaused de gameLogic
+    // Maneja el contador de forma independiente al resto de la función, el cuenta siempre que haya enemigos en rango y el zombie
+    // se este moviendo hacia ellos, tambien se dedica a mover al zombie y aumentar el contador de puntos(pasos) del camino
+
+
     void Update()
     {
         if (!gameLogic.isPaused&&!gameLogic.eventManager.onEvent)
