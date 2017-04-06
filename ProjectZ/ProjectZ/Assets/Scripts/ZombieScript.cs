@@ -62,6 +62,7 @@ public class ZombieScript : MonoBehaviour
     Vector3 originalPos; //POSICION ORIGINAL DEL ZOMBIE
     Vector3 groundPos;  //VARAIBLE QUE CAMBIA LA POSICION SOBRE LA QUE SE CLICA PARA QUE EL ZOMBIE NO SE META EN EL SUELO NI FLOTE
     Vector3 barricadePlace; //PUNTO DE LA BARRICADA AL QUE IR AL ATACARLA
+    public GameObject villagerToAttackOnClick;
 
     //METODO QUE COMPRUEBA SI EL ZOMBIE SIGUE VIVO
     bool CheckAlive()
@@ -159,6 +160,7 @@ public class ZombieScript : MonoBehaviour
         if (orden == "command")
         {
             GetComponent<ZombieAttack>().attacking = goBarricade = hasArrived = movingToEnemy = elMovimiento.countedOnce = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
+            villagerToAttackOnClick = null;
         }
         //SI NO QUEAN ENEMIGO
         else if (orden == "NoEnemies")
@@ -166,11 +168,13 @@ public class ZombieScript : MonoBehaviour
             GetComponent<ZombieAttack>().attacking = movingToEnemy = elMovimiento.countedOnce = elMovimiento.moving = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
             hasArrived = true;
             Debug.Log("NoEnemies");
+            villagerToAttackOnClick = null;
         }
 
         //SI DEBEN PARAR DE MOVERSE
         else if (orden == "StopMoving")
         {
+            villagerToAttackOnClick = null;
             //TO DO
         }
     }

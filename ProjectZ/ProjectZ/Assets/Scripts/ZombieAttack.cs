@@ -33,6 +33,7 @@ public class ZombieAttack : MonoBehaviour
                     attacking = true;
                     atHuman = true;
                     enemyToAttack = anEnemy.GetComponent<VillagerScript>();
+                    GetComponentInParent<ZombieMovement>().LookTowards(enemyToAttack.transform.position);
                 }
             }
             else

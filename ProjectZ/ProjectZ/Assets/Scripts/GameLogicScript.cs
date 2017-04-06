@@ -26,7 +26,6 @@ public class GameLogicScript : MonoBehaviour
     //Vector que en su momento representara el punto destino de los zombies que se mueven
     private Vector3 endPoint;
     
-
     //vertical position of the gameobject
     private float yAxis;
 
@@ -277,6 +276,11 @@ public class GameLogicScript : MonoBehaviour
                 camara.objetoAFocusear = null;
             }
 
+            if (eventManager == null)
+            {
+                eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
+            }
+
             if (!eventManager.onEvent) { 
 
             //Se hace true el booleano attackToggle en cada zombie seleccionado al pulsar la tecla A
@@ -364,58 +368,70 @@ public class GameLogicScript : MonoBehaviour
 //#endif
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                    if (Physics.Raycast(ray, out hit, 80, mascaraRompible)) {
-                    GameObject laBarricada = hit.collider.gameObject;
-                    foreach (GameObject z in _keptSelectedZombies)
+                     if (Physics.Raycast(ray, out hit, 80, mascaraVillagers))
                     {
-                        z.GetComponent<ZombieScript>().attackBarricade(laBarricada);
-                    }
-
-                }
-
-                //Se comprueba si choca con algun collider, teniendo en cuenta solo los objetos que pertenecen a la mascara mask1 "Ground"
-                else if (Physics.Raycast(ray, out hit, 80, mascaraSuelo))
-                {
-                    //Se guarda la posicion clicada 
-                    endPoint = hit.point;
-
-                    //Como no nos interesa que cambie la Y del zombie que se esta moviendo la restauramos a la original
-                    endPoint.y = yAxis;
-
-                    //Aqui se intenta que el zombie mire a la posicion a la que se esta moviendo
-                    this.gameObject.transform.LookAt(hit.point);
-
-                    //Esta i se utiliza de contador para repartir a los zombies alrededor del punto elegido como destino
-                    int i = 0;
-
-                    //Por cada zombie en la lista de zombies seleccionados, se establece el movimiento final en funcion de la 
-                    //Cantidad de zombies que se han movido ya hacia el punto y van rotando en un angulo de 45 grados alrededor del punto
-                    foreach (GameObject zombie in _keptSelectedZombies)
-                    {
-                        if (zombie != null)
+                        foreach (GameObject zombie in _keptSelectedZombies)
                         {
-                            Vector3 desplazamientoFinal = Vector3.zero;
-                            if (i >= 1)
-                            {
-                                float angle = 45 * i;
-                                Quaternion rotacion = Quaternion.AngleAxis(angle, Vector3.up);
-                                Vector3 distancia = Vector3.right * (1f * (1 + ((i - 1) / 8)));
-                                desplazamientoFinal = rotacion * distancia;
-                                if (zombie.GetComponent<ZombieScript>().barricada != null)
-                                {
-                                    if (zombie.GetComponent<ZombieScript>().barricada._atacantes.Contains(zombie))
-                                        zombie.GetComponent<ZombieScript>().barricada.VaciarSitio(zombie.GetComponent<ZombieScript>().barricadaSpot);
-                                    zombie.GetComponent<ZombieScript>().barricada._atacantes.Remove(zombie);
-                                }
-                            }
-                            //Esta funcion hace a los zombies moverse hacia el punto deseado pero teniendo en cuenta el desplazamiento final 
-                            //Para cada zombie
-                            MoveZombies(zombie, endPoint + desplazamientoFinal);
-                            i++;
+                            zombie.GetComponent<ZombieScript>().ResetStuff("command");
+                            zombie.GetComponent<ZombieMovement>().MoveTo(hit.collider.gameObject.transform.position);
+                            zombie.GetComponent<ZombieScript>().movingToEnemy = true;
+                            zombie.GetComponent<ZombieScript>().villagerToAttackOnClick = hit.collider.gameObject;
                         }
                     }
-                }
 
+                    else if (Physics.Raycast(ray, out hit, 80, mascaraRompible))
+                    {
+                        GameObject laBarricada = hit.collider.gameObject;
+                        foreach (GameObject z in _keptSelectedZombies)
+                        {
+                            z.GetComponent<ZombieScript>().attackBarricade(laBarricada);
+                        }
+
+                    }
+
+                    //Se comprueba si choca con algun collider, teniendo en cuenta solo los objetos que pertenecen a la mascara mask1 "Ground"
+                    else if (Physics.Raycast(ray, out hit, 80, mascaraSuelo))
+                    {
+                        //Se guarda la posicion clicada 
+                        endPoint = hit.point;
+
+                        //Como no nos interesa que cambie la Y del zombie que se esta moviendo la restauramos a la original
+                        endPoint.y = yAxis;
+
+                        //Aqui se intenta que el zombie mire a la posicion a la que se esta moviendo
+                        //this.gameObject.transform.LookAt(hit.point);
+
+                        //Esta i se utiliza de contador para repartir a los zombies alrededor del punto elegido como destino
+                        int i = 0;
+
+                        //Por cada zombie en la lista de zombies seleccionados, se establece el movimiento final en funcion de la 
+                        //Cantidad de zombies que se han movido ya hacia el punto y van rotando en un angulo de 45 grados alrededor del punto
+                        foreach (GameObject zombie in _keptSelectedZombies)
+                        {
+                            if (zombie != null)
+                            {
+                                Vector3 desplazamientoFinal = Vector3.zero;
+                                if (i >= 1)
+                                {
+                                    float angle = 45 * i;
+                                    Quaternion rotacion = Quaternion.AngleAxis(angle, Vector3.up);
+                                    Vector3 distancia = Vector3.right * (1f * (1 + ((i - 1) / 8)));
+                                    desplazamientoFinal = rotacion * distancia;
+                                    if (zombie.GetComponent<ZombieScript>().barricada != null)
+                                    {
+                                        if (zombie.GetComponent<ZombieScript>().barricada._atacantes.Contains(zombie))
+                                            zombie.GetComponent<ZombieScript>().barricada.VaciarSitio(zombie.GetComponent<ZombieScript>().barricadaSpot);
+                                        zombie.GetComponent<ZombieScript>().barricada._atacantes.Remove(zombie);
+                                    }
+                                }
+                                //Esta funcion hace a los zombies moverse hacia el punto deseado pero teniendo en cuenta el desplazamiento final 
+                                //Para cada zombie
+                                MoveZombies(zombie, endPoint + desplazamientoFinal);
+                                i++;
+                            }
+                        }
+                    }
+                   
             }
         }
         }

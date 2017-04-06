@@ -116,8 +116,12 @@ public class ZombieMovement : MonoBehaviour
     {
         if (!gameLogic.isPaused&&!gameLogic.eventManager.onEvent)
         {
+            if (gameObject.GetComponent<ZombieScript>().movingToEnemy&&gameObject.GetComponent<ZombieScript>().villagerToAttackOnClick!=null)
+            {
+                MoveTo(gameObject.GetComponent<ZombieScript>().villagerToAttackOnClick.transform.position);
+            }
 
-                
+
             if (gameObject.GetComponent<ZombieScript>().movingToEnemy && !gameObject.GetComponentInChildren<AttackRangeZombie>().enemyInRange)
             {
                 if (!countedOnce)
