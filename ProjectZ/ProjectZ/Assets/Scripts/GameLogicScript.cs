@@ -73,7 +73,6 @@ public class GameLogicScript : MonoBehaviour
 
     //public Vector3 posicionBase1;
     
-    GameObject zombie;
     GameObject walker;
     GameObject soldier;
     GameObject mutank;
@@ -116,14 +115,6 @@ public class GameLogicScript : MonoBehaviour
         GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
         soldierToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
         _villagers.Add(soldierToSpawn);
-    }
-
-
-    public void SpawnZombie(ZombieScript.zombieClass unTipo, Vector3 unaPos)
-    {
-        GameObject zombieToSpawn = Instantiate(zombie, unaPos, Quaternion.identity) as GameObject;
-        zombieToSpawn.GetComponent<ZombieScript>().tipo = unTipo;
-        _zombies.Add(zombieToSpawn);
     }
 
     public void SpawnWalker(Vector3 unaPos) {
@@ -192,21 +183,8 @@ public class GameLogicScript : MonoBehaviour
         walker = Resources.Load("WalkerObject") as GameObject;
         runner = Resources.Load("RunnerObject") as GameObject;
         mutank = Resources.Load("MutankObject") as GameObject;
-        villager = Resources.Load("VillagerObjectDef") as GameObject;
+        villager = Resources.Load("survivorObject") as GameObject;
         soldier = Resources.Load("SoldierObject")as GameObject;
-
-        //baseHumana = Resources.Load("OriginadorSoldados") as GameObject;
-
-        //GameObject base1 = Instantiate(baseHumana, posicionBase1, Quaternion.identity) as GameObject;
-
-      //  SpawnWalker(position1);
-
-      //  SpawnMutank(position2);
-
-      //  SpawnWalker(position3);
-
-      //  SpawnVillager(new Vector3(2, 0.4f, 13));
-      //  SpawnSoldier(new Vector3(4, 0.4f, 10));
 
         //Se oblga al pathfinder a hacer un escaneo inicial del mapa tras inicializar los elementos
         elPathfinder.GetComponent<AstarPath>().Scan();

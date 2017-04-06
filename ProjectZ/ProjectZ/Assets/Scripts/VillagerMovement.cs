@@ -43,7 +43,7 @@ public class VillagerMovement : MonoBehaviour
             //  startedMoving = true;
             if (targetPosition != newTargetPosition)
             {
-                if (gameObject.GetComponent<VillagerScript>().laVision.enemyInSight)
+                if (gameObject.GetComponent<VillagerScript>().laVision.enemyInSight&&!GetComponentInParent<VillagerScript>().runAway)
                 {
                     contador += Time.deltaTime;
                     if (contador > tiempoAContar)
@@ -55,6 +55,11 @@ public class VillagerMovement : MonoBehaviour
                         }
                     }
                 }
+                else if(gameObject.GetComponent<VillagerScript>().laVision.enemyInSight && !GetComponentInParent<VillagerScript>().runAway)
+                {
+                    buscador.StartPath(transform.position, newTargetPosition, MetodoCamino);
+                }
+
                 else
                 {
                     if (buscador != null)

@@ -152,6 +152,10 @@ public class ZombieScript : MonoBehaviour
             hasArrived = true;
             Debug.Log("NoEnemies");
         }
+        else if (orden == "StopMoving")
+        {
+            //TODO
+        }
     }
 
     void Update()

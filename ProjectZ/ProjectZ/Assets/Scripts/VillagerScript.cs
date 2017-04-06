@@ -57,7 +57,6 @@ public class VillagerScript : MonoBehaviour
         runAway = false;
         elAnimator = gameObject.GetComponent<Animator>();
         elAnimator.SetBool("moviendose", false);
-
         hasAlerted = alerted = false;
         freeRoam = true;
         goingToCheck = false;
@@ -152,7 +151,6 @@ public class VillagerScript : MonoBehaviour
         if (!goingToPat && !goingBack)
         {
             goingToPat = true;
-            elAnimator.SetBool("moviendose", false);
         }
 
         if (goingToPat)
@@ -169,7 +167,6 @@ public class VillagerScript : MonoBehaviour
 
             if ((patrolPoint - gameObject.transform.position).magnitude < 0.3f)
             {
-                elAnimator.SetBool("moviendose", true);
                 goingToPat = false;
                 goingBack = true;
             }
@@ -189,7 +186,6 @@ public class VillagerScript : MonoBehaviour
             }
             if ((originalPos - gameObject.transform.position).magnitude < 0.3f)
             {
-                elAnimator.SetBool("moviendose", true);
                 goingToPat = true;
                 goingBack = false;
             }
@@ -200,12 +196,13 @@ public class VillagerScript : MonoBehaviour
     }
     void Update()
     {
+
+        elAnimator.SetBool("moviendose", villagerMovement.moving);
         if (!villagerMovement.moving)
         {
-            elAnimator.SetBool("moviendose", villagerMovement.moving);
             elAnimator.SetBool("correr", villagerMovement.moving);
-
         }
+
 
 
         if (!gameLogic._villagers.Contains(gameObject)&&confirmAlive)
