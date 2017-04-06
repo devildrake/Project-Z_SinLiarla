@@ -12,9 +12,6 @@ using Pathfinding;
 
 public class GameLogicScript : MonoBehaviour
 {
-
-
-
     public static GameLogicScript gameLogic;    //SINGLETON, es una variable estatica que se asigna al primer GameLogicScript que ejecute
     public CameraScript camara; //INSTANCIA DE LA CAMARA
     public int currentLevel;    //INTEGER QUE MANTIENE TRACK DEL NIVEL, SE UTILIZA PARA RECARGAR NIVEL O MODIFICAR NIVEL
@@ -40,6 +37,9 @@ public class GameLogicScript : MonoBehaviour
 
     //Mascara para los zombies (mask2)
     public LayerMask mascaraZombies;
+
+    //Mascara para los villagers (mask2)
+    public LayerMask mascaraVillagers;
 
     //Referenca al script de inputs
 
@@ -211,6 +211,11 @@ public class GameLogicScript : MonoBehaviour
     void Update()
     {
 
+        foreach(GameObject z in _keptSelectedZombies)
+        {
+            z.GetComponent<ZombieScript>().isSelected = true;
+        }
+
         //COMPRUEBA SI LAS INSTANCIAS DE LOS OBJETOS ESPECIALES SON NULAS, EN CASO DE SERLO, LAS REASIGNA
         //COMPRUEBA SI NO QUEDAN ZOMBIES, EN CUYO CASO, SE CONSIDERA QUE EL JUGADOR HA PERDIDO, SE REINICIA EL NIVEL PASANDO POR ESCENAINTER Y SE AUMENTA EL
         //CONTADOR DE DERROTAS
@@ -317,8 +322,21 @@ public class GameLogicScript : MonoBehaviour
 //#endif
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                    if (Physics.Raycast(ray, out hit, 80, mascaraRompible))
+
+                    if (Physics.Raycast(ray, out hit, 80, mascaraZombies))
+                    {
+                        GameObject aZombie;
+                        aZombie = hit.collider.gameObject;
+                        if (!_keptSelectedZombies.Contains(aZombie)) {
+                            _keptSelectedZombies.Add(aZombie);
+                          //  aZombie.GetComponent<ZombieScript>().isSelected = true;
+                                }
+                    }
+
+                        if (Physics.Raycast(ray, out hit, 80, mascaraRompible))
                 {
+                        if(selectedBarricade!=null)
+                        selectedBarricade.GetComponentInParent<BarricadaScript>().ShowCircle(false);
                     selectedBarricade = hit.collider.gameObject;
                     selectedBarricade.GetComponentInParent<BarricadaScript>().ShowCircle(true);
 
@@ -558,7 +576,7 @@ public class GameLogicScript : MonoBehaviour
                     if (zombie != null)
                     {
                         _keptSelectedZombies.Add(zombie);
-                        zombie.GetComponent<ZombieScript>().isSelected = true;
+                       // zombie.GetComponent<ZombieScript>().isSelected = true;
                     }
                 //Indicamos que hemos finalizado nuestra selección
                 _selecting = false;
@@ -605,12 +623,12 @@ public class GameLogicScript : MonoBehaviour
 
                     //Agregamos a la lista los zombies que se encuentran dentro del cuadro de selección
                     //Iteración realizada una vez por zombie en la lista de zombies
-                    foreach (GameObject zombie in this._zombies)
+                    foreach (GameObject zombie in _zombies)
                     {
                         if (!zombiesInSelectionBox.Contains(zombie) && (Camera.main.WorldToScreenPoint(zombie.transform.position).x >= selectionPlane.xMin && Camera.main.WorldToScreenPoint(zombie.transform.position).x <= selectionPlane.xMax && Camera.main.WorldToScreenPoint(zombie.transform.position).y >= selectionPlane.yMin && Camera.main.WorldToScreenPoint(zombie.transform.position).y <= selectionPlane.yMax))
                         {
                             zombiesInSelectionBox.Add(zombie);
-                            zombie.GetComponent<ZombieScript>().isSelected = true;
+                          //  zombie.GetComponent<ZombieScript>().isSelected = true;
                         }
                         else
                         {
