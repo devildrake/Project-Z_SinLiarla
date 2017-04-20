@@ -331,7 +331,7 @@ public class VillagerScript : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
-            elAnimator.SetBool("isAlive", false);
+    
             Destroy(gameObject, 3.0f);
         }
         }else{

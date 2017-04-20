@@ -21,9 +21,14 @@ public class AttackRangeScript : MonoBehaviour {
         {
             if (zombie != null)
             {
-                if ((laVision.closestZombie.transform.position - gameObject.transform.position).magnitude <= attackRange && zombie != null && laVision.closestZombie.GetComponent<ZombieScript>().isAlive && laVision.closestZombie != null)
-                {
-                    a = true;
+                if(laVision.closestZombie != null) {
+                    if ((laVision.closestZombie.transform.position - gameObject.transform.position).magnitude <= attackRange)
+                    {
+                        if (zombie != null && laVision.closestZombie.GetComponent<ZombieScript>().isAlive)
+                        {
+                            a = true;
+                        }
+                    }
                 }
             }
         }

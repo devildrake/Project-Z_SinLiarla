@@ -10,6 +10,10 @@ public class Event3Script : MonoBehaviour {
         hasHappened = new bool[1];
         gameLogic = GameLogicScript.gameLogic;
         gameLogic.currentLevel = 3;
+        if (gameLogic.camara == null)
+        {
+            gameLogic.camara = FindObjectOfType<CameraScript>();
+        }
         gameLogic.camara.transform.position = new Vector3(-14.3277f,6.3f,-17.712f);
         gameLogic.camara.SetOrgPos();
         gameLogic.ClearLists();

@@ -23,7 +23,9 @@ public class EdificioCreaSoldiers : MonoBehaviour {
     void Start () {
         gameLogic = GameLogicScript.gameLogic;
 
+
         gameLogic._bases.Add(gameObject);
+
 
         isBlocked = false;
         amount = 4;
@@ -52,22 +54,16 @@ public class EdificioCreaSoldiers : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        spawnPoint = spawnPointObject.transform.position;
 
-        if (gameLogic == null) {
+        spawnPoint = spawnPointObject.transform.position;
+        if (gameLogic == null||!gameLogic._bases.Contains(gameObject)) {
             gameLogic = GameLogicScript.gameLogic;
-            }
+            AddIfNull();
+        }
         if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
             if (!isSpecial)
             {
-                /*if (blocker == null)
-                 {
-                     isBlocked = false;
-                 }
-                 else {
-                     isBlocked = true;
-                 }*/
 
                 if (alert && amount > 0 && !isBlocked)
                 {
@@ -107,4 +103,14 @@ public class EdificioCreaSoldiers : MonoBehaviour {
     //            break;
     //    }
     //}
+
+    void AddIfNull()
+    {
+        if (!gameLogic._bases.Contains(gameObject))
+        {
+            gameLogic._bases.Add(gameObject);
+            Debug.Log("Added");
+        }
+    }
+
 }

@@ -58,7 +58,7 @@ public class MinaEffect : MonoBehaviour {
                     {
                         if (!active)
                         {
-                            if (gameLogic.CalcularDistancia(gameObject, z) <= rangoActivacion)
+                            if (gameLogic.CalcularDistancia(gameObject, z) <= rangoActivacion&& (gameLogic.CalcularDistancia(gameObject, z)!=-1))
                             {
                                 active = true;
                             }

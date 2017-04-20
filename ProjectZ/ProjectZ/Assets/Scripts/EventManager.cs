@@ -42,8 +42,6 @@ namespace Assets.Scripts
 
         //Struct Evento que mantiene track de si esta ocurriendo, si ha ocurrido, cuantas interacciones tiene, en que interaccion se 
         //Encuentra y que mensajes tiene
-
-
         //Esta funcion crea un evento con el numero de mensajes que se pasa como parametro
         public void SetEvents(bool[] eventitos, int numEvents)
         {

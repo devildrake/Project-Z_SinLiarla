@@ -463,8 +463,11 @@ public class GameLogicScript : MonoBehaviour
     }
 
     //Método que calcula la distancia entre dos GameObjects
-    public float CalcularDistancia(GameObject a,GameObject b) { 
-        return (a.transform.position - b.transform.position).magnitude;
+    public float CalcularDistancia(GameObject a,GameObject b) {
+        if (a == null || b == null)
+            return -1;
+        else
+            return (a.transform.position - b.transform.position).magnitude;
     }
 
     //El codigo adicional que modifica las listas de zombies y villagers en funcion de una funcion que comprueba si estan vivos o no
@@ -474,7 +477,11 @@ public class GameLogicScript : MonoBehaviour
         _selectedZombies.RemoveAll(IsNotAlive);
         _keptSelectedZombies.RemoveAll(IsNotAlive);
         foreach (GameObject v in _villagers) {
-            if (!v.GetComponent<VillagerScript>().isAlive && !v.GetComponent<VillagerScript>().hasTransformed) {
+            if (v == null)
+            {
+                _villagers.Remove(v);
+            }
+            else if (!v.GetComponent<VillagerScript>().isAlive && !v.GetComponent<VillagerScript>().hasTransformed) {
                 int que = Random.Range(0, 20);
                 v.GetComponent<VillagerScript>().hasTransformed = true;
                 if (que < 10)

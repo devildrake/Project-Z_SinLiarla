@@ -53,7 +53,7 @@ public class Event2Script : MonoBehaviour {
 
         if (gameLogic.eventManager != null)
         {
-            if (gameLogic.eventManager.eventList[4].hasHappened&&!hasHappened[1])
+            if (gameLogic.eventManager.eventList[4].hasHappened&&hasHappened[1])
             {
                 Application.LoadLevel(3);
                 bool endLevel = true;
