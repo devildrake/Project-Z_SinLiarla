@@ -6,7 +6,7 @@ public class VillagerScript : MonoBehaviour
 {
     GameLogicScript gameLogic;
     Animator elAnimator;
-    public enum humanClass { villager, soldier,turret }
+    public enum humanClass {villager, soldier, turret}
     public VisionRangeScript laVision;
     AttackRangeScript elAtaque;
     public Vector3 targetPosition;
@@ -47,11 +47,10 @@ public class VillagerScript : MonoBehaviour
     VillagerAttack villagerAttack;
     private float attackTime;
 
-    private GameObject Latas;
-    // Use this for initialization
+    public GameObject quadFeedback;
 
-    void Start()
-    {
+    // Use this for initialization
+    void Start(){
         distanciaAlerta = 20;
         gameLogic = GameLogicScript.gameLogic;
         runAway = false;
@@ -70,9 +69,8 @@ public class VillagerScript : MonoBehaviour
         hasTransformed = false;
         initSpeedAn = elAnimator.speed;
         Renderer render = this.gameObject.GetComponentInChildren<Renderer>();
-
-        switch (tipo)
-        {
+        
+        switch (tipo){
             case humanClass.villager:
                 theAttackRange = 1;
                 health = 100;
@@ -104,25 +102,22 @@ public class VillagerScript : MonoBehaviour
 
         maxHealth = health;
 
-        if (patrolPointObject == null)
-        {
-            switch (patrolType)
-            {
+        if (patrolPointObject == null){
+            switch (patrolType){
                 case 0:
                     patrolPoint = originalPos + new Vector3(3, 0, 0);
-
                     break;
                 case 1:
                     patrolPoint = originalPos + new Vector3(0, 3, 0);
                     break;
             }
-
         }
-        else
-        {
+        else{
             patrolPoint = patrolPointObject.gameObject.transform.position;
         }
     }
+
+
     bool CheckAlive()
     {
         if (isAlive)
@@ -134,17 +129,15 @@ public class VillagerScript : MonoBehaviour
         }
         return isAlive;
     }
-    void heightCheck()
-    {
-        if (gameObject.transform.position.y > originalPos.y)
-        {
 
+
+    void heightCheck(){
+        if (gameObject.transform.position.y > originalPos.y){
             gameObject.transform.position = groundPos;
-
         }
-
-
     }
+
+
     void Patrol()
     {
 
@@ -194,8 +187,14 @@ public class VillagerScript : MonoBehaviour
 
 
     }
-    void Update()
-    {
+    void Update(){
+        if(tipo == humanClass.villager){
+            if (!runAway){
+                quadFeedback.SetActive(false);
+            }else{
+                quadFeedback.SetActive(true);
+            }
+        }
 
         elAnimator.SetBool("moviendose", villagerMovement.moving);
         if (!villagerMovement.moving)
