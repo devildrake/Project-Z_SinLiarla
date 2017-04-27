@@ -114,13 +114,12 @@ public class ZombieMovement : MonoBehaviour
 
     void Update()
     {
-        if (!gameLogic.isPaused&&!gameLogic.eventManager.onEvent)
+        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
-            if (gameObject.GetComponent<ZombieScript>().movingToEnemy&&gameObject.GetComponent<ZombieScript>().villagerToAttackOnClick!=null)
+            if (gameObject.GetComponent<ZombieScript>().movingToEnemy && gameObject.GetComponent<ZombieScript>().villagerToAttackOnClick != null)
             {
                 MoveTo(gameObject.GetComponent<ZombieScript>().villagerToAttackOnClick.transform.position);
             }
-
 
             if (gameObject.GetComponent<ZombieScript>().movingToEnemy && !gameObject.GetComponentInChildren<AttackRangeZombie>().enemyInRange)
             {
@@ -129,11 +128,13 @@ public class ZombieMovement : MonoBehaviour
                     contador = tiempoAContar;
                     countedOnce = true;
                 }
-                else {
+                else
+                {
                     tiempoAContar = 0.5f;
                     contador += Time.deltaTime;
                 }
             }
+            if (gameObject.GetComponent<ZombieScript>().isAlive) { 
             if (moving)
             {
                 //El circulo de selección se debe poder manejar tambien cuando el zombie este en movimiento
@@ -166,7 +167,7 @@ public class ZombieMovement : MonoBehaviour
 
                 //La dirección depende de la posición y el siguiente punto
                 Vector3 direccion = (camino.vectorPath[puntoActual] - gameObject.transform.position).normalized;
-                
+
                 //Se amplifica en función de la velocidad de movimeinto y el tiempo
                 direccion *= gameObject.GetComponent<ZombieScript>().movSpeed * Time.fixedDeltaTime;
 
@@ -180,6 +181,7 @@ public class ZombieMovement : MonoBehaviour
                     return;
                 }
             }
+         }
         }
     }
 }
