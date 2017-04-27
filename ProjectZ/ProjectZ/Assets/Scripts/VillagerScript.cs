@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class VillagerScript : MonoBehaviour
 {
@@ -26,6 +27,11 @@ public class VillagerScript : MonoBehaviour
     public bool goingToPat;
     public bool goingBack;
     public bool goingToCheck;
+
+    //array que guarda todos los materiales para los quads de feedback
+    //estos se cargan desde el inspector.
+    //Orden--> {escapar, alerta soldado, hostil soldado, torreta activa, torreta inutilizada}
+    public Material[] feedbackMaterials = new Material[5];
 
     bool confirmAlive;
     public humanClass tipo;
@@ -182,18 +188,34 @@ public class VillagerScript : MonoBehaviour
                 goingToPat = true;
                 goingBack = false;
             }
-
         }
-
-
     }
+
     void Update(){
+        //controla que solo aparezca el sprite de feedback cuando esta escapando el villager
         if(tipo == humanClass.villager){
+            quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[0];
             if (!runAway){
                 quadFeedback.SetActive(false);
             }else{
                 quadFeedback.SetActive(true);
             }
+        }
+        // controla los sprites de feedback del soldier
+        else if (tipo == humanClass.soldier){
+            if (goingToCheck){
+                quadFeedback.SetActive(true);
+            }
+            else if(gameObject.GetComponent<VillagerAttack>().attacking){
+                quadFeedback.SetActive(true);
+            }
+            else {
+                quadFeedback.SetActive(false);
+            }
+        }
+        //controla los sprites de feedback de la torreta
+        else if (tipo == humanClass.turret){
+
         }
 
         elAnimator.SetBool("moviendose", villagerMovement.moving);
