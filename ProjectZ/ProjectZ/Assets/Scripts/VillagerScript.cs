@@ -205,9 +205,11 @@ public class VillagerScript : MonoBehaviour
         else if (tipo == humanClass.soldier){
             if (goingToCheck){
                 quadFeedback.SetActive(true);
+                quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[1];
             }
             else if(gameObject.GetComponent<VillagerAttack>().attacking){
                 quadFeedback.SetActive(true);
+                quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[2];
             }
             else {
                 quadFeedback.SetActive(false);
