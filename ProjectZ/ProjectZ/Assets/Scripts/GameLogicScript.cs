@@ -19,7 +19,7 @@ public class GameLogicScript : MonoBehaviour
     int defeatCounter;          //CONTADOR DE DERROTAS
     
     public bool isPaused;   //BOOLEANO GENERAL QUE SUSTITUYE AL TIMESCALE = 0
-
+    private Rect bound;
 
     public PausaCanvasScript elPausaScript; //INSTANCIA DEL SCRIPT DE PAUSADO DE LA ESCENA, SE CARGA EN CADA CAMBIO DE ESCENA
 
@@ -536,7 +536,7 @@ public class GameLogicScript : MonoBehaviour
             else
             {
                 //Estos son los límites de nuestro cuadro de selección
-                Rect bound = _selectionBox.GetComponent<GUITexture>().pixelInset;
+                bound = _selectionBox.GetComponent<GUITexture>().pixelInset;
 
                 //Con esta sencilla función pasamos el origen de la selección a coordenadas de pantalla
                 Vector3 selectionOriginBox = Camera.main.WorldToScreenPoint(_selectionOrigin);
@@ -564,18 +564,6 @@ public class GameLogicScript : MonoBehaviour
                 if (!_input._keepSelection && !_input._invertSelection)
                 {
                     //Desmarcamos los zombies 
-
-                    //AQUI FALTA CAMBIAR QUE DEJE DE APARECER EL CÍRCULO QUE AÚN ESTA POR INCLUÍR
-
-                    foreach (GameObject zombie in _selectedZombies)
-                    {
-                        if (zombie != null)
-                        {
-                           /* Component[] renders = zombie.GetComponentsInChildren(typeof(Renderer));
-                            foreach (Renderer render in renders)
-                                render.material.color -= Color.yellow;*/
-                        }
-                    }
 
                     //Limpiamos las listas de zombies seleccionados
                     _selectedZombies.Clear(); //Esta no es necesario limpiarla ya
@@ -608,7 +596,7 @@ public class GameLogicScript : MonoBehaviour
             {
                 RaycastHit hit;
                 Ray ray;
-
+                Debug.Log("A");
                 //Buscamos los zombies se encuentren dentro de la caja de selección
                 List<GameObject> zombiesInSelectionBox = new List<GameObject>();
 
@@ -625,8 +613,10 @@ public class GameLogicScript : MonoBehaviour
 
                 //Primero lanzamos un rayo para guardar el punto de finalización de la selección
                 ray = Camera.main.ScreenPointToRay(_input._mousePosition);
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit, 80, mascaraZombies))
                 {
+                    Debug.Log("B");
+
                     //Este es el plano tridimensional de selección
                     Rect selectionPlane = new Rect();
 
@@ -636,6 +626,8 @@ public class GameLogicScript : MonoBehaviour
                     //Comprobamos que el rayo no golpea directamente en una unidad
                     if (_zombies.Contains(hit.collider.gameObject))
                     {
+
+                        Debug.Log("C");
 
                         //Como el collider forma parte del propio objeto se añaden el zombie en contacto con el propio rayo
                         //en funcion de su propio collider
@@ -648,15 +640,46 @@ public class GameLogicScript : MonoBehaviour
                     //Iteración realizada una vez por zombie en la lista de zombies
                     foreach (GameObject zombie in _zombies)
                     {
-                        if (!zombiesInSelectionBox.Contains(zombie) && (Camera.main.WorldToScreenPoint(zombie.transform.position).x >= selectionPlane.xMin && Camera.main.WorldToScreenPoint(zombie.transform.position).x <= selectionPlane.xMax && Camera.main.WorldToScreenPoint(zombie.transform.position).y >= selectionPlane.yMin && Camera.main.WorldToScreenPoint(zombie.transform.position).y <= selectionPlane.yMax))
+                        if (bound.size.magnitude < 10)
                         {
-                            zombiesInSelectionBox.Add(zombie);
-                          //  zombie.GetComponent<ZombieScript>().isSelected = true;
+                            Debug.Log("D");
+
+                            ray = Camera.main.ScreenPointToRay(_input._mousePosition);
+                                if (Physics.Raycast(ray, out hit))
+
+                            {
+                                //Este es el plano tridimensional de selección
+                                Debug.Log("E");
+
+
+                                //Se hace al selectionPlane ser igual que la _selectionbox ya que ambos estan en función de la pantalla
+                                selectionPlane = _selectionBox.GetComponent<GUITexture>().pixelInset;
+
+                                    //Comprobamos que el rayo no golpea directamente en una unidad
+                                    if (_zombies.Contains(hit.collider.gameObject))
+                                    {
+
+                                        //Como el collider forma parte del propio objeto se añaden el zombie en contacto con el propio rayo
+                                        //en funcion de su propio collider
+
+                                        _keptSelectedZombies.Add(hit.collider.gameObject);
+                                        Debug.Log("Trying To add", hit.collider.gameObject);
+                                    }
+                                
+                            }
                         }
                         else
                         {
+                            if (!zombiesInSelectionBox.Contains(zombie) && (Camera.main.WorldToScreenPoint(zombie.transform.position).x >= selectionPlane.xMin && Camera.main.WorldToScreenPoint(zombie.transform.position).x <= selectionPlane.xMax && Camera.main.WorldToScreenPoint(zombie.transform.position).y >= selectionPlane.yMin && Camera.main.WorldToScreenPoint(zombie.transform.position).y <= selectionPlane.yMax))
+                            {
+                                zombiesInSelectionBox.Add(zombie);
+                                //  zombie.GetComponent<ZombieScript>().isSelected = true;
+                            }
+                            else
+                            {
                                 _selectedZombies.Remove(zombie);
                                 zombie.GetComponent<ZombieScript>().isSelected = false;
+                            }
                         }
                     }
                 }
