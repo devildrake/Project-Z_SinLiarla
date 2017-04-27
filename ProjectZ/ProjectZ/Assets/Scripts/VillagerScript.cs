@@ -6,7 +6,7 @@ public class VillagerScript : MonoBehaviour
 {
     GameLogicScript gameLogic;
     Animator elAnimator;
-    public enum humanClass {villager, soldier, turret}
+    public enum humanClass { villager, soldier, turret }
     public VisionRangeScript laVision;
     AttackRangeScript elAtaque;
     public Vector3 targetPosition;
@@ -50,7 +50,7 @@ public class VillagerScript : MonoBehaviour
     public GameObject quadFeedback;
 
     // Use this for initialization
-    void Start(){
+    void Start() {
         distanciaAlerta = 20;
         gameLogic = GameLogicScript.gameLogic;
         runAway = false;
@@ -68,16 +68,15 @@ public class VillagerScript : MonoBehaviour
         villagerAttack = GetComponent<VillagerAttack>();
         hasTransformed = false;
         initSpeedAn = elAnimator.speed;
-        Renderer render = this.gameObject.GetComponentInChildren<Renderer>();
-        
-        switch (tipo){
+
+        switch (tipo) {
             case humanClass.villager:
                 theAttackRange = 1;
                 health = 100;
                 attack = 10;
                 defense = 10;
                 attackSpeed = 0.5f;
-                movSpeed = Random.Range(0.8f,1.2f);
+                movSpeed = Random.Range(0.8f, 1.2f);
                 //render.material.color += Color.yellow;
                 break;
             case humanClass.soldier:
@@ -96,14 +95,13 @@ public class VillagerScript : MonoBehaviour
                 defense = 20;
                 attackSpeed = 2.5f;
                 movSpeed = 0;
-                render.material.color = Color.red;
                 break;
         }
 
         maxHealth = health;
 
-        if (patrolPointObject == null){
-            switch (patrolType){
+        if (patrolPointObject == null) {
+            switch (patrolType) {
                 case 0:
                     patrolPoint = originalPos + new Vector3(3, 0, 0);
                     break;
@@ -112,7 +110,7 @@ public class VillagerScript : MonoBehaviour
                     break;
             }
         }
-        else{
+        else {
             patrolPoint = patrolPointObject.gameObject.transform.position;
         }
     }
@@ -131,8 +129,8 @@ public class VillagerScript : MonoBehaviour
     }
 
 
-    void heightCheck(){
-        if (gameObject.transform.position.y > originalPos.y){
+    void heightCheck() {
+        if (gameObject.transform.position.y > originalPos.y) {
             gameObject.transform.position = groundPos;
         }
     }
@@ -148,6 +146,7 @@ public class VillagerScript : MonoBehaviour
 
         if (goingToPat)
         {
+            Debug.Log("Patrolling");
             villagerMovement.MoveTo(patrolPoint);
 
             if (villagerMovement.hasArrived)
@@ -187,12 +186,18 @@ public class VillagerScript : MonoBehaviour
 
 
     }
-    void Update(){
-        if(tipo == humanClass.villager){
-            if (!runAway){
-                quadFeedback.SetActive(false);
-            }else{
-                quadFeedback.SetActive(true);
+    void Update() {
+
+        if (tipo == humanClass.turret)
+        {
+
+        }
+        else { 
+        if (tipo == humanClass.villager) {
+            if (!runAway) {
+                //quadFeedback.SetActive(false);
+            } else {
+                //quadFeedback.SetActive(true);
             }
         }
 
@@ -204,7 +209,7 @@ public class VillagerScript : MonoBehaviour
 
 
 
-        if (!gameLogic._villagers.Contains(gameObject)&&confirmAlive)
+        if (!gameLogic._villagers.Contains(gameObject) && confirmAlive)
         {
             gameLogic._villagers.Add(gameObject);
         }
@@ -227,7 +232,7 @@ public class VillagerScript : MonoBehaviour
 
             if (confirmAlive)
             {
-                if (runAway)
+                if (runAway&&gameLogic._bases.Count!=0)
                 {
                     if (gameObject.transform.position != gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject.transform.position)
                     {
@@ -252,7 +257,7 @@ public class VillagerScript : MonoBehaviour
                         }
                     }
                 }
-                else { 
+                else {
                     if (patrolPointObject != null && patrolPoint != patrolPointObject.transform.position)
                         patrolPoint = patrolPointObject.transform.position;
 
@@ -283,7 +288,7 @@ public class VillagerScript : MonoBehaviour
                         {
                             canMove = false;
                             elAnimator.SetBool("isHit", true);
-                            elAnimator.SetBool("moviendose",false);
+                            elAnimator.SetBool("moviendose", false);
                             elAnimator.SetBool("correr", false);
 
                         }
@@ -325,18 +330,18 @@ public class VillagerScript : MonoBehaviour
                             hasAlerted = true;
                         }
                     }
+                }
             }
-        }
-        else
-        {
-            gameObject.SetActive(false);
-    
-            Destroy(gameObject, 3.0f);
-        }
-        }else{
+            else
+            {
+                gameObject.SetActive(false);
+
+                Destroy(gameObject, 3.0f);
+            }
+        } else {
             elAnimator.speed = 0;
         }
-    }
+    } }
 
     public void heardSomething(Vector3 somewhere)
     {

@@ -12,6 +12,8 @@ using Pathfinding;
 
 public class GameLogicScript : MonoBehaviour
 {
+    public bool godMode;
+
     public static GameLogicScript gameLogic;    //SINGLETON, es una variable estatica que se asigna al primer GameLogicScript que ejecute
     public CameraScript camara; //INSTANCIA DE LA CAMARA
     public int currentLevel;    //INTEGER QUE MANTIENE TRACK DEL NIVEL, SE UTILIZA PARA RECARGAR NIVEL O MODIFICAR NIVEL
@@ -267,6 +269,10 @@ public class GameLogicScript : MonoBehaviour
         //LA TECLA A Y S VARÍAN EL TOGGLE DE ATAQUE QUE CONSISTE EN DETERMINAR SI LOS ZOMBIES DEBEN O NO ATACAR A LOS HUMANOS CERCANOS AL ACABAR SU MOVIMIENTO
         if (!isPaused)
         {
+
+            if (Input.GetKeyDown(KeyCode.G)) {
+                godMode = !godMode;
+            }
 
             if (-_keptSelectedZombies.Count != 0)
             {
@@ -596,7 +602,6 @@ public class GameLogicScript : MonoBehaviour
             {
                 RaycastHit hit;
                 Ray ray;
-                Debug.Log("A");
                 //Buscamos los zombies se encuentren dentro de la caja de selección
                 List<GameObject> zombiesInSelectionBox = new List<GameObject>();
 
@@ -613,10 +618,8 @@ public class GameLogicScript : MonoBehaviour
 
                 //Primero lanzamos un rayo para guardar el punto de finalización de la selección
                 ray = Camera.main.ScreenPointToRay(_input._mousePosition);
-                if (Physics.Raycast(ray, out hit, 80, mascaraZombies))
+                if (Physics.Raycast(ray, out hit, 80))
                 {
-                    Debug.Log("B");
-
                     //Este es el plano tridimensional de selección
                     Rect selectionPlane = new Rect();
 
@@ -627,7 +630,6 @@ public class GameLogicScript : MonoBehaviour
                     if (_zombies.Contains(hit.collider.gameObject))
                     {
 
-                        Debug.Log("C");
 
                         //Como el collider forma parte del propio objeto se añaden el zombie en contacto con el propio rayo
                         //en funcion de su propio collider
@@ -642,14 +644,13 @@ public class GameLogicScript : MonoBehaviour
                     {
                         if (bound.size.magnitude < 10)
                         {
-                            Debug.Log("D");
 
                             ray = Camera.main.ScreenPointToRay(_input._mousePosition);
-                                if (Physics.Raycast(ray, out hit))
+                                if (Physics.Raycast(ray, out hit,80,mascaraZombies))
 
                             {
                                 //Este es el plano tridimensional de selección
-                                Debug.Log("E");
+
 
 
                                 //Se hace al selectionPlane ser igual que la _selectionbox ya que ambos estan en función de la pantalla
@@ -663,7 +664,6 @@ public class GameLogicScript : MonoBehaviour
                                         //en funcion de su propio collider
 
                                         _keptSelectedZombies.Add(hit.collider.gameObject);
-                                        Debug.Log("Trying To add", hit.collider.gameObject);
                                     }
                                 
                             }

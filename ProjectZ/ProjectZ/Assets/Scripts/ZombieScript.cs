@@ -30,7 +30,7 @@ public class ZombieScript : MonoBehaviour
     public bool canAttack;
 
     public bool attackToggle;    //BOOLEANO DEL TOGGLE DE ATAQUE
-
+    private bool prevGodMode;
     public bool goBarricade;    //BOOLEANO QUE GESTIONA SI EL ZOMBIE ESTA YENDO HACIA UNA BARRICADA
     public bool inBuilding;     //BOOLEANO QUE GESTIONA SI EL ZOMBIE SE ENCUENTRA EN UN EDIFICIO
     public bool irCasa;         //BOOLEANO QUE GESTIONA SI EL ZOMBIE ESTA YENDO HACIA UNA CASA
@@ -194,6 +194,39 @@ public class ZombieScript : MonoBehaviour
 
         if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
+            if (gameLogic.godMode)
+            {
+                maxHealth = health;
+                attack = 1000;
+                movSpeed = 50;
+                health = 1000;
+            }
+            else
+            {
+                if (prevGodMode != gameLogic.godMode)
+                {
+
+                    switch (tipo)
+                    {
+                        case zombieClass.walker:
+                            attack = 10;
+                            movSpeed = 2f;
+
+                            break;
+                        case zombieClass.runner:
+                            attack = 5;
+                            movSpeed = 3f;
+                            break;
+                        case zombieClass.mutank:
+                            attack = 20;
+                            movSpeed = 1f;
+                            break;
+                    }
+                    health = maxHealth;
+
+                }
+            }
+            prevGodMode = gameLogic.godMode;
 
             if (elMovimiento.wasCommanded)
             {
