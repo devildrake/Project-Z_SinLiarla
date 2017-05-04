@@ -114,7 +114,9 @@ public class ZombieMovement : MonoBehaviour
 
     void Update()
     {
-        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
+        if (gameLogic.eventManager != null)
+        {
+            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
             if (gameObject.GetComponent<ZombieScript>().movingToEnemy && gameObject.GetComponent<ZombieScript>().villagerToAttackOnClick != null)
             {
@@ -134,54 +136,54 @@ public class ZombieMovement : MonoBehaviour
                     contador += Time.deltaTime;
                 }
             }
-            if (gameObject.GetComponent<ZombieScript>().isAlive) { 
-            if (moving)
-            {
-                //El circulo de selección se debe poder manejar tambien cuando el zombie este en movimiento
-                #region CirculoDeSelección
-                if (!gameObject.GetComponent<ZombieScript>().isSelected)
+            if (gameObject.GetComponent<ZombieScript>().isAlive) {
+                if (moving)
                 {
-                    gameObject.GetComponent<ZombieScript>().elCirculo.SetActive(false);
-                }
-                else
-                {
-                    gameObject.GetComponent<ZombieScript>().elCirculo.SetActive(true);
-                }
+                    //El circulo de selección se debe poder manejar tambien cuando el zombie este en movimiento
+                    #region CirculoDeSelección
+                    if (!gameObject.GetComponent<ZombieScript>().isSelected)
+                    {
+                        gameObject.GetComponent<ZombieScript>().elCirculo.SetActive(false);
+                    }
+                    else
+                    {
+                        gameObject.GetComponent<ZombieScript>().elCirculo.SetActive(true);
+                    }
 
-                #endregion
+                    #endregion
 
-                if (camino == null)
-                    return;
+                    if (camino == null)
+                        return;
 
-                //Si llega al final se cambian algunos booleanos
-                if (puntoActual >= camino.vectorPath.Count)
-                {
-                    moving = false;
-                    wasCommanded = false;
-                    gameObject.GetComponent<ZombieScript>().hasArrived = true;
-                    if (gameObject.GetComponent<ZombieScript>().goBarricade)
-                        LookTowards(gameObject.GetComponent<ZombieScript>().barricada.transform.position);
-                    gameObject.GetComponent<ZombieScript>().canAttack = true;
-                    return;
-                }
+                    //Si llega al final se cambian algunos booleanos
+                    if (puntoActual >= camino.vectorPath.Count)
+                    {
+                        moving = false;
+                        wasCommanded = false;
+                        gameObject.GetComponent<ZombieScript>().hasArrived = true;
+                        if (gameObject.GetComponent<ZombieScript>().goBarricade && gameObject.GetComponent<ZombieScript>().barricada != null)
+                            LookTowards(gameObject.GetComponent<ZombieScript>().barricada.transform.position);
+                        gameObject.GetComponent<ZombieScript>().canAttack = true;
+                        return;
+                    }
 
-                //La dirección depende de la posición y el siguiente punto
-                Vector3 direccion = (camino.vectorPath[puntoActual] - gameObject.transform.position).normalized;
+                    //La dirección depende de la posición y el siguiente punto
+                    Vector3 direccion = (camino.vectorPath[puntoActual] - gameObject.transform.position).normalized;
 
-                //Se amplifica en función de la velocidad de movimeinto y el tiempo
-                direccion *= gameObject.GetComponent<ZombieScript>().movSpeed * Time.fixedDeltaTime;
+                    //Se amplifica en función de la velocidad de movimeinto y el tiempo
+                    direccion *= gameObject.GetComponent<ZombieScript>().movSpeed * Time.fixedDeltaTime;
 
-                //Se mueve el zombie
-                gameObject.transform.position += direccion * 0.5f;
+                    //Se mueve el zombie
+                    gameObject.transform.position += direccion * 0.5f;
 
-                //Se aumenta el contador de pasos
-                if (Vector3.Distance(transform.position, camino.vectorPath[puntoActual]) < distanciaSiguientePunto)
-                {
-                    puntoActual++;
-                    return;
+                    //Se aumenta el contador de pasos
+                    if (Vector3.Distance(transform.position, camino.vectorPath[puntoActual]) < distanciaSiguientePunto)
+                    {
+                        puntoActual++;
+                        return;
+                    }
                 }
             }
-         }
-        }
+        } }
     }
 }

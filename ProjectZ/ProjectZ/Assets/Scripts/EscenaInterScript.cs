@@ -7,19 +7,31 @@ public class EscenaInterScript : MonoBehaviour {
     GameLogicScript gameLogic;
 	// Use this for initialization
 	void Start () {
+        gameLogic = GameLogicScript.gameLogic;
+        gameLogic.loadingScene = false;
         done = false;
-	}
+    }
 	
-	// Update is called once per frame
-	void Update () {
+    void LoadCurrentLevel()
+    {
+        gameLogic.loadingScene = false;
+        gameLogic.hasGamedOver = false;
+        gameLogic.waitAFrame = false;
+
+        Application.LoadLevel(gameLogic.currentLevel);
+    }
+    // Update is called once per frame
+    void Update () {
         if (gameLogic == null)
         {
             gameLogic = GameLogicScript.gameLogic;
+            gameLogic.loadingScene = false;
         }
         if (gameLogic != null && !done)
         {
             done = true;
-            Application.LoadLevel(gameLogic.currentLevel);
+            Invoke("LoadCurrentLevel",2.0f);
+
         }
 	}
 }

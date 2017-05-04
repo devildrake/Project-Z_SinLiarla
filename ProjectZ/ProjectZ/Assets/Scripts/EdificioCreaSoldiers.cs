@@ -56,11 +56,14 @@ public class EdificioCreaSoldiers : MonoBehaviour {
     {
 
         spawnPoint = spawnPointObject.transform.position;
-        if (gameLogic == null||!gameLogic._bases.Contains(gameObject)) {
+        if (gameLogic == null || !gameLogic._bases.Contains(gameObject))
+        {
             gameLogic = GameLogicScript.gameLogic;
             AddIfNull();
         }
-        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
+        if (gameLogic.eventManager != null)
+        {
+            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
             if (!isSpecial)
             {
@@ -78,7 +81,7 @@ public class EdificioCreaSoldiers : MonoBehaviour {
                     if (spawnTime <= spawnTimer)
                     {
                         //spawn(Random.Range(0, 1));
-                        gameLogic.SpawnSoldier(spawnPoint+new Vector3(Random.Range(-1,1),0,Random.Range(-1,0)));
+                        gameLogic.SpawnSoldier(spawnPoint + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 0)));
                         counter++;
                         amount--;
                         spawnTimer = 0;
@@ -86,6 +89,7 @@ public class EdificioCreaSoldiers : MonoBehaviour {
                 }
             }
         }
+    }
     }
     //void spawn(int tipo) {
     //    switch (tipo) {
@@ -109,7 +113,7 @@ public class EdificioCreaSoldiers : MonoBehaviour {
         if (!gameLogic._bases.Contains(gameObject))
         {
             gameLogic._bases.Add(gameObject);
-            Debug.Log("Added");
+            //Debug.Log("Added");
         }
     }
 

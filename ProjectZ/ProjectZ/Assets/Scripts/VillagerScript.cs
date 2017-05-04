@@ -191,32 +191,35 @@ public class VillagerScript : MonoBehaviour
         }
     }
 
-    void Update(){
+    void Update() {
         //controla que solo aparezca el sprite de feedback cuando esta escapando el villager
-        if(tipo == humanClass.villager){
+        if (tipo == humanClass.villager) {
             quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[0];
-            if (!runAway){
+            if (!runAway) {
                 quadFeedback.SetActive(false);
-            }else{
+            } else {
                 quadFeedback.SetActive(true);
             }
         }
         // controla los sprites de feedback del soldier
-        else if (tipo == humanClass.soldier){
-            if (goingToCheck){
-                quadFeedback.SetActive(true);
-                quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[1];
-            }
-            else if(gameObject.GetComponent<VillagerAttack>().attacking){
+        else if (tipo == humanClass.soldier)
+        {
+            if (gameObject.GetComponent<VillagerAttack>().attacking)
+            {
                 quadFeedback.SetActive(true);
                 quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[2];
             }
+            else if (goingToCheck) {
+                quadFeedback.SetActive(true);
+                quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[1];
+            }
+
             else {
                 quadFeedback.SetActive(false);
             }
         }
         //controla los sprites de feedback de la torreta
-        else if (tipo == humanClass.turret){
+        else if (tipo == humanClass.turret) {
 
         }
 
@@ -228,12 +231,13 @@ public class VillagerScript : MonoBehaviour
 
 
 
-        if (!gameLogic._villagers.Contains(gameObject)&&confirmAlive)
+        if (!gameLogic._villagers.Contains(gameObject) && confirmAlive)
         {
             gameLogic._villagers.Add(gameObject);
         }
-
-        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
+        if (gameLogic.eventManager != null)
+        {
+            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
 
             if (elAnimator.speed == 0)
@@ -276,7 +280,7 @@ public class VillagerScript : MonoBehaviour
                         }
                     }
                 }
-                else { 
+                else {
                     if (patrolPointObject != null && patrolPoint != patrolPointObject.transform.position)
                         patrolPoint = patrolPointObject.transform.position;
 
@@ -307,7 +311,7 @@ public class VillagerScript : MonoBehaviour
                         {
                             canMove = false;
                             elAnimator.SetBool("isHit", true);
-                            elAnimator.SetBool("moviendose",false);
+                            elAnimator.SetBool("moviendose", false);
                             elAnimator.SetBool("correr", false);
 
                         }
@@ -349,15 +353,18 @@ public class VillagerScript : MonoBehaviour
                             hasAlerted = true;
                         }
                     }
+                }
+            }
+            else
+            {
+                gameObject.SetActive(false);
+
+                Destroy(gameObject, 3.0f);
             }
         }
-        else
-        {
-            gameObject.SetActive(false);
-    
-            Destroy(gameObject, 3.0f);
         }
-        }else{
+        if (gameLogic.isPaused || gameLogic.eventManager.onEvent)
+        {
             elAnimator.speed = 0;
         }
     }

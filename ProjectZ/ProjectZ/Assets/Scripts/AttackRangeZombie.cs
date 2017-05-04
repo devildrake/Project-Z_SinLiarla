@@ -33,14 +33,16 @@ public class AttackRangeZombie : MonoBehaviour
     }
     void Update()
     {
+        if (gameLogic.eventManager != null) { 
+
         if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
             attackRange = gameObject.GetComponentInParent<ZombieScript>().theAttackRange;
             enemyInRange = CheckAttack();
-            if (enemyInRange && gameObject.GetComponentInParent<ZombieScript>().canAttack&&gameObject.GetComponentInParent<ZombieScript>().attackToggle)
+            if (enemyInRange && gameObject.GetComponentInParent<ZombieScript>().canAttack && gameObject.GetComponentInParent<ZombieScript>().attackToggle)
             {
                 gameObject.GetComponentInParent<ZombieAttack>().Attack(laVision.closestEnemy);
             }
-        }
+        } }
     }
 }

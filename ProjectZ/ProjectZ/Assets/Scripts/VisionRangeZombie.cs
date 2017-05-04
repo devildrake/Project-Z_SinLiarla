@@ -80,7 +80,9 @@ public class VisionRangeZombie : MonoBehaviour
     }
     void Update()
     {
-        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
+        if (gameLogic.eventManager != null)
+        {
+            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
             if (_enemiesInRange.Count > 0)
             {
@@ -93,7 +95,7 @@ public class VisionRangeZombie : MonoBehaviour
                 hasCheckedFirst = false;
                 closestEnemy = null;
             }
-        }
+        } }
     }
 }
 

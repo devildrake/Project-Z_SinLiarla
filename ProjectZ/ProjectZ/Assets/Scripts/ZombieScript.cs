@@ -182,7 +182,7 @@ public class ZombieScript : MonoBehaviour
     //COMPRUEBA SI HAY REFERENCIAS NULAS, EN CASO DE QUE EL ZOMBIE NO ESTE EN LAS LISTAS, SE INTRODUCE
     void Update()
     {
-        if (gameLogic==null){
+        if (gameLogic == null) {
             gameLogic = GameLogicScript.gameLogic;
         }
 
@@ -191,8 +191,9 @@ public class ZombieScript : MonoBehaviour
             gameLogic._zombies.Add(gameObject);
 
         }
-
-        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
+        if (gameLogic.eventManager != null)
+        {
+            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
 
             if (elMovimiento.wasCommanded)
@@ -316,11 +317,11 @@ public class ZombieScript : MonoBehaviour
             if (!elMovimiento.wasCommanded)
             {
                 canMove = true;
-                if (laVision.enemyInSight){
-                    if (!elAtaqueRange.enemyInRange){
-                        if (canAttack){
-                            if (canMove && attackToggle){
-                                if (laVision.closestEnemy != null){
+                if (laVision.enemyInSight) {
+                    if (!elAtaqueRange.enemyInRange) {
+                        if (canAttack) {
+                            if (canMove && attackToggle) {
+                                if (laVision.closestEnemy != null) {
                                     if (laVision.closestEnemy.transform.position != prevTargetPos) {
                                         movingToEnemy = false;
                                     }
@@ -358,10 +359,10 @@ public class ZombieScript : MonoBehaviour
 
                 elCirculo.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
             }
-        }
+        } }
 
 //EN CASO DE ESTAR PAUSADO PONE LA VELOCIDAD DE ANIMACION A 0
-        else
+        if(gameLogic.isPaused||gameLogic.eventManager.onEvent)
         {
             elAnimator.speed = 0;
         }

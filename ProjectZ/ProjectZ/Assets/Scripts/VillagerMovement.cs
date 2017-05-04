@@ -87,8 +87,9 @@ public class VillagerMovement : MonoBehaviour
 
     void Update()
     {
-        
-        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
+        if (gameLogic.eventManager != null)
+        {
+            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
 
             if (moving)
@@ -102,7 +103,7 @@ public class VillagerMovement : MonoBehaviour
                     //LlegaAlFinal
                     moving = false;
                     gameObject.GetComponent<VillagerScript>().goingToCheck = false;
-                    Debug.Log("FinalAlcanzado");
+                    //Debug.Log("FinalAlcanzado");
                     //startedMoving = false;
                     return;
                 }
@@ -120,6 +121,6 @@ public class VillagerMovement : MonoBehaviour
                 }
 
             }
-        }
+        } }
     }
 }

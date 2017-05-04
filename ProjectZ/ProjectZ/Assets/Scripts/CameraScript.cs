@@ -71,13 +71,17 @@ public class CameraScript : MonoBehaviour
 
     void Update()
     {
+        if (gameLogic.eventManager != null) { 
+
         if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
-            if (_input._centerCamera&&objetoAFocusear==null) {
-                gameObject.transform.position = originalPos;
-            }else if (_input._centerCamera)
+            if (_input._centerCamera && objetoAFocusear == null)
             {
-                gameObject.transform.position = new Vector3(GetPos(objetoAFocusear,0),GetPos(gameObject,1),GetPos(objetoAFocusear,2)-5);
+                gameObject.transform.position = originalPos;
+            }
+            else if (_input._centerCamera)
+            {
+                gameObject.transform.position = new Vector3(GetPos(objetoAFocusear, 0), GetPos(gameObject, 1), GetPos(objetoAFocusear, 2) - 5);
             }
 
 
@@ -87,21 +91,22 @@ public class CameraScript : MonoBehaviour
             //Comprobamos si el ratón se encuentra en los margenes de movimiento
             CheckMousePosition(out cameraVector);
 
-            
+
 
             //Y ahora comprobamos las entradas del teclado
-            if ((_input._cameraUp)&&(gameObject.transform.position.z - targetObject.transform.position.z) <TOPLIMIT)
+            if ((_input._cameraUp) && (gameObject.transform.position.z - targetObject.transform.position.z) < TOPLIMIT)
                 cameraVector.z = CAMERA_SPEED;
             else if ((_input._cameraDown) && (gameObject.transform.position.z - targetObject.transform.position.z) > BOTLIMIT)
                 cameraVector.z = -CAMERA_SPEED;
-            if ((_input._cameraRight)&& (gameObject.transform.position.x - targetObject.transform.position.x)<RIGHTLIMIT)
+            if ((_input._cameraRight) && (gameObject.transform.position.x - targetObject.transform.position.x) < RIGHTLIMIT)
                 cameraVector.x = CAMERA_SPEED;
-            else if ((_input._cameraLeft)&& (gameObject.transform.position.x - targetObject.transform.position.x)>LEFTLIMIT)
+            else if ((_input._cameraLeft) && (gameObject.transform.position.x - targetObject.transform.position.x) > LEFTLIMIT)
                 cameraVector.x = -CAMERA_SPEED;
 
             //Movemos la cámara en el vector que hemos especificado
             transform.Translate(cameraVector * Time.deltaTime, Space.World);
         }
+    }
     }
     void CheckMousePosition(out Vector3 cameraVector)
     {

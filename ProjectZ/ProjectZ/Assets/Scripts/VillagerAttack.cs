@@ -62,7 +62,9 @@ public class VillagerAttack : MonoBehaviour
 
     void Update()
     {
-        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
+        if (gameLogic.eventManager != null)
+        {
+            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
             if (elAnimator.speed == 0)
             {
@@ -89,7 +91,7 @@ public class VillagerAttack : MonoBehaviour
             {
                 attacking = false;
             }
-        }else
+        } }else
         {
             elAnimator.speed = 0;
         }

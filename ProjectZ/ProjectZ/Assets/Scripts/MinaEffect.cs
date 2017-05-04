@@ -47,9 +47,12 @@ public class MinaEffect : MonoBehaviour {
 
     // Update is called once per frame
     void Update()
-{
+    {
         zombiesEnRango.RemoveAll(IsNotAlive);
-            if (!gameLogic.eventManager.onEvent){
+
+        if (gameLogic.eventManager != null) { 
+        if (!gameLogic.eventManager.onEvent && gameLogic.eventManager != null)
+        {
             if (!stop)
             {
                 if (!gameLogic.isPaused)
@@ -58,45 +61,49 @@ public class MinaEffect : MonoBehaviour {
                     {
                         if (!active)
                         {
-                            if (gameLogic.CalcularDistancia(gameObject, z) <= rangoActivacion&& (gameLogic.CalcularDistancia(gameObject, z)!=-1))
+                            if (gameLogic.CalcularDistancia(gameObject, z) <= rangoActivacion && (gameLogic.CalcularDistancia(gameObject, z) != -1))
                             {
                                 active = true;
                             }
                         }
                     }
                 }
-                    if (blown){
+                if (blown)
+                {
 
 
-                        foreach (GameObject z in zombiesEnRango){
-                            if (z.GetComponent<ZombieScript>().tipo != ZombieScript.zombieClass.runner)
-                            {
-                                z.GetComponent<ZombieScript>().health -= mineDmg;
-                            }
-                            else
-                            {
-                                Debug.Log("Dat Runner Got hurt Gurl");
-                            }
+                    foreach (GameObject z in zombiesEnRango)
+                    {
+                        if (z.GetComponent<ZombieScript>().tipo != ZombieScript.zombieClass.runner)
+                        {
+                            z.GetComponent<ZombieScript>().health -= mineDmg;
                         }
-                        GetComponent<MeshFilter>().mesh = null;
-                        stop = true;
+                        else
+                        {
+                           // Debug.Log("Dat Runner Got hurt Gurl");
+                        }
                     }
-                    else if (active){
-                        particleScript.detonate = true; //Esto activa las particulas y sonidos del otro script.
+                    GetComponent<MeshFilter>().mesh = null;
+                    stop = true;
+                }
+                else if (active)
+                {
+                    particleScript.detonate = true; //Esto activa las particulas y sonidos del otro script.
 
-                        counter += Time.deltaTime;
-                        if (counter >= timeToExplode){
-                            blown = true;
-                        Debug.Log(gameLogic._bases.Count);
+                    counter += Time.deltaTime;
+                    if (counter >= timeToExplode)
+                    {
+                        blown = true;
+                       // Debug.Log(gameLogic._bases.Count);
                         foreach (GameObject b in gameLogic._bases)
                         {
                             b.GetComponent<EdificioCreaSoldiers>().alert = true;
                         }
                     }
-                    }
                 }
             }
-        
+        }
+    }
     }
     private void OnTriggerEnter(Collider other){
         if (other.tag == "Zn") {

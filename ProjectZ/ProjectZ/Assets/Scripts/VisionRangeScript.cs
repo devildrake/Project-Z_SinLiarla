@@ -90,7 +90,9 @@ public class VisionRangeScript : MonoBehaviour {
     }
     void Update()
     {
-        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
+        if (gameLogic.eventManager != null)
+        {
+            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
             if (enemyInSight)
             {
@@ -110,6 +112,6 @@ public class VisionRangeScript : MonoBehaviour {
             {
                 closestZombie = null;
             }
-        }
+        } }
     }
 }

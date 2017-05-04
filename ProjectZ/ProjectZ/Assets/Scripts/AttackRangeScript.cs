@@ -36,12 +36,14 @@ public class AttackRangeScript : MonoBehaviour {
     }
     void Update()
     {
-        if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
+        if (gameLogic.eventManager != null)
+        {
+            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
             attackRange = gameObject.GetComponentInParent<VillagerScript>().theAttackRange;
             enemyInRange = CheckAttack();
         }
-    }
+    } }
 }
   
     

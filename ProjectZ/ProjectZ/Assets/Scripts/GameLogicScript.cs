@@ -17,7 +17,7 @@ public class GameLogicScript : MonoBehaviour
     public int currentLevel;    //INTEGER QUE MANTIENE TRACK DEL NIVEL, SE UTILIZA PARA RECARGAR NIVEL O MODIFICAR NIVEL
 
     int defeatCounter;          //CONTADOR DE DERROTAS
-    
+
     public bool isPaused;   //BOOLEANO GENERAL QUE SUSTITUYE AL TIMESCALE = 0
 
 
@@ -25,10 +25,13 @@ public class GameLogicScript : MonoBehaviour
 
     //Vector que en su momento representara el punto destino de los zombies que se mueven
     private Vector3 endPoint;
-    
+
     //vertical position of the gameobject
     private float yAxis;
 
+    public bool loadingScene = false;
+    public bool hasGamedOver = false;
+    public bool waitAFrame = false;
     //Las máscaras se indican en el inspector
 
     //Mascara para el suelo (mask1)
@@ -67,11 +70,11 @@ public class GameLogicScript : MonoBehaviour
 
     //Estas variables son las posiciones de los 3 zombies que se crean por codigo más abajo
     //public Vector3 position1;
-   // public Vector3 position2;
-   // public Vector3 position3;
+    // public Vector3 position2;
+    // public Vector3 position3;
 
     public GameObject elPathfinder; //INSTANCIA DEL OBJETO DEL PATHFINDER
-    
+
     GameObject walker;  //"PUNTERO" AL PREFAB DEL WALKER
     GameObject soldier; //"PUNTERO" AL PREFAB DEL SOLDIER
     GameObject mutank;  //"PUNTERO" AL PREFAB DEL MUTANK
@@ -87,8 +90,8 @@ public class GameLogicScript : MonoBehaviour
 
     #region MetodosDeAparicion
 
-//METODOS DE SPAWNEADO DE PERSONAJES DEL JUEGO, LOS HUMANOS TIENEN EL METODO SOBRECARGADO PARA PODER MANDARLES UNA POSICION ESPECFÍCIA DE PATRUYA
-    public void SpawnVillager(Vector3 patrolPos,Vector3 unaPos ) {
+    //METODOS DE SPAWNEADO DE PERSONAJES DEL JUEGO, LOS HUMANOS TIENEN EL METODO SOBRECARGADO PARA PODER MANDARLES UNA POSICION ESPECFÍCIA DE PATRUYA
+    public void SpawnVillager(Vector3 patrolPos, Vector3 unaPos) {
         GameObject villagerToSpawn = Instantiate(villager, unaPos, Quaternion.identity) as GameObject;
         GameObject anEmptyGameObject = new GameObject();
         villagerToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.villager;
@@ -125,7 +128,7 @@ public class GameLogicScript : MonoBehaviour
     }
 
     public void SpawnMutank(Vector3 unaPos) {
-        GameObject zombieToSpawn = Instantiate(mutank, unaPos, Quaternion.identity) as GameObject; 
+        GameObject zombieToSpawn = Instantiate(mutank, unaPos, Quaternion.identity) as GameObject;
         _zombies.Add(zombieToSpawn);
     }
 
@@ -154,8 +157,8 @@ public class GameLogicScript : MonoBehaviour
     {
         defeatCounter = 0;
         eventos = new bool[10];
-        
-        for(int i = 0; i < 10; i++) {
+
+        for (int i = 0; i < 10; i++) {
             eventos[i] = false;
         }
 
@@ -170,7 +173,7 @@ public class GameLogicScript : MonoBehaviour
         isPaused = false;
 
         elPausaScript = FindObjectOfType<PausaCanvasScript>();
-           
+
         //posicionBase1 = new Vector3(0.69f,0.05f,13.72f);
 
         yAxis = gameObject.transform.position.y;
@@ -189,7 +192,7 @@ public class GameLogicScript : MonoBehaviour
         runner = Resources.Load("RunnerObject") as GameObject;
         mutank = Resources.Load("MutankObject") as GameObject;
         villager = Resources.Load("survivorObject") as GameObject;
-        soldier = Resources.Load("SoldierObject")as GameObject;
+        soldier = Resources.Load("SoldierObject") as GameObject;
 
         //Se oblga al pathfinder a hacer un escaneo inicial del mapa tras inicializar los elementos
         elPathfinder.GetComponent<AstarPath>().Scan();
@@ -206,11 +209,14 @@ public class GameLogicScript : MonoBehaviour
         _selectedZombies.Clear();
     }
 
-    
+
     void Update()
     {
-
-        foreach(GameObject z in _keptSelectedZombies)
+        if (!waitAFrame)
+        {
+            waitAFrame = true;
+        }else { 
+        foreach (GameObject z in _keptSelectedZombies)
         {
             z.GetComponent<ZombieScript>().isSelected = true;
         }
@@ -218,11 +224,13 @@ public class GameLogicScript : MonoBehaviour
         //COMPRUEBA SI LAS INSTANCIAS DE LOS OBJETOS ESPECIALES SON NULAS, EN CASO DE SERLO, LAS REASIGNA
         //COMPRUEBA SI NO QUEDAN ZOMBIES, EN CUYO CASO, SE CONSIDERA QUE EL JUGADOR HA PERDIDO, SE REINICIA EL NIVEL PASANDO POR ESCENAINTER Y SE AUMENTA EL
         //CONTADOR DE DERROTAS
-        
-        if(_zombies.Count == 0)
+
+        if (_zombies.Count == 0 && !hasGamedOver)
         {
             defeatCounter++;
             ClearLists();
+            loadingScene = true;
+            hasGamedOver = true;
             Application.LoadLevel("EscenaInter");
         }
 
@@ -236,7 +244,8 @@ public class GameLogicScript : MonoBehaviour
             elPathfinder = GameObject.FindGameObjectWithTag("A*");
         }
 
-        if (elPausaScript == null) {
+        if (elPausaScript == null)
+        {
             elPausaScript = FindObjectOfType<PausaCanvasScript>();
         }
 
@@ -255,7 +264,8 @@ public class GameLogicScript : MonoBehaviour
         }
 
         //Por encima de todo lo demás se maneja el booleano del pausado
-        if (eventManager!=null&&!eventManager.onEvent&&Input.GetKeyDown(KeyCode.Escape)) {
+        if (eventManager != null && !eventManager.onEvent && Input.GetKeyDown(KeyCode.Escape))
+        {
             changePause();
         }
 
@@ -267,177 +277,183 @@ public class GameLogicScript : MonoBehaviour
         //LA TECLA A Y S VARÍAN EL TOGGLE DE ATAQUE QUE CONSISTE EN DETERMINAR SI LOS ZOMBIES DEBEN O NO ATACAR A LOS HUMANOS CERCANOS AL ACABAR SU MOVIMIENTO
         if (!isPaused)
         {
-
-            if (-_keptSelectedZombies.Count != 0)
-            {
-                camara.objetoAFocusear = _keptSelectedZombies[0];
-            }else if(camara!=null)
-            {
-                camara.objetoAFocusear = null;
-            }
-
-            if (eventManager == null)
-            {
-                eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
-            }
-
-            if (!eventManager.onEvent) { 
-
-            //Se hace true el booleano attackToggle en cada zombie seleccionado al pulsar la tecla A
-            if (_input._attackToggle && _keptSelectedZombies.Count > 0)
-            {
-                foreach (GameObject t in _keptSelectedZombies)
+                if (!loadingScene)
                 {
-                        if(t.GetComponent<ZombieScript>()!=null)
-                    t.GetComponent<ZombieScript>().attackToggle = true;
-                }
-            }
-
-            //O Se hace false en los zombies seleccionados al pulsar la tecla S
-            else if (!_input._attackToggle && _keptSelectedZombies.Count > 0)
-            {
-                foreach (GameObject t in _keptSelectedZombies)
-                {
-                    t.GetComponent<ZombieScript>().attackToggle = false;
-                }
-            }
-            //Funcion que dibuja la caja de seleccion
-            DrawSelectionBox();
-
-            //Funcion que actualiza la seleccion
-            UpdateSelection();
-
-            //Funcion de apoyo para actualizar la seleccion cuando los zombies mueren
-            UpdateSelection2();
-
-            //Al pulsar el boton derecho del ratón, se genera un rayo en el mundo
-
-            if ((Input.GetMouseButtonDown(0)))
-            {
-                RaycastHit hit;
-
-                //Se crea la variable de rayo
-                Ray ray;
-
-                //Al ser el editor de unity se utiliza esta funcion para el Rayo
-
-//#if UNITY_EDITOR
-//                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-//#endif
-                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-
-                    if (Physics.Raycast(ray, out hit, 80, mascaraZombies))
+                    if (-_keptSelectedZombies.Count != 0)
                     {
-                        GameObject aZombie;
-                        aZombie = hit.collider.gameObject;
-                        if (!_keptSelectedZombies.Contains(aZombie)) {
-                            _keptSelectedZombies.Add(aZombie);
-                          //  aZombie.GetComponent<ZombieScript>().isSelected = true;
-                                }
+                        camara.objetoAFocusear = _keptSelectedZombies[0];
+                    }
+                    else if (camara != null)
+                    {
+                        camara.objetoAFocusear = null;
                     }
 
-                        if (Physics.Raycast(ray, out hit, 80, mascaraRompible))
-                {
-                        if(selectedBarricade!=null)
-                        selectedBarricade.GetComponentInParent<BarricadaScript>().ShowCircle(false);
-                    selectedBarricade = hit.collider.gameObject;
-                    selectedBarricade.GetComponentInParent<BarricadaScript>().ShowCircle(true);
-
-                }
-                else {
-                    if (selectedBarricade != null)
+                    if (eventManager == null)
                     {
-                        selectedBarricade.GetComponentInParent<BarricadaScript>().ShowCircle(false);
-                        selectedBarricade = null;
+                        eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
                     }
-                }
-            }
-
-            if ((Input.GetMouseButtonDown(1)))
-            {
-                //Se declara una variable del struct RayCastHit
-                RaycastHit hit;
-
-                //Se crea la variable de rayo
-                Ray ray;
-
-                    //Al ser el editor de unity se utiliza esta funcion para el Rayo
-
-//#if UNITY_EDITOR
-//#endif
-                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                     if (Physics.Raycast(ray, out hit, 80, mascaraVillagers))
+                    if (eventManager != null) { 
+                    if (!eventManager.onEvent)
                     {
-                        foreach (GameObject zombie in _keptSelectedZombies)
+
+                        //Se hace true el booleano attackToggle en cada zombie seleccionado al pulsar la tecla A
+                        if (_input._attackToggle && _keptSelectedZombies.Count > 0)
                         {
-                            zombie.GetComponent<ZombieScript>().ResetStuff("command");
-                            zombie.GetComponent<ZombieMovement>().MoveTo(hit.collider.gameObject.transform.position);
-                            zombie.GetComponent<ZombieScript>().movingToEnemy = true;
-                            zombie.GetComponent<ZombieScript>().villagerToAttackOnClick = hit.collider.gameObject;
-                        }
-                    }
-
-                    else if (Physics.Raycast(ray, out hit, 80, mascaraRompible))
-                    {
-                        GameObject laBarricada = hit.collider.gameObject;
-                        foreach (GameObject z in _keptSelectedZombies)
-                        {
-                            z.GetComponent<ZombieScript>().attackBarricade(laBarricada);
-                        }
-
-                    }
-
-                    //Se comprueba si choca con algun collider, teniendo en cuenta solo los objetos que pertenecen a la mascara mask1 "Ground"
-                    else if (Physics.Raycast(ray, out hit, 80, mascaraSuelo))
-                    {
-                        //Se guarda la posicion clicada 
-                        endPoint = hit.point;
-
-                        //Como no nos interesa que cambie la Y del zombie que se esta moviendo la restauramos a la original
-                        endPoint.y = yAxis;
-
-                        //Aqui se intenta que el zombie mire a la posicion a la que se esta moviendo
-                        //this.gameObject.transform.LookAt(hit.point);
-
-                        //Esta i se utiliza de contador para repartir a los zombies alrededor del punto elegido como destino
-                        int i = 0;
-
-                        //Por cada zombie en la lista de zombies seleccionados, se establece el movimiento final en funcion de la 
-                        //Cantidad de zombies que se han movido ya hacia el punto y van rotando en un angulo de 45 grados alrededor del punto
-                        foreach (GameObject zombie in _keptSelectedZombies)
-                        {
-                            if (zombie != null)
+                            foreach (GameObject t in _keptSelectedZombies)
                             {
-                                Vector3 desplazamientoFinal = Vector3.zero;
-                                if (i >= 1)
-                                {
-                                    float angle = 45 * i;
-                                    Quaternion rotacion = Quaternion.AngleAxis(angle, Vector3.up);
-                                    Vector3 distancia = Vector3.right * (1f * (1 + ((i - 1) / 8)));
-                                    desplazamientoFinal = rotacion * distancia;
-                                    if (zombie.GetComponent<ZombieScript>().barricada != null)
-                                    {
-                                        if (zombie.GetComponent<ZombieScript>().barricada._atacantes.Contains(zombie))
-                                            zombie.GetComponent<ZombieScript>().barricada.VaciarSitio(zombie.GetComponent<ZombieScript>().barricadaSpot);
-                                        zombie.GetComponent<ZombieScript>().barricada._atacantes.Remove(zombie);
-                                    }
-                                }
-                                //Esta funcion hace a los zombies moverse hacia el punto deseado pero teniendo en cuenta el desplazamiento final 
-                                //Para cada zombie
-                                MoveZombies(zombie, endPoint + desplazamientoFinal);
-                                i++;
+                                if (t.GetComponent<ZombieScript>() != null)
+                                    t.GetComponent<ZombieScript>().attackToggle = true;
                             }
                         }
+
+                        //O Se hace false en los zombies seleccionados al pulsar la tecla S
+                        else if (!_input._attackToggle && _keptSelectedZombies.Count > 0)
+                        {
+                            foreach (GameObject t in _keptSelectedZombies)
+                            {
+                                t.GetComponent<ZombieScript>().attackToggle = false;
+                            }
+                        }
+                        //Funcion que dibuja la caja de seleccion
+                        DrawSelectionBox();
+
+                        //Funcion que actualiza la seleccion
+                        UpdateSelection();
+
+                        //Funcion de apoyo para actualizar la seleccion cuando los zombies mueren
+                        UpdateSelection2();
+
+                        //Al pulsar el boton derecho del ratón, se genera un rayo en el mundo
+
+                        if ((Input.GetMouseButtonDown(0)))
+                        {
+                            RaycastHit hit;
+
+                            //Se crea la variable de rayo
+                            Ray ray;
+
+                            //Al ser el editor de unity se utiliza esta funcion para el Rayo
+
+                            //#if UNITY_EDITOR
+                            //                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                            //#endif
+                            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+
+                            if (Physics.Raycast(ray, out hit, 80, mascaraZombies))
+                            {
+                                GameObject aZombie;
+                                aZombie = hit.collider.gameObject;
+                                if (!_keptSelectedZombies.Contains(aZombie))
+                                {
+                                    _keptSelectedZombies.Add(aZombie);
+                                    //  aZombie.GetComponent<ZombieScript>().isSelected = true;
+                                }
+                            }
+
+                            if (Physics.Raycast(ray, out hit, 80, mascaraRompible))
+                            {
+                                if (selectedBarricade != null)
+                                    selectedBarricade.GetComponentInParent<BarricadaScript>().ShowCircle(false);
+                                selectedBarricade = hit.collider.gameObject;
+                                selectedBarricade.GetComponentInParent<BarricadaScript>().ShowCircle(true);
+
+                            }
+                            else
+                            {
+                                if (selectedBarricade != null)
+                                {
+                                    selectedBarricade.GetComponentInParent<BarricadaScript>().ShowCircle(false);
+                                    selectedBarricade = null;
+                                }
+                            }
+                        }
+
+                        if ((Input.GetMouseButtonDown(1)))
+                        {
+                            //Se declara una variable del struct RayCastHit
+                            RaycastHit hit;
+
+                            //Se crea la variable de rayo
+                            Ray ray;
+
+                            //Al ser el editor de unity se utiliza esta funcion para el Rayo
+
+                            //#if UNITY_EDITOR
+                            //#endif
+                            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                            if (Physics.Raycast(ray, out hit, 80, mascaraVillagers))
+                            {
+                                foreach (GameObject zombie in _keptSelectedZombies)
+                                {
+                                    zombie.GetComponent<ZombieScript>().ResetStuff("command");
+                                    zombie.GetComponent<ZombieMovement>().MoveTo(hit.collider.gameObject.transform.position);
+                                    zombie.GetComponent<ZombieScript>().movingToEnemy = true;
+                                    zombie.GetComponent<ZombieScript>().villagerToAttackOnClick = hit.collider.gameObject;
+                                }
+                            }
+
+                            else if (Physics.Raycast(ray, out hit, 80, mascaraRompible))
+                            {
+                                GameObject laBarricada = hit.collider.gameObject;
+                                foreach (GameObject z in _keptSelectedZombies)
+                                {
+                                    z.GetComponent<ZombieScript>().attackBarricade(laBarricada);
+                                }
+
+                            }
+
+                            //Se comprueba si choca con algun collider, teniendo en cuenta solo los objetos que pertenecen a la mascara mask1 "Ground"
+                            else if (Physics.Raycast(ray, out hit, 80, mascaraSuelo))
+                            {
+                                //Se guarda la posicion clicada 
+                                endPoint = hit.point;
+
+                                //Como no nos interesa que cambie la Y del zombie que se esta moviendo la restauramos a la original
+                                endPoint.y = yAxis;
+
+                                //Aqui se intenta que el zombie mire a la posicion a la que se esta moviendo
+                                //this.gameObject.transform.LookAt(hit.point);
+
+                                //Esta i se utiliza de contador para repartir a los zombies alrededor del punto elegido como destino
+                                int i = 0;
+
+                                //Por cada zombie en la lista de zombies seleccionados, se establece el movimiento final en funcion de la 
+                                //Cantidad de zombies que se han movido ya hacia el punto y van rotando en un angulo de 45 grados alrededor del punto
+                                foreach (GameObject zombie in _keptSelectedZombies)
+                                {
+                                    if (zombie != null)
+                                    {
+                                        Vector3 desplazamientoFinal = Vector3.zero;
+                                        if (i >= 1)
+                                        {
+                                            float angle = 45 * i;
+                                            Quaternion rotacion = Quaternion.AngleAxis(angle, Vector3.up);
+                                            Vector3 distancia = Vector3.right * (1f * (1 + ((i - 1) / 8)));
+                                            desplazamientoFinal = rotacion * distancia;
+                                            if (zombie.GetComponent<ZombieScript>().barricada != null)
+                                            {
+                                                if (zombie.GetComponent<ZombieScript>().barricada._atacantes.Contains(zombie))
+                                                    zombie.GetComponent<ZombieScript>().barricada.VaciarSitio(zombie.GetComponent<ZombieScript>().barricadaSpot);
+                                                zombie.GetComponent<ZombieScript>().barricada._atacantes.Remove(zombie);
+                                            }
+                                        }
+                                        //Esta funcion hace a los zombies moverse hacia el punto deseado pero teniendo en cuenta el desplazamiento final 
+                                        //Para cada zombie
+                                        MoveZombies(zombie, endPoint + desplazamientoFinal);
+                                        i++;
+                                    }
+                                }
+                            }
+
+                        }
                     }
-                   
+                }
             }
         }
-        }
-
     }
-
+}
     //Método que cambia el booleano de pausado
     public void changePause() {
             isPaused = !isPaused;  

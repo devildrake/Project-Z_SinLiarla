@@ -10,7 +10,7 @@ public class Detonate : MonoBehaviour {
     public bool hasExploded;
     public bool detonate;
     public AudioClip boom, beep;
-
+    GameLogicScript gameLogic;
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +18,7 @@ public class Detonate : MonoBehaviour {
         exp = GetComponentInChildren<ParticleSystem>();
         aud = GetComponent<AudioSource>();
         aud.clip = beep;
+        gameLogic = GameLogicScript.gameLogic;
         //boom = Resources.Load<AudioClip>(".sfx/explosion_1");
         //beep = Resources.Load<AudioClip>(".sfx/beeps");
 	}
@@ -47,9 +48,9 @@ public class Detonate : MonoBehaviour {
     }
 
     void Activate(){
-        if (!GameLogicScript.gameLogic.eventManager.onEvent)
+        if (!gameLogic.eventManager.onEvent)
         {
-            if (!GameLogicScript.gameLogic.isPaused)
+            if (!gameLogic.isPaused)
             {
                 aud.Play();
 
@@ -64,11 +65,12 @@ public class Detonate : MonoBehaviour {
 
 
     // Update is called once per frame
-    void Update(){
-
-        if (!GameLogicScript.gameLogic.eventManager.onEvent)
+    void Update() {
+        if (gameLogic.eventManager != null)
         {
-            if (!GameLogicScript.gameLogic.isPaused)
+            if (!gameLogic.eventManager.onEvent)
+        {
+            if (!gameLogic.isPaused)
             {
                 if (!aud.isPlaying)
                     aud.UnPause();
@@ -82,10 +84,11 @@ public class Detonate : MonoBehaviour {
                 detonate = false;
                 playing = aud.isPlaying;
             }
-            else{
+            else {
                 aud.Pause();
             }
         }
+    }
     }
 
 

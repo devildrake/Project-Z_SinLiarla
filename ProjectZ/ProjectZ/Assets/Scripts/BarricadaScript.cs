@@ -22,7 +22,7 @@ public class BarricadaScript : MonoBehaviour {
     //Listado de atacantes
     public List<GameObject> _atacantes;
 
-    public sitios [] _posiciones;
+    public sitios[] _posiciones;
     public sitios[] _posicionesOrdenadas;
 
     GameLogicScript gameLogic;
@@ -35,8 +35,8 @@ public class BarricadaScript : MonoBehaviour {
         public bool ocupado;
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         gameLogic = GameLogicScript.gameLogic;
         gameLogic._barricadas.Add(gameObject);
         circuloSprite = GetComponentInChildren<SpriteRenderer>();
@@ -46,7 +46,7 @@ public class BarricadaScript : MonoBehaviour {
         elPathfinder = FindObjectOfType<AstarPath>();
         maxHealth = health = 100;
         _posiciones = new sitios[5];
-         _posicionesOrdenadas = new sitios[5];
+        _posicionesOrdenadas = new sitios[5];
 
         //_posiciones[0].posicion = (gameObject.transform.position) + new Vector3(0.716f, -0.2f, -0.591f);
         //_posiciones[1].posicion = (gameObject.transform.position) + new Vector3(0.319f, -0.2f, -0.591f);
@@ -77,7 +77,7 @@ public class BarricadaScript : MonoBehaviour {
 
             for (int j = i + 1; j < 5; j++)
             {
-                if ((_posiciones[i].posicion-gameObject.transform.position).magnitude < (_posiciones[j].posicion-gameObject.transform.position).magnitude)
+                if ((_posiciones[i].posicion - gameObject.transform.position).magnitude < (_posiciones[j].posicion - gameObject.transform.position).magnitude)
                 {
                     minPos = j;
                 }
@@ -100,9 +100,9 @@ public class BarricadaScript : MonoBehaviour {
     public Vector3 AsignarSitio(GameObject zombie) {
         bool assigned = false;
         int contador = 0;
-        Vector3 closestFreeSpot = new Vector3(0,0,0);
+        Vector3 closestFreeSpot = new Vector3(0, 0, 0);
         ordenarArray(_posicionesOrdenadas, zombie);
-        while (!assigned&&contador<5) {
+        while (!assigned && contador < 5) {
             if (_posiciones[contador].ocupado)
             {
                 contador++;
@@ -134,7 +134,9 @@ public class BarricadaScript : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
-        if (!gameLogic.isPaused&&!gameLogic.eventManager.onEvent){
+        if (gameLogic.eventManager != null)
+        {
+            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent) {
             if (health / maxHealth * 100 <= 20)
             {
                 circulo.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
@@ -146,7 +148,7 @@ public class BarricadaScript : MonoBehaviour {
             if (health <= 0) {
                 Destroy(gameObject);
             }
-        } }
+        } } }
 
     private void OnDestroy()
     {

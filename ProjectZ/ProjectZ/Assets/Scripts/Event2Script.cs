@@ -9,14 +9,14 @@ public class Event2Script : MonoBehaviour {
     // Use this for initialization
 
 
-    void Start () {
+    void Start() {
         cFind = false;
         hasHappened = new bool[3];
         gameLogic = GameLogicScript.gameLogic;
 
 
         gameLogic.ClearLists();
-        if (gameLogic.eventManager != null&&gameLogic.camara!=null)
+        if (gameLogic.eventManager != null && gameLogic.camara != null)
         {
             gameLogic.eventManager.eventList[0].hasHappened = gameLogic.eventManager.eventList[1].hasHappened = gameLogic.eventManager.eventList[2].hasHappened = gameLogic.eventManager.eventList[3].hasHappened = true;
             gameLogic.camara.gameObject.transform.position = new Vector3(0.6264908f, 6.3f, -14.65801f);
@@ -30,8 +30,10 @@ public class Event2Script : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-        if (cFind)
+    void Update() {
+        if (gameLogic.eventManager != null)
+        {
+            if (cFind)
         {
             cFind = false;
             gameLogic = GameLogicScript.gameLogic;
@@ -39,13 +41,14 @@ public class Event2Script : MonoBehaviour {
             gameLogic.camara.gameObject.transform.position = new Vector3(0.6264908f, 6.3f, -14.65801f);
             gameLogic.currentLevel = 2;
             gameLogic.camara.SetOrgPos();
+            gameLogic.loadingScene = false;
         }
 
         if (gameLogic == null)
         {
             gameLogic = GameLogicScript.gameLogic;
         }
-        else if(!gameLogic.eventManager.eventList[4].hasHappened&&!hasHappened[0])
+        else if (!gameLogic.eventManager.eventList[4].hasHappened && !hasHappened[0])
         {
             gameLogic.eventManager.activateEvent(4);
             hasHappened[0] = true;
@@ -53,7 +56,7 @@ public class Event2Script : MonoBehaviour {
 
         if (gameLogic.eventManager != null)
         {
-            if (gameLogic.eventManager.eventList[4].hasHappened&&hasHappened[1])
+            if (gameLogic.eventManager.eventList[4].hasHappened && hasHappened[1])
             {
                 Application.LoadLevel(3);
                 bool endLevel = true;
@@ -81,5 +84,5 @@ public class Event2Script : MonoBehaviour {
                 Application.LoadLevel(3);
             }
         }
-        }
+    } }
 }
