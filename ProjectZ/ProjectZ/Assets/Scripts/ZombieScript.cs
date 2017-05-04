@@ -361,10 +361,13 @@ public class ZombieScript : MonoBehaviour
             }
         } }
 
-//EN CASO DE ESTAR PAUSADO PONE LA VELOCIDAD DE ANIMACION A 0
-        if(gameLogic.isPaused||gameLogic.eventManager.onEvent)
+        //EN CASO DE ESTAR PAUSADO PONE LA VELOCIDAD DE ANIMACION A 0
+        if (gameLogic.eventManager != null)
         {
-            elAnimator.speed = 0;
+            if (gameLogic.isPaused || gameLogic.eventManager.onEvent)
+            {
+                elAnimator.speed = 0;
+            }
         }
     }
 

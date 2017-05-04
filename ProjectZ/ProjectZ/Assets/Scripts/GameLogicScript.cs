@@ -98,16 +98,21 @@ public class GameLogicScript : MonoBehaviour
         anEmptyGameObject.transform.position = patrolPos;
         _villagers.Add(villagerToSpawn);
         villagerToSpawn.GetComponent<VillagerScript>().patrolPointObject = anEmptyGameObject;
+        Debug.Log("Spawning a villager with a patrollingPosition");
     }
 
     public void SpawnVillager(Vector3 unaPos) {
         GameObject villagerToSpawn = Instantiate(villager, unaPos, Quaternion.identity) as GameObject;
         villagerToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.villager;
         _villagers.Add(villagerToSpawn);
+        Debug.Log("Spawning a villager without a patrollingPosition");
+
     }
 
     public void SpawnSoldier(Vector3 patrolPos, Vector3 unaPos)
     {
+        Debug.Log("Spawning a soldier with a patrollingPosition");
+
         GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
         GameObject anEmptyGameObject = new GameObject();
         soldierToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
@@ -117,22 +122,29 @@ public class GameLogicScript : MonoBehaviour
     }
 
     public void SpawnSoldier(Vector3 unaPos) {
+        Debug.Log("Spawning a soldier without a patrollingPosition");
+
         GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
         soldierToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
         _villagers.Add(soldierToSpawn);
     }
 
     public void SpawnWalker(Vector3 unaPos) {
+        Debug.Log("Spawning a walker");
+
         GameObject zombieToSpawn = Instantiate(walker, unaPos, Quaternion.identity) as GameObject;
         _zombies.Add(zombieToSpawn);
     }
 
     public void SpawnMutank(Vector3 unaPos) {
+        Debug.Log("Spawning a mutank");
         GameObject zombieToSpawn = Instantiate(mutank, unaPos, Quaternion.identity) as GameObject;
         _zombies.Add(zombieToSpawn);
     }
 
     public void SpawnRunner(Vector3 unaPos) {
+        Debug.Log("Spawning a runner");
+
         GameObject zombieToSpawn = Instantiate(runner, unaPos, Quaternion.identity) as GameObject;
         _zombies.Add(zombieToSpawn);
     }

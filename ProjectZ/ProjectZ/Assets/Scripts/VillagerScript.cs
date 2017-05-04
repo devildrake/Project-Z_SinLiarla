@@ -363,9 +363,12 @@ public class VillagerScript : MonoBehaviour
             }
         }
         }
-        if (gameLogic.isPaused || gameLogic.eventManager.onEvent)
+        if (gameLogic.eventManager != null)
         {
-            elAnimator.speed = 0;
+            if (gameLogic.isPaused || gameLogic.eventManager.onEvent)
+            {
+                elAnimator.speed = 0;
+            }
         }
     }
 
