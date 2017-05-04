@@ -629,8 +629,8 @@ ModelImporter:
     - serializedVersion: 16
       name: walk
       takeName: metarig|metarigAction
-      firstFrame: 60
-      lastFrame: 130
+      firstFrame: 70
+      lastFrame: 118
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
