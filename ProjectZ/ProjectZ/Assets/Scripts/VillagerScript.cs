@@ -292,7 +292,6 @@ public class VillagerScript : MonoBehaviour
                         patrolPoint = patrolPointObject.transform.position;
 
 
-
                     if (laVision.enemyInSight)
                     {
                         if (tipo == humanClass.soldier)

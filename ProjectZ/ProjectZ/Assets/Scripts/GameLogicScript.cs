@@ -119,6 +119,16 @@ public class GameLogicScript : MonoBehaviour
         soldierToSpawn.GetComponent<VillagerScript>().patrolPointObject = anEmptyGameObject;
     }
 
+    public void SpawnSoldier(Vector3 unaPos, GameObject unObjetoDePatrulla)
+    {
+        Debug.Log("Spawning a soldier with a patrollingPosition");
+
+        GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
+        soldierToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
+        soldierToSpawn.GetComponent<VillagerScript>().patrolPointObject = unObjetoDePatrulla;
+        _villagers.Add(soldierToSpawn);
+    }
+
     public void SpawnSoldier(Vector3 unaPos) {
         Debug.Log("Spawning a soldier without a patrollingPosition");
 

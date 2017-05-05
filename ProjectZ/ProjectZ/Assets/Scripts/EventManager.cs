@@ -48,7 +48,7 @@ namespace Assets.Scripts
         {
             if (eventManager == null)
             {
-                DontDestroyOnLoad(eventManager);
+                DontDestroyOnLoad(gameObject);
                 eventManager = this;
             }
             else if (eventManager != this)
