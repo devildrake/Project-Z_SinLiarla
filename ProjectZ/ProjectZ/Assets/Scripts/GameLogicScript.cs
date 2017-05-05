@@ -84,8 +84,6 @@ public class GameLogicScript : MonoBehaviour
 
     GameObject villager;//"PUNTERO" AL PREFAB DEL VILLAGER
 
-    public bool[] eventos;  //LISTADO BOOLEANOS QUE MANEJA LOS EVENTOS, AQUÍ VAN TODOS LO BOOLEANOS, LOS SCRIPTS INDIVIDAULES DE LAS ESCENAS USAN ESTO
-
     public Assets.Scripts.EventManager eventManager; //INSTANCIA DE LA CLASE EVENTMANAGER
 
     #region MetodosDeAparicion
@@ -168,11 +166,6 @@ public class GameLogicScript : MonoBehaviour
     void Start()
     {
         defeatCounter = 0;
-        eventos = new bool[10];
-
-        for (int i = 0; i < 10; i++) {
-            eventos[i] = false;
-        }
 
         camara = FindObjectOfType<CameraScript>();
 
@@ -265,14 +258,6 @@ public class GameLogicScript : MonoBehaviour
         {
             eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
 
-        }
-
-        else
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                eventos[i] = eventManager.eventList[i].hasHappened;
-            }
         }
 
         //Por encima de todo lo demás se maneja el booleano del pausado

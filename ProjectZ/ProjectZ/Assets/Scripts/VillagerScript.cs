@@ -191,6 +191,12 @@ public class VillagerScript : MonoBehaviour
         }
     }
 
+    public void LookTowards(Vector3 where)
+    {
+        gameObject.transform.LookAt(where);
+        gameObject.transform.eulerAngles = new Vector3(0, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
+    }
+
     void Update() {
         //controla que solo aparezca el sprite de feedback cuando esta escapando el villager
         if (tipo == humanClass.villager) {
@@ -206,7 +212,9 @@ public class VillagerScript : MonoBehaviour
         {
             if (gameObject.GetComponent<VillagerAttack>().attacking)
             {
-                quadFeedback.SetActive(true);
+    GetComponentInParent<VillagerMovement>().LookTowards(gameObject.GetComponent<VillagerAttack>().zombieToAttack.transform.position);
+
+    quadFeedback.SetActive(true);
                 quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[2];
             }
             else if (goingToCheck) {
@@ -265,7 +273,6 @@ public class VillagerScript : MonoBehaviour
                         villagerMovement.MoveTo(gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject.transform.position);
                         elAnimator.SetBool("correr", true);
                         freeRoam = false;
-                        Debug.Log("Huyendo");
 
 
                         if (tipo == humanClass.villager)
@@ -293,7 +300,6 @@ public class VillagerScript : MonoBehaviour
                             alerted = true;
                             freeRoam = false;
                             elAnimator.SetBool("correr", true);
-
                             if (canMove && laVision.closestZombie != null)
                             {
                                 villagerMovement.MoveTo(laVision.closestZombie.transform.position);
