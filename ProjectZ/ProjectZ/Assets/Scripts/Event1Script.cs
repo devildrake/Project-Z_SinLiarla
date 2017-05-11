@@ -118,12 +118,12 @@ public class Event1Script : MonoBehaviour {
 
         if (gameLogic.eventManager.eventList[3].hasHappened && !hasHappened[3] && !gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
-            gameLogic.SpawnSoldier(new Vector3(-16.94f, 0.39f, 17.63f), puntosDePatrulla[0]);
-            gameLogic.SpawnSoldier(new Vector3(-16.94f, 0.39f, 16), puntosDePatrulla[1]);
-            gameLogic.SpawnSoldier(new Vector3(-16.94f, 0.39f, -8.88f), puntosDePatrulla[2]);
-            gameLogic.SpawnSoldier(new Vector3(-16.94f, 0.39f, -10.54f), puntosDePatrulla[3]);
-            gameLogic.SpawnSoldier(new Vector3(-18.18f, 0.39f, 4.03f), puntosDePatrulla[4]);
-            gameLogic.SpawnSoldier(new Vector3(-18.18f, 0.39f, 2.37f), puntosDePatrulla[5]);
+            gameLogic.SpawnSoldier(new Vector3(-16.94f, 0.02499896f, 17.63f), puntosDePatrulla[0]);
+            gameLogic.SpawnSoldier(new Vector3(-16.94f, 0.02499896f, 16), puntosDePatrulla[1]);
+            gameLogic.SpawnSoldier(new Vector3(-16.94f, 0.02499896f, -8.88f), puntosDePatrulla[2]);
+            gameLogic.SpawnSoldier(new Vector3(-16.94f, 0.02499896f, -10.54f), puntosDePatrulla[3]);
+            gameLogic.SpawnSoldier(new Vector3(-18.18f, 0.02499896f, 4.03f), puntosDePatrulla[4]);
+            gameLogic.SpawnSoldier(new Vector3(-18.18f, 0.02499896f, 2.37f), puntosDePatrulla[5]);
             hasHappened[3] = true;
         }
 

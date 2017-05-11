@@ -90,6 +90,7 @@ public class GameLogicScript : MonoBehaviour
 
     //METODOS DE SPAWNEADO DE PERSONAJES DEL JUEGO, LOS HUMANOS TIENEN EL METODO SOBRECARGADO PARA PODER MANDARLES UNA POSICION ESPECFÍCIA DE PATRUYA
     public void SpawnVillager(Vector3 patrolPos, Vector3 unaPos) {
+        unaPos.y = 0.02499896f;
         GameObject villagerToSpawn = Instantiate(villager, unaPos, Quaternion.identity) as GameObject;
         GameObject anEmptyGameObject = new GameObject();
         villagerToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.villager;
@@ -100,16 +101,21 @@ public class GameLogicScript : MonoBehaviour
     }
 
     public void SpawnVillager(Vector3 unaPos) {
+
+        unaPos.y = 0.02499896f;
         GameObject villagerToSpawn = Instantiate(villager, unaPos, Quaternion.identity) as GameObject;
         villagerToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.villager;
         _villagers.Add(villagerToSpawn);
         Debug.Log("Spawning a villager without a patrollingPosition");
+        Debug.Log(unaPos);
 
     }
 
     public void SpawnSoldier(Vector3 patrolPos, Vector3 unaPos)
     {
+        unaPos.y = 0.02499896f;
         Debug.Log("Spawning a soldier with a patrollingPosition");
+        Debug.Log(unaPos);
 
         GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
         GameObject anEmptyGameObject = new GameObject();
@@ -121,7 +127,10 @@ public class GameLogicScript : MonoBehaviour
 
     public void SpawnSoldier(Vector3 unaPos, GameObject unObjetoDePatrulla)
     {
-        Debug.Log("Spawning a soldier with a patrollingPosition");
+        unaPos.y = 0.02499896f;
+
+        Debug.Log("Spawning a soldier with a patrollingPosition at ");
+        Debug.Log(unaPos);
 
         GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
         soldierToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
@@ -130,7 +139,10 @@ public class GameLogicScript : MonoBehaviour
     }
 
     public void SpawnSoldier(Vector3 unaPos) {
+        unaPos.y = 0.02499896f;
+
         Debug.Log("Spawning a soldier without a patrollingPosition");
+        Debug.Log(unaPos);
 
         GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
         soldierToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
@@ -138,6 +150,8 @@ public class GameLogicScript : MonoBehaviour
     }
 
     public void SpawnWalker(Vector3 unaPos) {
+        unaPos.y = 0.02499896f;
+
         Debug.Log("Spawning a walker");
 
         GameObject zombieToSpawn = Instantiate(walker, unaPos, Quaternion.identity) as GameObject;
@@ -145,12 +159,16 @@ public class GameLogicScript : MonoBehaviour
     }
 
     public void SpawnMutank(Vector3 unaPos) {
+        unaPos.y = 0.02499896f;
+
         Debug.Log("Spawning a mutank");
         GameObject zombieToSpawn = Instantiate(mutank, unaPos, Quaternion.identity) as GameObject;
         _zombies.Add(zombieToSpawn);
     }
 
     public void SpawnRunner(Vector3 unaPos) {
+        unaPos.y = 0.02499896f;
+
         Debug.Log("Spawning a runner");
 
         GameObject zombieToSpawn = Instantiate(runner, unaPos, Quaternion.identity) as GameObject;

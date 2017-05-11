@@ -161,12 +161,17 @@ public class ZombieScript : MonoBehaviour
         {
             GetComponent<ZombieAttack>().attacking = goBarricade = hasArrived = movingToEnemy = elMovimiento.countedOnce = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
             villagerToAttackOnClick = null;
+            elAnimator.SetBool("atacando", false);
+
         }
         //SI NO QUEAN ENEMIGO
         else if (orden == "NoEnemies")
         {
+
             GetComponent<ZombieAttack>().attacking = movingToEnemy = elMovimiento.countedOnce = elMovimiento.moving = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
             hasArrived = true;
+            elAnimator.SetBool("atacando", false);
+
             Debug.Log("NoEnemies");
             villagerToAttackOnClick = null;
         }
@@ -174,6 +179,7 @@ public class ZombieScript : MonoBehaviour
         //SI DEBEN PARAR DE MOVERSE
         else if (orden == "StopMoving")
         {
+            elAnimator.SetBool("atacando", false);
             villagerToAttackOnClick = null;
             //TO DO
         }
@@ -282,6 +288,7 @@ public class ZombieScript : MonoBehaviour
                         else
                         {
                             elMovimiento.moving = false;
+                                elAnimator.SetBool("atacando",true);
                             {
                                 contadorAtk += Time.deltaTime;
                             }
