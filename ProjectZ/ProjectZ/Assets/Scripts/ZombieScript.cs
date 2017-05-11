@@ -67,21 +67,31 @@ public class ZombieScript : MonoBehaviour
     //METODO QUE COMPRUEBA SI EL ZOMBIE SIGUE VIVO
     bool CheckAlive()
     {
-        if (isAlive)
+        if (gameObject != null)
         {
-            if (health <= 0)
+            if (isAlive)
             {
-                isAlive = false;
+                if (health <= 0)
+                {
+                    isAlive = false;
+                }
             }
+            return isAlive;
+
+        }else
+        {
+            return false;
         }
-        return isAlive;
     }
     //METODO QUE REINCIA TODOS LOS BOOLEANOS PERTINENTES PARA QUE EL ZOMBIE ATAQUE UNA BARRICADA
     public void attackBarricade(GameObject laBarricada)
     {
-        ResetStuff("command");
-        goBarricade = true;
-        barricada = laBarricada.GetComponentInParent<BarricadaScript>();
+        if (laBarricada != null)
+        {
+            ResetStuff("command");
+            goBarricade = true;
+            barricada = laBarricada.GetComponentInParent<BarricadaScript>();
+        }
     }
 
     //METODO QUE INICIALIZA LAS VARIABLES, Y MODIFICA LAS STATS DEL ZOMBIE EN FUNCION DE SU TIPO
@@ -147,7 +157,6 @@ public class ZombieScript : MonoBehaviour
     {
         if (gameObject.transform.position.y > originalPos.y)
         {
-
             gameObject.transform.position = groundPos;
         }
     }
@@ -180,6 +189,7 @@ public class ZombieScript : MonoBehaviour
         else if (orden == "StopMoving")
         {
             elAnimator.SetBool("atacando", false);
+
             villagerToAttackOnClick = null;
             //TO DO
         }

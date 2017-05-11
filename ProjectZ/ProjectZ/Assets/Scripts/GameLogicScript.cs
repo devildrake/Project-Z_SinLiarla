@@ -84,7 +84,7 @@ public class GameLogicScript : MonoBehaviour
 
     GameObject villager;//"PUNTERO" AL PREFAB DEL VILLAGER
 
-    public Assets.Scripts.EventManager eventManager; //INSTANCIA DE LA CLASE EVENTMANAGER
+    public EventManager eventManager; //INSTANCIA DE LA CLASE EVENTMANAGER
 
     #region MetodosDeAparicion
 
@@ -197,7 +197,7 @@ public class GameLogicScript : MonoBehaviour
 
         camara = FindObjectOfType<CameraScript>();
 
-        eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
+        eventManager = EventManager.eventManager;
 
         //eventManager.SetEvents(eventos,10);
 
@@ -284,8 +284,7 @@ public class GameLogicScript : MonoBehaviour
 
         if (eventManager == null)
         {
-            eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
-
+                eventManager = EventManager.eventManager;
         }
 
         //Por encima de todo lo demás se maneja el booleano del pausado
@@ -315,7 +314,7 @@ public class GameLogicScript : MonoBehaviour
 
                     if (eventManager == null)
                     {
-                        eventManager = FindObjectOfType<Assets.Scripts.EventManager>();
+                        eventManager = EventManager.eventManager;
                     }
                     if (eventManager != null) { 
                     if (!eventManager.onEvent)

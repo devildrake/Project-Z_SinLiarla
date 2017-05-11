@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Event2Script : MonoBehaviour {
     public GameLogicScript gameLogic;
+    EventManager eventManager;
     public bool[] hasHappened;
     bool cFind;
     // Use this for initialization
@@ -13,7 +14,7 @@ public class Event2Script : MonoBehaviour {
         cFind = false;
         hasHappened = new bool[3];
         gameLogic = GameLogicScript.gameLogic;
-
+        eventManager = EventManager.eventManager;
 
         gameLogic.ClearLists();
         if (gameLogic.eventManager != null && gameLogic.camara != null)
@@ -37,6 +38,11 @@ public class Event2Script : MonoBehaviour {
             gameLogic = GameLogicScript.gameLogic;
         }
 
+        if (eventManager == null)
+        {
+            eventManager = EventManager.eventManager;
+        }
+
         if (gameLogic.eventManager != null)
         {
             if (cFind)
@@ -50,15 +56,15 @@ public class Event2Script : MonoBehaviour {
         }
         else if (!gameLogic.eventManager.eventList[4].hasHappened && !hasHappened[0])
         {
-            gameLogic.eventManager.activateEvent(4);
+            eventManager.activateEvent(4);
         }
 
-        if(!hasHappened[0] && !gameLogic.eventManager.eventList[4].hasHappened)
+        if(!hasHappened[0] && eventManager.eventList[4].hasHappened)
                 hasHappened[0] = true;
 
-            if (gameLogic.eventManager != null)
+            if (eventManager != null)
         {
-            if (gameLogic.eventManager.eventList[4].hasHappened && hasHappened[1])
+            if (eventManager.eventList[4].hasHappened && hasHappened[1])
             {
                 Application.LoadLevel(3);
                 bool endLevel = true;
@@ -76,12 +82,12 @@ public class Event2Script : MonoBehaviour {
 
                 if (endLevel)
                 {
-                    gameLogic.eventManager.activateEvent(5);
+                    eventManager.activateEvent(5);
                     hasHappened[1] = true;
                 }
 
             }
-            else if (gameLogic.eventManager.eventList[5].hasHappened)
+            else if (eventManager.eventList[5].hasHappened)
             {
                 Application.LoadLevel(3);
             }

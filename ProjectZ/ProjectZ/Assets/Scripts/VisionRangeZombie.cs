@@ -76,10 +76,18 @@ public class VisionRangeZombie : MonoBehaviour
     void CheckEnemyAlive()
     {
         _enemiesInRange.RemoveAll(IsNotAlive);
-
     }
     void Update()
     {
+
+        foreach(GameObject g in _enemiesInRange)
+        {
+            if (g == null)
+            {
+                _enemiesInRange.Remove(g);
+            }
+        }
+
         if (gameLogic.eventManager != null)
         {
             if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)

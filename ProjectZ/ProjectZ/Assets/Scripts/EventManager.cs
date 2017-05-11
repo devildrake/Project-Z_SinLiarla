@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts
-{
     public class EventManager : MonoBehaviour
     {
         //Esta clase maneja todos los eventos del juego, tiene un array con los eventos que hay (eventList).
         //Y un booleano que hace las veces de pause pero justo por debajo de este.
 
         //BOOLEANO TEMPORAL A BORRAR, SOLO ES PARA PRUEBAS DE FUNCIONALIDAD O PARA UN PRIMER EVENTO DEL JUEGO
-        public EventManager eventManager;
+        public static EventManager eventManager;
 
         //Referencia al InputHandler
         private InputHandlerScript _input;
@@ -20,13 +18,13 @@ namespace Assets.Scripts
         public bool onEvent;
 
         //Listado de eventos
-        public Evento[] eventList;
+        public Assets.Scripts.Evento[] eventList;
 
         //Número de eventos totales
         int numEvents = 10;
 
         //Evento actual
-        public Evento currentEvent;
+        public Assets.Scripts.Evento currentEvent;
 
         //Texto que se muestra en pantalla
         public Text currentText;
@@ -65,9 +63,9 @@ namespace Assets.Scripts
             }
         }
 
-        private Evento CrearEvento(int i)
+        private Assets.Scripts.Evento CrearEvento(int i)
         {
-            Evento anEvent = new Evento();
+            Assets.Scripts.Evento anEvent = new Assets.Scripts.Evento();
             anEvent.numInteracts = i;
             anEvent.messages = new string[i];
             anEvent.currInteract = 0;
@@ -114,7 +112,7 @@ namespace Assets.Scripts
             canvasChild = gameObject.GetComponentInChildren<Canvas>();
             blancoTrans = gameObject.GetComponentInChildren<RawImage>();
             currentText = gameObject.GetComponentInChildren<Text>();
-            eventList = new Evento[numEvents];
+            eventList = new Assets.Scripts.Evento[numEvents];
             eventList[0] = CrearEvento(5);
             eventList[1] = CrearEvento(5);
             eventList[2] = CrearEvento(2);
@@ -196,4 +194,3 @@ namespace Assets.Scripts
             }
         }
     }
-}
