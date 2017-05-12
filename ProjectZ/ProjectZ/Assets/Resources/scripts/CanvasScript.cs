@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CanvasScript : MonoBehaviour {
     public GameObject fondo, taza, papeles, carpeta, carpeta_abierta, b1, b2, b3;
@@ -26,7 +27,9 @@ public class CanvasScript : MonoBehaviour {
         }
     }
 
-
+    public void Continuar(){
+        SceneManager.LoadScene(1);
+    }
 
 
 
