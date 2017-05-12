@@ -145,7 +145,7 @@ public class ZombieScript : MonoBehaviour
                 attack = 20;
                 defense = 10;
                 attackSpeed = 0.5f;
-                movSpeed = 1f;
+                movSpeed = 1.5f;
                 theAttackRange = 1f;
                 break;
         }
@@ -226,18 +226,25 @@ public class ZombieScript : MonoBehaviour
             #region comportamiento Mutank
             if (tipo == zombieClass.mutank)
             {
+
+                    Debug.Log(defenseMode);
+
                 //Comportamiento especifico de mutank
 
                 if (prevHealth != health)
                 {
-                    defenseMode = false;
+                    defenseMode = true;
+                       timeOutOfCombat = 0;
+                        Debug.Log("Defences up");
                 }
                 else
                 {
                     timeOutOfCombat += Time.deltaTime;
                     if (timeOutOfCombat > defenseTime)
                     {
-                        defenseMode = false;
+                            Debug.Log("Defences down");
+
+                            defenseMode = false;
                     }
                 }
                 if (defenseMode)
@@ -309,7 +316,10 @@ public class ZombieScript : MonoBehaviour
                                 barricada.loseHp();
                             }
                         }
-                    }
+                        }else
+                        {
+                            elAnimator.SetBool("atacando", false);
+                        }
                 }
                 //Código de que hace el zombie normalmente
                 if (isSelected)
