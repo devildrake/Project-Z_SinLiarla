@@ -7,7 +7,6 @@ public class Event1Script : MonoBehaviour {
     public GameObject spawner;
     public bool[] hasHappened;
     bool once = false;
-    bool cFind;
     public GameObject[] objetosZona = new GameObject[3];
     public GameObject[] puntosDePatrulla = new GameObject[6];
     // Use this for initialization
@@ -30,10 +29,6 @@ public class Event1Script : MonoBehaviour {
             gameLogic.camara.gameObject.transform.position = new Vector3(4.330669f, 6.3f, -12.29557f);
             gameLogic.camara.SetOrgPos();
         }
-        else
-        {
-            cFind = true;
-        }
     }
 
     // Update is called once per frame
@@ -46,14 +41,6 @@ public class Event1Script : MonoBehaviour {
 
         if (gameLogic.eventManager != null)
         {
-        if (cFind)
-        {
-            cFind = false;
-            gameLogic.currentLevel = 1;
-            gameLogic = GameLogicScript.gameLogic;
-            gameLogic.camara.gameObject.transform.position = new Vector3(4.330669f, 6.3f, -12.78199f);
-            gameLogic.camara.SetOrgPos();
-        }
 
         if (!once)
         {
@@ -128,7 +115,8 @@ public class Event1Script : MonoBehaviour {
         }
 
         if (gameLogic.eventManager.eventList[3].hasHappened && gameLogic._villagers.Count == 0) {
-            Application.LoadLevel(2);
+                gameLogic.currentLevel = 2;
+                Application.LoadLevel(2);
         }
     } }
 }
