@@ -5,7 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CanvasScript : MonoBehaviour {
-    public GameObject fondo, taza, papeles, carpeta, carpeta_abierta, b1, b2, b3;
+    public GameObject fondo, taza, papeles, carpeta, carpeta_abierta, b1, b2, b3, opcionesBase;
+    private enum state {PREV_MENU, MAIN_MENU, OPCIONES };
+    private state menuState;
 
 
     void Start(){
@@ -13,22 +15,47 @@ public class CanvasScript : MonoBehaviour {
         b1.SetActive(false);
         b2.SetActive(false);
         b3.SetActive(false);
+        menuState = state.PREV_MENU;
     }
 
     void Update(){
-        if (Input.anyKey){
-            taza.SetActive(false);
-            papeles.SetActive(false);
-            carpeta.SetActive(false);
-            carpeta_abierta.SetActive(true);
-            b1.SetActive(true);
-            b2.SetActive(true);
-            b3.SetActive(true);
+        //comportamiento cuando esta en la pantalla de "pulsa cualquier tecla"
+        if (menuState == state.PREV_MENU) {
+            if (Input.anyKey) {
+                taza.SetActive(false);
+                papeles.SetActive(false);
+                carpeta.SetActive(false);
+                carpeta_abierta.SetActive(true);
+                b1.SetActive(true);
+                b2.SetActive(true);
+                b3.SetActive(true);
+                menuState = state.MAIN_MENU;
+            }
+        }
+
+        //comportamiento dentro del boton opciones
+        if(menuState == state.OPCIONES) {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                opcionesBase.SetActive(false);
+                menuState = state.MAIN_MENU;
+                //cuando se vuelve al menu principal se deben reactivar los botones
+                b1.GetComponent<Button>().interactable = true;
+                b2.GetComponent<Button>().interactable = true;
+                b3.GetComponent<Button>().interactable = true;
+            }
         }
     }
 
     public void Continuar(){
         SceneManager.LoadScene(1);
+    }
+
+    public void Opciones() {
+        opcionesBase.SetActive(true);
+        b1.GetComponent<Button>().interactable = false;
+        b2.GetComponent<Button>().interactable = false;
+        b3.GetComponent<Button>().interactable = false;
+        menuState = state.OPCIONES;
     }
 
 
