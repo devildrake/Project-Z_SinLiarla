@@ -15,6 +15,7 @@ public class CanvasScript : MonoBehaviour {
         b1.SetActive(false);
         b2.SetActive(false);
         b3.SetActive(false);
+        opcionesBase.SetActive(false);
         menuState = state.PREV_MENU;
     }
 
@@ -29,6 +30,7 @@ public class CanvasScript : MonoBehaviour {
                 b1.SetActive(true);
                 b2.SetActive(true);
                 b3.SetActive(true);
+               
                 menuState = state.MAIN_MENU;
             }
         }
