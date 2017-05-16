@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Event1Script : MonoBehaviour {
     public GameLogicScript gameLogic;
@@ -116,7 +117,7 @@ public class Event1Script : MonoBehaviour {
 
         if (gameLogic.eventManager.eventList[3].hasHappened && gameLogic._villagers.Count == 0) {
                 gameLogic.currentLevel = 2;
-                Application.LoadLevel(2);
+                SceneManager.LoadScene(2);
         }
     } }
 }

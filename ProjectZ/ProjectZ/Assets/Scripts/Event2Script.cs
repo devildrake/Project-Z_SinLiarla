@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Event2Script : MonoBehaviour {
     public GameLogicScript gameLogic;
@@ -61,7 +62,7 @@ public class Event2Script : MonoBehaviour {
 
             if (eventManager != null) {
                 if (eventManager.eventList[4].hasHappened && hasHappened[0]) {
-                    Application.LoadLevel(3);
+                    SceneManager.LoadScene(3);
                     bool endLevel = true;
                     foreach (GameObject bas in gameLogic._bases) {
                         if (bas.GetComponent<EdificioCreaSoldiers>().counter != 4) {
@@ -78,8 +79,8 @@ public class Event2Script : MonoBehaviour {
                     }
 
                 }
-                if (eventManager.eventList[5].hasHappened) {
-                    Application.LoadLevel(3);
+                if (eventManager.eventList[5].hasHappened) { 
+                    SceneManager.LoadScene(3);
                 }
             }
         }

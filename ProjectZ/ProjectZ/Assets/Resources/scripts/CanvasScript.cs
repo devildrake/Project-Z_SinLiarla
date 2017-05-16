@@ -61,7 +61,9 @@ public class CanvasScript : MonoBehaviour {
     }
 
 
-
+    public void ResetGame() {
+        //TODO elimina todo el progreso guardado y reinicia el juego.
+    }
 
 
 
@@ -821,6 +823,93 @@ public class CanvasScript : MonoBehaviour {
     //               SceneState1();
     //           }
     //       }*/
+    //   }
+
+    //   void SceneState1()
+    //   {
+    //       sceneState = 1;
+    //       sceneBg.sprite = secondSprite;
+    //       for(int i = 0; i<buts.Length; i++)
+    //       {
+    //           buts[i].SetActive(true);
+    //       }
+    //       mouseInputScript.SetActive(true);
+    //   }
+
+    //   void ExitSceneState2()
+    //   {
+    //       for(int i = 0; i<partidas.Length; i++)
+    //       {
+    //           partidas[i].SetActive(false);
+    //       }
+    //   }
+
+    //   void LoadTextures()
+    //   {
+    //       //Dos imagenes de fondo del menu
+    //       firstSprite = Resources.Load<Sprite>("pre_menu");
+    //       secondSprite = Resources.Load<Sprite>("menu_sin_botones");
+
+    //       //Cargar animacion selected del boton continuar
+    //       for (int i = 0; i < continuarSelected.Length; i++)
+    //       {
+    //           continuarSelected[i] = Resources.Load<Sprite>("Botones/Continuar/selected_" + i);
+    //       }
+
+    //       //Cargar animacion selected del boton nueva partida
+    //       for(int i = 0; i<nuevaSelected.Length; i++)
+    //       {
+    //           nuevaSelected[i] = Resources.Load<Sprite>("Botones/Nueva_Partida/selected_" + i);
+    //       }
+
+    //       //Cargar animacion selected del boton opciones
+    //       for (int i = 0; i<opcionesSelected.Length; i++)
+    //       {
+    //           opcionesSelected[i] = Resources.Load<Sprite>("Botones/Opciones/selected_" + i);
+    //       }
+
+    //       //Cargar animacion selected del boton salir
+    //       for(int i = 0; i<salirSelected.Length; i++)
+    //       {
+    //           salirSelected[i] = Resources.Load<Sprite>("Botones/Salir/selected_" + i);
+    //       }
+
+    //       //Cargar animacion clicked del boton continuar
+    //       for(int i = 0; i<continuarClick.Length; i++)
+    //       {
+    //           continuarClick[i] = Resources.Load<Sprite>("Botones/Continuar/click_"+i);
+    //       }
+
+    //       //Animacion click nueva partida
+    //       for (int i = 0; i<nuevaClick.Length; i++)
+    //       {
+    //           nuevaClick[i] = Resources.Load<Sprite>("Botones/Nueva_Partida/click_" + i);
+    //       }
+
+    //       //Animacion click opciones
+    //       for(int i = 0; i<opcionesClick.Length; i++)
+    //       {
+    //           opcionesClick[i] = Resources.Load<Sprite>("Botones/Opciones/click_" + i);
+    //       }
+
+    //       //Animacion click salir
+    //       for(int i = 0; i<salirClick.Length; i++)
+    //       {
+    //           salirClick[i] = Resources.Load<Sprite>("Botones/Salir/click_" + i);
+    //       }
+
+    //       //Cargar los sprites para la seleccion de partida.
+    //       idle_Partida1 = Resources.Load<Sprite>("Botones/Seleccion_Partida/Carpeta1/idle");
+    //       idle_Partida2 = Resources.Load<Sprite>("Botones/Seleccion_Partida/Carpeta2/idle");
+    //       idle_Partida3 = Resources.Load<Sprite>("Botones/Seleccion_Partida/Carpeta3/idle");
+    //       fondo = Resources.Load<Sprite>("Botones/Seleccion_Partida/fondo");
+    //       selected_Partida1 = Resources.Load<Sprite>("Botones/Seleccion_Partida/Carpeta1/selected");
+    //       selected_Partida2 = Resources.Load<Sprite>("Botones/Seleccion_Partida/Carpeta2/selected");
+    //       selected_Partida3 = Resources.Load<Sprite>("Botones/Seleccion_Partida/Carpeta3/selected");
+
+    //("Botones/Seleccion_Partida/Carpeta3/selected");
+
+   
     //   }
 
     //   void SceneState1()
