@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Event3Script : MonoBehaviour {
     public bool[]hasHappened;
@@ -10,8 +11,7 @@ public class Event3Script : MonoBehaviour {
         hasHappened = new bool[1];
         gameLogic = GameLogicScript.gameLogic;
         gameLogic.currentLevel = 3;
-        if (gameLogic.camara == null)
-        {
+        if (gameLogic.camara == null){
             gameLogic.camara = FindObjectOfType<CameraScript>();
         }
         gameLogic.camara.transform.position = new Vector3(-14.3277f,6.3f,-17.712f);
@@ -21,19 +21,14 @@ public class Event3Script : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (!hasHappened[0])
-        {
+        if (!hasHappened[0]) {
             //gameLogic.eventManager.activateEvent(6);
             hasHappened[0] = true;
-        }else
-        {
-            if (gameLogic._villagers.Count == 0 && hasHappened[0])
-            {
-                Application.LoadLevel(5);
+        }
+        else {
+            if (gameLogic._villagers.Count == 0 && hasHappened[0]) {
+                SceneManager.LoadScene(5);
             }
         }
-
-
     }
-   
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EscenaInterScript : MonoBehaviour {
     bool done;
@@ -18,7 +19,7 @@ public class EscenaInterScript : MonoBehaviour {
         gameLogic.hasGamedOver = false;
         gameLogic.waitAFrame = false;
 
-        Application.LoadLevel(gameLogic.currentLevel);
+        SceneManager.LoadScene(gameLogic.currentLevel);
     }
     // Update is called once per frame
     void Update () {

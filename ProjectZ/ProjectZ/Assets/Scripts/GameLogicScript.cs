@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
+using UnityEngine.SceneManagement;
 
 
 
@@ -264,7 +265,7 @@ public class GameLogicScript : MonoBehaviour
             ClearLists();
             loadingScene = true;
             hasGamedOver = true;
-            Application.LoadLevel("EscenaInter");
+            SceneManager.LoadScene("EscenaInter");
         }
 
         if (camara == null)
