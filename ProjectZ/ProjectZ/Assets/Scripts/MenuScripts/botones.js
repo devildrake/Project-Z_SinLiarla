@@ -1,13 +1,13 @@
 ﻿public function BotonJugar(){
 	
-	Application.LoadLevel("Tutorial1");
+    Application.LoadLevel("Tutorial1");
 	
 }
 
 public function BotonMenu(){
 	
-    Application.LoadLevel("Menu");
-	
+   Application.LoadLevel("Menu");
+   
 }
 
 public function BotonSalir(){

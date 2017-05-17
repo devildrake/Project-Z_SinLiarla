@@ -65,7 +65,9 @@ public class CanvasScript : MonoBehaviour {
         //TODO elimina todo el progreso guardado y reinicia el juego.
     }
 
-
+    public void SalirApp() {
+        Application.Quit();
+    }
 
 
 
