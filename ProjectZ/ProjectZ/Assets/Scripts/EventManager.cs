@@ -95,7 +95,6 @@ using UnityEngine.UI;
                 currentEvent.currInteract = 0;
                 currentEvent.isHappening = false;
                 currentEvent.hasHappened = true;
-            Debug.Log("Dafuq is this");
 
             }
         }

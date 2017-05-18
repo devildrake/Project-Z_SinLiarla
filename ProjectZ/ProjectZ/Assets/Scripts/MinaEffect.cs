@@ -89,8 +89,9 @@ public class MinaEffect : MonoBehaviour {
                 else if (active)
                 {
                     particleScript.detonate = true; //Esto activa las particulas y sonidos del otro script.
-
-                    counter += Time.deltaTime;
+                        if (!gameLogic.isPaused) {
+                            counter += Time.deltaTime;
+                        }
                     if (counter >= timeToExplode)
                     {
                         blown = true;

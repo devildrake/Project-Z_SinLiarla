@@ -9,8 +9,11 @@ public class Detonate : MonoBehaviour {
     public bool hasBeenActive;
     public bool hasExploded;
     public bool detonate;
+    public bool hasFinished = false;
+    public bool hasStartedPlaying;
     public AudioClip boom, beep;
     GameLogicScript gameLogic;
+    public float timer = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -38,11 +41,23 @@ public class Detonate : MonoBehaviour {
         {
             if (!GameLogicScript.gameLogic.isPaused)
             {
-                aud.clip = boom;
-                exp.Play();
-                aud.Play();
-                Invoke("StopExplosion", exp.main.duration);
-                Invoke("StopBoom", 2.0f);
+                if (!hasStartedPlaying) {
+                    aud.clip = boom;
+                    exp.Play();
+                    aud.Play();
+                    hasStartedPlaying = true;
+                }
+
+                if (timer >= exp.main.duration) {
+                    StopExplosion();
+                }
+
+                if (timer >= 2.0f) {
+                    StopBoom();
+                    hasFinished = true;
+                }
+
+
             }
         }
     }
@@ -52,13 +67,21 @@ public class Detonate : MonoBehaviour {
         {
             if (!gameLogic.isPaused)
             {
-                aud.Play();
-
-                if (!hasExploded&&aud.clip!=null)
-                {
-                    Invoke("Explode", aud.clip.length);
-                    hasExploded = true;
+                if (!hasStartedPlaying&&!hasExploded) {
+                    aud.Play();
+                    hasStartedPlaying = true;
                 }
+
+                if (!hasExploded&&aud.clip!=null&&timer>=aud.clip.length)
+                {
+                    hasStartedPlaying = false;
+                    Explode();
+                    hasExploded = true;
+                    timer = 0;
+                }
+            }
+            else {
+                aud.Pause();
             }
         }
     }
@@ -72,16 +95,16 @@ public class Detonate : MonoBehaviour {
         {
             if (!gameLogic.isPaused)
             {
-                if (!aud.isPlaying)
+                if (!aud.isPlaying&&playing)
                     aud.UnPause();
 
-                if (detonate && !hasBeenActive)
+                if (detonate)
                 {
-                    Activate();
-                    hasBeenActive = true;
+                            timer += Time.deltaTime;
+                            Activate();
                 }
 
-                detonate = false;
+                //detonate = false;
                 playing = aud.isPlaying;
             }
             else {

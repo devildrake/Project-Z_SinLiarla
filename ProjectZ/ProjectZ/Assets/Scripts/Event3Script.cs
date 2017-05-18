@@ -22,7 +22,7 @@ public class Event3Script : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         if (!hasHappened[0]) {
-            //gameLogic.eventManager.activateEvent(6);
+            gameLogic.eventManager.activateEvent(6);
             hasHappened[0] = true;
         }
         else {
