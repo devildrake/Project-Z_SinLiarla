@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TorretaScript : MonoBehaviour {
     public List<GameObject> _zombiesInArea;
+    public List<GameObject> _targetingZombies;
     public GameLogicScript gameLogic;
     public GameObject closestZombie;
     public GameObject closestMutank;
@@ -24,11 +25,18 @@ public class TorretaScript : MonoBehaviour {
         health = maxHealth;
     }
 
-    bool isNotAlive(GameObject g) {
-        if (g != null)
-            return g.GetComponent<ZombieScript>().isAlive;
-
-        else return false;
+    bool IsNotAlive(GameObject z) {
+        if (z != null) {
+            if (z.GetComponent<ZombieScript>() != null) {
+                return !z.GetComponent<ZombieScript>().isAlive;
+            }
+            else {
+                return !z.GetComponent<VillagerScript>().isAlive;
+            }
+        }
+        else {
+            return true;
+        }
     }
 
     GameObject GetClosestZombie(List<GameObject> zombies) {
@@ -82,10 +90,9 @@ public class TorretaScript : MonoBehaviour {
             if (health <= 0)
                 alive = false;
 
-            _zombiesInArea.RemoveAll(isNotAlive);
+            _zombiesInArea.RemoveAll(IsNotAlive);
             if (!gameLogic.eventManager.onEvent) {
                 if (!gameLogic.isPaused) {
-                    _zombiesInArea.Sort();
                     if(CheckForMutanks()==null)
                     closestZombie = GetClosestZombie(_zombiesInArea);
                     else {
@@ -122,7 +129,9 @@ public class TorretaScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Zn") {
+            Debug.Log("A");
             if (!_zombiesInArea.Contains(other.gameObject)) {
+                Debug.Log("B");
                 _zombiesInArea.Add(other.gameObject);
             }
         }   
@@ -130,6 +139,11 @@ public class TorretaScript : MonoBehaviour {
     private void OnDestroy() {
         if (gameLogic._barricadas.Contains(gameObject))
             gameLogic._barricadas.Remove(gameObject);
+        _targetingZombies.RemoveAll(IsNotAlive);
+        foreach (GameObject z in _targetingZombies) {
+            z.GetComponent<ZombieScript>().turretToAttack = null;
+        }
+
     }
 
 }

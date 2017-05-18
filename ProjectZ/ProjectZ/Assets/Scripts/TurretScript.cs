@@ -40,6 +40,7 @@ public class TurretScript : MonoBehaviour {
 	public bool alerted;
 
 	List<GameObject> _nearbyPartners;
+    List<GameObject> _targetigZombies;
 	public GameObject patrolPointObject;
 	VillagerMovement villagerMovement;
 	VillagerAttack villagerAttack;

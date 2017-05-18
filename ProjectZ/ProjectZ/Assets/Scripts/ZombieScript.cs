@@ -307,9 +307,10 @@ public class ZombieScript : MonoBehaviour
                 }
                     else 
                     {
+
                         canAttack = false;
                         canMove = false;
-                        if (gameLogic.CalcularDistancia(gameObject, turretToAttack)<theAttackRange)
+                        if (gameLogic.CalcularDistancia(gameObject, turretToAttack)>theAttackRange)
                         elMovimiento.MoveTo(turretToAttack.transform.position);
 
                         else{
@@ -322,7 +323,7 @@ public class ZombieScript : MonoBehaviour
 
                                 if (contadorAtkTor > attackSpeed) {
                                     elAnimator.SetBool("atacando", true);
-                                    turretToAttack.GetComponent<TurretScript>().health -= attack;
+                                    turretToAttack.GetComponent<TorretaScript>().health -= attack;
                                     contadorAtkTor = 0;
                                 }
 

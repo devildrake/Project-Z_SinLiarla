@@ -414,11 +414,16 @@ public class GameLogicScript : MonoBehaviour
                             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                                 if (Physics.Raycast(ray, out hit, 80, mascaraVillagers)) {
-                                    foreach (GameObject zombie in _keptSelectedZombies) {
-                                        zombie.GetComponent<ZombieScript>().ResetStuff("command");
-                                        zombie.GetComponent<ZombieMovement>().MoveTo(hit.collider.gameObject.transform.position);
-                                        zombie.GetComponent<ZombieScript>().movingToEnemy = true;
-                                        zombie.GetComponent<ZombieScript>().villagerToAttackOnClick = hit.collider.gameObject;
+                                    foreach (GameObject z in _keptSelectedZombies) {
+                                        z.GetComponent<ZombieScript>().ResetStuff("command");
+                                        z.GetComponent<ZombieMovement>().MoveTo(hit.collider.gameObject.transform.position);
+                                        z.GetComponent<ZombieScript>().movingToEnemy = true;
+                                        z.GetComponent<ZombieScript>().villagerToAttackOnClick = hit.collider.gameObject;
+                                        if (z.GetComponent<ZombieScript>().turretToAttack != null) {
+                                            if (z.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>() != null)
+                                                z.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>()._targetingZombies.Remove(gameObject);
+                                        }
+                                        z.GetComponent<ZombieScript>().turretToAttack = null;
                                     }
                                 }
 
@@ -426,6 +431,12 @@ public class GameLogicScript : MonoBehaviour
                                     GameObject laBarricada = hit.collider.gameObject;
                                     foreach (GameObject z in _keptSelectedZombies) {
                                         z.GetComponent<ZombieScript>().attackBarricade(laBarricada);
+                                        if (z.GetComponent<ZombieScript>().turretToAttack != null) {
+                                            if (z.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>() != null)
+                                                z.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>()._targetingZombies.Remove(gameObject);
+                                        }
+                                        z.GetComponent<ZombieScript>().turretToAttack = null;
+                                        
                                     }
 
                                 }
@@ -433,6 +444,9 @@ public class GameLogicScript : MonoBehaviour
                                     GameObject laTorreta = hit.collider.gameObject;
                                     foreach (GameObject z in _keptSelectedZombies) {
                                       z.GetComponent<ZombieScript>().turretToAttack = laTorreta;
+                                        if (!laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Contains(z)) {
+                                            laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Add(z);
+                                        }
                                     }
 
 
@@ -457,6 +471,12 @@ public class GameLogicScript : MonoBehaviour
                                     //Cantidad de zombies que se han movido ya hacia el punto y van rotando en un angulo de 45 grados alrededor del punto
                                     foreach (GameObject zombie in _keptSelectedZombies) {
                                         if (zombie != null) {
+                                            if (zombie.GetComponent<ZombieScript>().turretToAttack != null) {
+                                                if (zombie.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>() != null)
+                                                    zombie.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>()._targetingZombies.Remove(gameObject);
+                                            }
+                                            zombie.GetComponent<ZombieScript>().turretToAttack = null;
+
                                             Vector3 desplazamientoFinal = Vector3.zero;
                                             if (i >= 1) {
                                                 float angle = 45 * i;
