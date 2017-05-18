@@ -227,22 +227,18 @@ public class ZombieScript : MonoBehaviour
             if (tipo == zombieClass.mutank)
             {
 
-                    Debug.Log(defenseMode);
-
                 //Comportamiento especifico de mutank
 
                 if (prevHealth != health)
                 {
                     defenseMode = true;
                        timeOutOfCombat = 0;
-                        Debug.Log("Defences up");
                 }
                 else
                 {
                     timeOutOfCombat += Time.deltaTime;
                     if (timeOutOfCombat > defenseTime)
                     {
-                            Debug.Log("Defences down");
 
                             defenseMode = false;
                     }
