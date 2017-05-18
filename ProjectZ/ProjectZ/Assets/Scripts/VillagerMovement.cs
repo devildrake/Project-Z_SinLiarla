@@ -94,7 +94,6 @@ public class VillagerMovement : MonoBehaviour
 
             if (moving)
             {
-
                 if (camino == null)
                     return;
                 if (puntoActual >= camino.vectorPath.Count)
@@ -108,7 +107,10 @@ public class VillagerMovement : MonoBehaviour
                     return;
                 }
 
-                Vector3 direccion = (camino.vectorPath[puntoActual] - gameObject.transform.position).normalized;
+                    LookTowards(targetPosition);
+
+
+                    Vector3 direccion = (camino.vectorPath[puntoActual] - gameObject.transform.position).normalized;
 
                 direccion *= gameObject.GetComponent<VillagerScript>().movSpeed * Time.fixedDeltaTime;
 
