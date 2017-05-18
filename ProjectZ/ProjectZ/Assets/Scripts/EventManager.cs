@@ -81,6 +81,7 @@ using UnityEngine.UI;
                 onEvent = true;
                 currentEvent = eventList[which];
                 currentEvent.isHappening = true;
+            currentEvent.currInteract = 0;
             }
         }
 

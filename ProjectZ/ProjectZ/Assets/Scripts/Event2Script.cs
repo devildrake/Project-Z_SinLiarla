@@ -62,7 +62,7 @@ public class Event2Script : MonoBehaviour {
 
             if (eventManager != null) {
                 if (eventManager.eventList[4].hasHappened && hasHappened[0]) {
-                    SceneManager.LoadScene(3);
+                    //SceneManager.LoadScene(3);
                     bool endLevel = true;
                     foreach (GameObject bas in gameLogic._bases) {
                         if (bas.GetComponent<EdificioCreaSoldiers>().counter != 4) {
@@ -79,8 +79,9 @@ public class Event2Script : MonoBehaviour {
                     }
 
                 }
-                if (eventManager.eventList[5].hasHappened) { 
-                    SceneManager.LoadScene(3);
+                if (eventManager.eventList[5].hasHappened) {
+
+                        SceneManager.LoadScene(3);
                 }
             }
         }

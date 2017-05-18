@@ -512,32 +512,28 @@ public class GameLogicScript : MonoBehaviour
     }
 
     //El codigo adicional que modifica las listas de zombies y villagers en funcion de una funcion que comprueba si estan vivos o no
-    void UpdateSelection2()
-    {
+    void UpdateSelection2() {
         _zombies.RemoveAll(IsNotAlive);
         _selectedZombies.RemoveAll(IsNotAlive);
         _keptSelectedZombies.RemoveAll(IsNotAlive);
         foreach (GameObject v in _villagers) {
-            if (v == null)
-            {
-                _villagers.Remove(v);
-            }
-            else if (!v.GetComponent<VillagerScript>().isAlive && !v.GetComponent<VillagerScript>().hasTransformed) {
-                int que = Random.Range(0, 20);
-                v.GetComponent<VillagerScript>().hasTransformed = true;
-                if (que < 10)
-                {
-                    SpawnWalker(v.transform.position);
+            if (v != null) { 
+
+                if (!v.GetComponent<VillagerScript>().isAlive && !v.GetComponent<VillagerScript>().hasTransformed) {
+                    int que = Random.Range(0, 20);
+                    v.GetComponent<VillagerScript>().hasTransformed = true;
+                    if (que < 10) {
+                        SpawnWalker(v.transform.position);
+                    }
+                    else if (que < 16) {
+                        SpawnRunner(v.transform.position);
+                    }
+                    else {
+                        SpawnMutank(v.transform.position);
+                    }
                 }
-                else if (que < 16)
-                {
-                    SpawnRunner(v.transform.position);
-                }
-                else {
-                    SpawnMutank(v.transform.position);
-                }
-            }
         }
+    }
         _villagers.RemoveAll(IsNotAlive);
     }
 
