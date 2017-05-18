@@ -33,7 +33,6 @@ public class ZombieScript : MonoBehaviour
 
     public bool goBarricade;    //BOOLEANO QUE GESTIONA SI EL ZOMBIE ESTA YENDO HACIA UNA BARRICADA
     public bool inBuilding;     //BOOLEANO QUE GESTIONA SI EL ZOMBIE SE ENCUENTRA EN UN EDIFICIO
-    public bool irCasa;         //BOOLEANO QUE GESTIONA SI EL ZOMBIE ESTA YENDO HACIA UNA CASA
     public bool movingToEnemy; //BOOLEANO QUE GESTIONA SI EL ZOMBIE ESTA YENDO HACIA UN ENEMIGO
     public bool defenseMode;    //BOOLEANO SOLO UTILIZADO POR LOS MUTANKS PARA SABER SI DEBE RECIBIR MENOS DAÑO Y SI DEBE PONERSE EN POSICION DEFENSA
     public bool hasArrived;     //BOOLEANO QUE GESTIONA SI EL ZOMBIE HA LLEGADO A LA POSICION DESEADA
@@ -63,6 +62,7 @@ public class ZombieScript : MonoBehaviour
     Vector3 groundPos;  //VARAIBLE QUE CAMBIA LA POSICION SOBRE LA QUE SE CLICA PARA QUE EL ZOMBIE NO SE META EN EL SUELO NI FLOTE
     Vector3 barricadePlace; //PUNTO DE LA BARRICADA AL QUE IR AL ATACARLA
     public GameObject villagerToAttackOnClick;
+    public GameObject turretToAttack;
 
     //METODO QUE COMPRUEBA SI EL ZOMBIE SIGUE VIVO
     bool CheckAlive()
@@ -210,7 +210,7 @@ public class ZombieScript : MonoBehaviour
         if (gameLogic.eventManager != null)
         {
             if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
-        {
+            {
 
             if (elMovimiento.wasCommanded)
             {
@@ -276,15 +276,8 @@ public class ZombieScript : MonoBehaviour
             confirmAlive = CheckAlive();
             if (confirmAlive)
             {
-                if (irCasa)
-                {
-                    elMovimiento.MoveTo(puntoCasa);
-                    if (hasArrived)
-                    {
-                        irCasa = false;
-                    }
-                }
-                else if (goBarricade)
+                
+                if (goBarricade)
                 {
                     if (barricada != null)
                     {

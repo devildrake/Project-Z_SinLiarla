@@ -7,7 +7,7 @@ public class VillagerScript : MonoBehaviour
 {
     GameLogicScript gameLogic;
     Animator elAnimator;
-    public enum humanClass {villager, soldier, turret}
+    public enum humanClass {villager, soldier}
     public VisionRangeScript laVision;
     AttackRangeScript elAtaque;
     public Vector3 targetPosition;
@@ -95,15 +95,15 @@ public class VillagerScript : MonoBehaviour
                 movSpeed = 2;
                 //render.material.color += Color.green;
                 break;
-            case humanClass.turret:
-                theAttackRange = 6;
-                health = 100;
-                attack = 20;
-                defense = 20;
-                attackSpeed = 2.5f;
-                movSpeed = 0;
-                render.material.color = Color.red;
-                break;
+            //case humanClass.turret:
+            //    theAttackRange = 6;
+            //    health = 100;
+            //    attack = 20;
+            //    defense = 20;
+            //    attackSpeed = 2.5f;
+            //    movSpeed = 0;
+            //    render.material.color = Color.red;
+            //    break;
         }
 
         maxHealth = health;
@@ -225,10 +225,6 @@ public class VillagerScript : MonoBehaviour
             else {
                 quadFeedback.SetActive(false);
             }
-        }
-        //controla los sprites de feedback de la torreta
-        else if (tipo == humanClass.turret) {
-
         }
 
         elAnimator.SetBool("moviendose", villagerMovement.moving);
