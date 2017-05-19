@@ -17,6 +17,7 @@ public class VillagerAttack : MonoBehaviour
     void Start()
     {
         gameLogic = GameLogicScript.gameLogic;
+
         elAnimator = gameObject.GetComponent<Animator>();
         zombieToAttack = null;
         theVillager = GetComponent<VillagerScript>();
