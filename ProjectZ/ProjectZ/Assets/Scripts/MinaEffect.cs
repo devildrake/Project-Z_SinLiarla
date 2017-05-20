@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MinaEffect : MonoBehaviour {
     public List<GameObject> zombiesEnRango;
+    public GameObject porLaLus;
     public float mineDmg;
     public bool active;
     public bool blown;
@@ -30,6 +31,7 @@ public class MinaEffect : MonoBehaviour {
     }
 
     public void Dissappear() {
+        //Debug.Log("UH");
         Destroy(gameObject);
     }
 
@@ -70,8 +72,6 @@ public class MinaEffect : MonoBehaviour {
                 }
                 if (blown)
                 {
-
-
                     foreach (GameObject z in zombiesEnRango)
                     {
                         if (z.GetComponent<ZombieScript>().tipo != ZombieScript.zombieClass.runner)
@@ -84,6 +84,7 @@ public class MinaEffect : MonoBehaviour {
                         }
                     }
                     GetComponent<MeshFilter>().mesh = null;
+                        porLaLus.SetActive(false);
                     stop = true;
                 }
                 else if (active)

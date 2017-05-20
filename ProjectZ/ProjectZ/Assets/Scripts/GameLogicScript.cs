@@ -444,7 +444,7 @@ public class GameLogicScript : MonoBehaviour
                                     GameObject laTorreta = hit.collider.gameObject;
                                     foreach (GameObject z in _keptSelectedZombies) {
                                       z.GetComponent<ZombieScript>().turretToAttack = laTorreta;
-                                        if (!laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Contains(z)) {
+                                        if (!laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Contains(z)&&laTorreta.GetComponent<TorretaScript>().alive) {
                                             laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Add(z);
                                         }
                                     }
