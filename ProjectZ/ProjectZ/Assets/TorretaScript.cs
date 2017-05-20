@@ -17,12 +17,16 @@ public class TorretaScript : MonoBehaviour {
     public const float maxHealth = 100;
     public float attackSpeed = 0.2f;
     public float attackDamage = 1;
+    private bool attacking;
+    public ParticleSystem shoot;
 
     // Use this for initialization
     void Start() {
         gameLogic = GameLogicScript.gameLogic;
         gameLogic._barricadas.Add(gameObject);
         health = maxHealth;
+        attacking = false;
+        shoot.Stop();
     }
 
     bool IsNotAlive(GameObject z) {
@@ -102,11 +106,14 @@ public class TorretaScript : MonoBehaviour {
                 if (closestZombie != null) {
                     contadorTiempoAtaque += Time.deltaTime;
                     if (contadorTiempoAtaque > attackSpeed) {
+                        //aqui empieza a atacar
+                        attacking = true;
                         contadorTiempoAtaque = 0;
                         closestZombie.GetComponent<ZombieScript>().health -= attackDamage;
                     }
                 }else {
                     contadorTiempoAtaque = 0;
+                    attacking = false;
                 }
             }
         }else {
@@ -116,6 +123,19 @@ public class TorretaScript : MonoBehaviour {
                 Cañon.transform.position = ObjetoPosicionRoto.transform.position;
             }
 
+        }
+        //gestion del sistema de particulas
+        if (attacking) {
+            shoot.Play();
+        }
+        else {
+            StopParticles();
+        }
+    }
+
+    private void StopParticles() {
+        if(shoot.particleCount == 0) {
+            shoot.Stop();
         }
     }
 
