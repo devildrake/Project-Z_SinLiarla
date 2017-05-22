@@ -14,7 +14,8 @@ public class VillagerMovement : MonoBehaviour
     public int puntoActual = 0;
     public float contador;
     public float tiempoAContar;
-    public bool hasArrived; 
+    public bool hasArrived;
+    Animator elAnimator; 
     //private bool startedMoving;
 
     public void LookTowards(Vector3 where)
@@ -32,7 +33,7 @@ public class VillagerMovement : MonoBehaviour
         tiempoAContar = 1;
         //startedMoving = false;
         buscador = gameObject.GetComponent<Seeker>();
-
+        elAnimator = gameObject.GetComponent<Animator>();
     }
 
     public void MoveTo(Vector3 newTargetPosition)
@@ -124,5 +125,10 @@ public class VillagerMovement : MonoBehaviour
 
             }
         } }
+        elAnimator.SetBool("moviendose",moving);
+        if (moving == false) {
+            elAnimator.SetBool("correr", false);
+        }
+
     }
 }

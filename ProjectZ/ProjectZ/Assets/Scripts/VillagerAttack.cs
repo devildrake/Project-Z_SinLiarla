@@ -13,6 +13,8 @@ public class VillagerAttack : MonoBehaviour
     Animator elAnimator;
     private GameObject Latas;
     float initSpeedAn;
+    public ParticleSystem boomParticles;
+
     // Use this for initialization
     void Start()
     {
@@ -25,76 +27,71 @@ public class VillagerAttack : MonoBehaviour
         initSpeedAn = elAnimator.speed;
     }
 
-    public void Attack(GameObject aZombie)
-    {
-        if (aZombie != null)
-        {
-            if (aZombie.GetComponent<ZombieScript>().isAlive && elRango.enemyInRange)
-            {
+    public void Attack(GameObject aZombie){
+        if (aZombie != null){
+            if (aZombie.GetComponent<ZombieScript>().isAlive && elRango.enemyInRange){
                 attacking = true;
                 zombieToAttack = aZombie.GetComponent<ZombieScript>();
             }
-            else
-            {
+            else{
                 attacking = false;
             }
         }
     }
     // Update is called once per frame
-    void takeDamageColor()
-    {
+    void takeDamageColor(){
         elAnimator.SetBool("isHit", true);
         Component[] renders = zombieToAttack.GetComponentsInChildren(typeof(Renderer));
-        foreach (Renderer render in renders)
-        {
+        foreach (Renderer render in renders){
             render.material.color += Color.red;
         }
     }
 
-    void noRed()
-    {
+    void noRed(){
         Component[] renders = zombieToAttack.GetComponentsInChildren(typeof(Renderer));
-        foreach (Renderer render in renders)
-        {
+        foreach (Renderer render in renders){
             render.material.color -= Color.red;
             Debug.Log("NoMoreRed?");
         }
     }
 
-    void Update()
-    {
-        if (gameLogic.eventManager != null)
-        {
-            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
-        {
-            if (elAnimator.speed == 0)
-            {
-                elAnimator.speed = initSpeedAn;
-            }
-            if (attacking)
-            {
-                if (zombieToAttack != null)
-                {
-                    if (attackTimer < theVillager.attackSpeed)
-                    {
-                        attackTimer += Time.deltaTime;
-                    }
-                    else
-                    {
-                        zombieToAttack.health -= theVillager.attack;
-                        attackTimer = 0;
-
+    void Update(){
+        if (gameLogic.eventManager != null){
+            if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent){
+                if (elAnimator.speed == 0){
+                    elAnimator.speed = initSpeedAn;
+                }
+                if (attacking){
+                    if (zombieToAttack != null){
+                        if (attackTimer < theVillager.attackSpeed){
+                            attackTimer += Time.deltaTime;
+                        }
+                        else{
+                            zombieToAttack.health -= theVillager.attack;
+                            attackTimer = 0;
+                        }
                     }
                 }
-            }
 
-            if (!elRango.enemyInRange)
-            {
-                attacking = false;
+                if (!elRango.enemyInRange){
+                    attacking = false;
+                }
             }
-        } }else
-        {
+        }
+        else{
             elAnimator.speed = 0;
         }
+
+        //gestion del sprite que sale cuando disparan
+        //esta implementado como un sistema de particulas y se activa y desactiva
+        //utilizando el booleano "attacking"
+        if (attacking) {
+            boomParticles.Play();
+        }
+        else {
+            boomParticles.Stop();
+        }
+        elAnimator.SetBool("atacando", attacking);
+
     }
 }
