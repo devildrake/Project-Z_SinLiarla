@@ -71,13 +71,15 @@ public class EventManager : MonoBehaviour {
     public void activateEvent(int which) {
         if (!eventList[which].hasHappened && !eventList[which].isHappening && !onEvent && eventList[which].tipo == Assets.Scripts.Evento.tipoEvento.NORMAL) {
             onEvent = true;
-
-        } else {
+            Debug.Log("Activando evento normal");
+        }
+        else if (!eventList[which].hasHappened && !eventList[which].isHappening && !onEvent && eventList[which].tipo == Assets.Scripts.Evento.tipoEvento.ESPECIAL) {
+            Debug.Log("Activando evento especial");
             onSpecialEvent = true;
         }
         currentEvent = eventList[which];
         currentEvent.isHappening = true;
-        currentEvent.currInteract = 0;
+        //currentEvent.currInteract = 0;
     }
 
     //Método que termina el evento actual de forma interna y externa
@@ -88,6 +90,7 @@ public class EventManager : MonoBehaviour {
             currentEvent.currInteract = 0;
             currentEvent.isHappening = false;
             currentEvent.hasHappened = true;
+            Debug.Log("Terminando evento normal");
 
         }
         else if (!currentEvent.hasHappened && onSpecialEvent) {
@@ -96,6 +99,8 @@ public class EventManager : MonoBehaviour {
             currentEvent.currInteract = 0;
             currentEvent.isHappening = false;
             currentEvent.hasHappened = true;
+            Debug.Log("Terminando evento especial");
+
         }
     }
 
@@ -163,36 +168,47 @@ public class EventManager : MonoBehaviour {
         blancoTrans.gameObject.SetActive(true);
         setCanvas(false);
         onEvent = false;
+        onSpecialEvent = false;
     }
 
     void Update() {
         if (GameLogicScript.gameLogic != null) {
             if (!GameLogicScript.gameLogic.isPaused) { 
+
             if (onEvent && currentEvent.isHappening) {
+                    Debug.Log("EventoNormal");
                 currentText.text = currentEvent.messages[currentEvent.currInteract];
                 setCanvas(true);
 
                 if (_input._continue) {
+                        Debug.Log("_continueNormal");
                     currentEvent.currInteract++;
+                        Debug.Log(currentEvent.currInteract);
                     if (currentEvent.currInteract < currentEvent.numInteracts) {
                         _input._continue = false;
-                    }
-                    else {
+                            Debug.Log("ProsigueElTextoNormal");
+                        }
+                        else {
                         endCurrentEvent();
                         _input._continue = false;
                     }
                 }
             } else if (onSpecialEvent && currentEvent.isHappening) {
+                    Debug.Log("EventoEspecial");
 
-                currentText.text = currentEvent.messages[currentEvent.currInteract];
+                    currentText.text = currentEvent.messages[currentEvent.currInteract];
                 setCanvas(true);
 
                 if (_input._continue) {
-                    currentEvent.currInteract++;
+                        Debug.Log("_continueEspecial");
+
+                        currentEvent.currInteract++;
                     if (currentEvent.currInteract < currentEvent.numInteracts) {
                         _input._continue = false;
-                    }
-                    else {
+                            Debug.Log("ProsigueElTextoEspecial");
+
+                        }
+                        else {
                         endCurrentEvent();
                         _input._continue = false;
                     }

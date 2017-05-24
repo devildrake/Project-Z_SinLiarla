@@ -91,8 +91,6 @@ public class CameraScript : MonoBehaviour
             //Comprobamos si el ratón se encuentra en los margenes de movimiento
             CheckMousePosition(out cameraVector);
 
-                Debug.Log(gameObject.transform.position);
-
                 //Y ahora comprobamos las entradas del teclado
                 if ((_input._cameraUp) && (gameObject.transform.position.z - targetObject.transform.position.z) < TOPLIMIT) {
                     cameraVector.z = CAMERA_SPEED;
