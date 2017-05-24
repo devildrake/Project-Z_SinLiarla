@@ -74,6 +74,10 @@ public class InputHandlerScript : MonoBehaviour
 
     }
 
+    public void makeContinueTrue() {
+        _continue = true;
+    }
+
     private void ResetKeys()
     {
         //Guardamos la posición del ratón, por si alguien hace uso de ella
@@ -165,13 +169,11 @@ public class InputHandlerScript : MonoBehaviour
         else if (Input.GetKeyDown(_Attack))
         {
             _attackToggle = true;
-            
         }
         else if (Input.GetKeyDown(_dontAttack)) {
             _attackToggle = false;
-            
         }
-        if (Input.GetKeyDown(_continueInteract)||Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(_continueInteract))
         {
             _continue = true;
         }
