@@ -35,7 +35,7 @@ public class CameraScript : MonoBehaviour
     void Start()
     {
         SetOrgPos();
-        targetObject = GameObject.FindGameObjectWithTag("Ground");
+        targetObject = GameObject.FindGameObjectWithTag("CameraFocus");
         //Guardamos la referencia al input en nuestra clase
         gameLogic = GameLogicScript.gameLogic;
         _input = gameLogic.GetComponent<InputHandlerScript>();
@@ -91,13 +91,14 @@ public class CameraScript : MonoBehaviour
             //Comprobamos si el ratón se encuentra en los margenes de movimiento
             CheckMousePosition(out cameraVector);
 
+                Debug.Log(gameObject.transform.position);
 
-
-            //Y ahora comprobamos las entradas del teclado
-            if ((_input._cameraUp) && (gameObject.transform.position.z - targetObject.transform.position.z) < TOPLIMIT)
-                cameraVector.z = CAMERA_SPEED;
-            else if ((_input._cameraDown) && (gameObject.transform.position.z - targetObject.transform.position.z) > BOTLIMIT)
-                cameraVector.z = -CAMERA_SPEED;
+                //Y ahora comprobamos las entradas del teclado
+                if ((_input._cameraUp) && (gameObject.transform.position.z - targetObject.transform.position.z) < TOPLIMIT) {
+                    cameraVector.z = CAMERA_SPEED;
+                }
+                else if ((_input._cameraDown) && (gameObject.transform.position.z - targetObject.transform.position.z) > BOTLIMIT)
+                    cameraVector.z = -CAMERA_SPEED;
             if ((_input._cameraRight) && (gameObject.transform.position.x - targetObject.transform.position.x) < RIGHTLIMIT)
                 cameraVector.x = CAMERA_SPEED;
             else if ((_input._cameraLeft) && (gameObject.transform.position.x - targetObject.transform.position.x) > LEFTLIMIT)

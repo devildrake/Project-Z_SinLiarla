@@ -171,7 +171,7 @@ public class InputHandlerScript : MonoBehaviour
             _attackToggle = false;
             
         }
-        if (Input.GetKeyDown(_continueInteract))
+        if (Input.GetKeyDown(_continueInteract)||Input.GetMouseButtonDown(0))
         {
             _continue = true;
         }

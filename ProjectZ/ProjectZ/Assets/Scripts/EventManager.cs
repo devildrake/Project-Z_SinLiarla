@@ -165,7 +165,6 @@ using UnityEngine.UI;
             onEvent = false;
         }
 
-
         void Update()
         {
 
@@ -187,11 +186,11 @@ using UnityEngine.UI;
                         _input._continue = false;
                     }
                 }
-
             }
             else
             {
                 setCanvas(false);
             }
-        }
+        _input._continue = false;
     }
+}
