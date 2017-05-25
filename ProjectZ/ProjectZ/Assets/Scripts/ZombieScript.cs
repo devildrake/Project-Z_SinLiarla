@@ -107,7 +107,7 @@ public class ZombieScript : MonoBehaviour
         }
         attackToggle = true;
         defenseMode = goBarricade = hasArrived = inBuilding = false;
-        Debug.Log("GobarricadeFalse");
+
         defenseTime = 1.5f;
         elAnimator = gameObject.GetComponent<Animator>();
         elAnimator.SetBool("moviendose", false);
@@ -184,7 +184,6 @@ public class ZombieScript : MonoBehaviour
                     barricada = null;
                     barricadaSpot = 0;
                 }
-                Debug.Log("GobarricadeFalse");
                 goBarricade = false;
             }
 
@@ -198,7 +197,6 @@ public class ZombieScript : MonoBehaviour
             hasArrived = true;
             elAnimator.SetBool("atacando", false);
 
-            Debug.Log("NoEnemies");
             villagerToAttackOnClick = null;
             if (barricada != null) {
                 barricada.GetComponent<BarricadaScript>()._atacantes.Remove(gameObject);
@@ -338,7 +336,9 @@ public class ZombieScript : MonoBehaviour
                         else{
                             if (attackToggle) {
                                 if (tipo == zombieClass.runner) {
-                                    //Allahuakbar();
+                                    turretToAttack.GetComponent<TorretaScript>().health -= 50;
+                                    health = 0;
+
                                 }
                             }else {
                                 contadorAtkTor += Time.deltaTime;

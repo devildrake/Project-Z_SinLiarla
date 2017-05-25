@@ -127,9 +127,11 @@ public class CameraScript : MonoBehaviour
                 cameraVector.y += 5;
             }
 
-            if ((_input._mousePosition.x < CAMERA_MOVE_MARGINX) && (gameObject.transform.position.x - targetObject.transform.position.x) > LEFTLIMIT)
+            if (_input._mousePosition.x < CAMERA_MOVE_MARGINX) 
             {
-                cameraVector.x = -CAMERA_SPEED;
+                if ((gameObject.transform.position.x - targetObject.transform.position.x) > LEFTLIMIT){
+                    cameraVector.x = -CAMERA_SPEED;
+                }
             }
             else if ((_input._mousePosition.x > (Screen.width - CAMERA_MOVE_MARGINX)) && (gameObject.transform.position.x - targetObject.transform.position.x) < RIGHTLIMIT)
             {

@@ -106,10 +106,24 @@ public class TorretaScript : MonoBehaviour {
                 if (closestZombie != null) {
                     contadorTiempoAtaque += Time.deltaTime;
                     if (contadorTiempoAtaque > attackSpeed) {
-                        //aqui empieza a atacar
-                        attacking = true;
-                        contadorTiempoAtaque = 0;
-                        closestZombie.GetComponent<ZombieScript>().health -= attackDamage;
+                        if (closestZombie.GetComponent<ZombieScript>().tipo != ZombieScript.zombieClass.runner) {
+                            //aqui empieza a atacar
+                            attacking = true;
+                            contadorTiempoAtaque = 0;
+                            closestZombie.GetComponent<ZombieScript>().health -= (attackDamage - closestZombie.GetComponent<ZombieScript>().defense / 2);
+                        }else {
+                            int que = Random.Range(0, 20);
+                            if (que < 10) {
+                                attacking = true;
+                                contadorTiempoAtaque = 0;
+                            }
+                            else {
+                                attacking = true;
+                                contadorTiempoAtaque = 0;
+                                closestZombie.GetComponent<ZombieScript>().health -= (attackDamage - closestZombie.GetComponent<ZombieScript>().defense / 2);
+
+                            }
+                        }
                     }
                 }else {
                     contadorTiempoAtaque = 0;

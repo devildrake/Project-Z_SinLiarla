@@ -51,12 +51,6 @@ public class EventManager : MonoBehaviour {
         }
     }
 
-    public void SetEvents(bool[] eventitos, int numEvents) {
-        for (int i = 0; i < numEvents; i++) {
-            eventList[i].hasHappened = eventitos[i];
-        }
-    }
-
     private Assets.Scripts.Evento CrearEvento(int i, Assets.Scripts.Evento.tipoEvento tipo) {
         Assets.Scripts.Evento anEvent = new Assets.Scripts.Evento();
         anEvent.numInteracts = i;
@@ -71,10 +65,8 @@ public class EventManager : MonoBehaviour {
     public void activateEvent(int which) {
         if (!eventList[which].hasHappened && !eventList[which].isHappening && !onEvent && eventList[which].tipo == Assets.Scripts.Evento.tipoEvento.NORMAL) {
             onEvent = true;
-            Debug.Log("Activando evento normal");
         }
         else if (!eventList[which].hasHappened && !eventList[which].isHappening && !onEvent && eventList[which].tipo == Assets.Scripts.Evento.tipoEvento.ESPECIAL) {
-            Debug.Log("Activando evento especial");
             onSpecialEvent = true;
         }
         currentEvent = eventList[which];
@@ -90,7 +82,7 @@ public class EventManager : MonoBehaviour {
             currentEvent.currInteract = 0;
             currentEvent.isHappening = false;
             currentEvent.hasHappened = true;
-            Debug.Log("Terminando evento normal");
+
 
         }
         else if (!currentEvent.hasHappened && onSpecialEvent) {
@@ -99,7 +91,6 @@ public class EventManager : MonoBehaviour {
             currentEvent.currInteract = 0;
             currentEvent.isHappening = false;
             currentEvent.hasHappened = true;
-            Debug.Log("Terminando evento especial");
 
         }
     }
@@ -109,6 +100,32 @@ public class EventManager : MonoBehaviour {
         canvasChild.gameObject.SetActive(tellme);
     }
 
+    void ResetEvents(int nivel) {
+        switch (nivel) {
+            case 1:
+                eventList[0].hasHappened = false;
+                eventList[1].hasHappened = false;
+                eventList[2].hasHappened = false;
+                eventList[3].hasHappened = false;
+
+                break;
+            case 2:
+                eventList[4].hasHappened = false;
+
+                break;
+            case 3:
+                eventList[5].hasHappened = false;
+
+                break;
+            case 4:
+                eventList[6].hasHappened = false;
+
+                break;
+            case 5:
+                break;
+
+        }
+    }
 
     // Use this for initialization
     void Start() {
