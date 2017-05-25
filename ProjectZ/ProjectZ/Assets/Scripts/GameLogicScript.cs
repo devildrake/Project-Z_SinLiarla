@@ -333,8 +333,8 @@ public class GameLogicScript : MonoBehaviour
                     if (!eventManager.onEvent)
                     {
 
-                        //Se hace true el booleano attackToggle en cada zombie seleccionado al pulsar la tecla A
-                        if (_input._attackToggle && _keptSelectedZombies.Count > 0)
+                                //Se hace true el booleano attackToggle en cada zombie seleccionado al pulsar la tecla A
+                                if (_input._attackToggle && _keptSelectedZombies.Count > 0)
                         {
                             foreach (GameObject t in _keptSelectedZombies)
                             {
@@ -525,7 +525,56 @@ public class GameLogicScript : MonoBehaviour
                                 }
 
                         }
-                    }
+
+                            if (_input._selectWalkers) {
+                                _keptSelectedZombies.Clear();
+                                foreach (GameObject z in _zombies) {
+                                    if (z.GetComponent<ZombieScript>().tipo == ZombieScript.zombieClass.walker) {
+                                        _keptSelectedZombies.Add(z);
+                                        z.GetComponent<ZombieScript>().isSelected = true;
+
+                                    }
+                                    else {
+                                        z.GetComponent<ZombieScript>().isSelected = false;
+                                    }
+                                }
+                                _input._selectWalkers = false;
+                            }
+                            else if (_input._selectMutanks) {
+                                _keptSelectedZombies.Clear();
+                                foreach (GameObject z in _zombies) {
+                                    if (z.GetComponent<ZombieScript>().tipo == ZombieScript.zombieClass.mutank) {
+                                        _keptSelectedZombies.Add(z);
+                                        z.GetComponent<ZombieScript>().isSelected = true;
+
+                                    }
+                                    else {
+                                        z.GetComponent<ZombieScript>().isSelected = false;
+                                    }
+                                }
+                                _input._selectMutanks = false;
+                            }
+                            else if (_input._selectRunners) {
+                                _keptSelectedZombies.Clear();
+                                foreach (GameObject z in _zombies) {
+                                    if (z.GetComponent<ZombieScript>().tipo == ZombieScript.zombieClass.runner) {
+                                        _keptSelectedZombies.Add(z);
+                                        z.GetComponent<ZombieScript>().isSelected = true;
+
+                                    }
+                                    else {
+                                        z.GetComponent<ZombieScript>().isSelected = false;
+                                    }
+                                }
+                                _input._selectRunners = false;
+                            }
+                            else if (_input._deSelect) {
+                                _input._deSelect = false;
+                                _keptSelectedZombies.Clear();
+                            }
+
+
+                        }
                 }
             }
         }

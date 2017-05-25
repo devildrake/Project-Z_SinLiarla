@@ -23,6 +23,11 @@ public class InputHandlerScript : MonoBehaviour
     KeyCode _keepSelectionKey2 = KeyCode.RightShift;
     KeyCode _invertSelectionKey1 = KeyCode.LeftControl;
     KeyCode _invertSelectionKey2 = KeyCode.RightControl;
+    KeyCode _selectWalkersKey= KeyCode.Alpha1;
+    KeyCode _selectRunnersKey = KeyCode.Alpha2;
+    KeyCode _selectMutanksKey = KeyCode.Alpha3;
+    KeyCode _deSelectKey = KeyCode.Backspace;
+
     KeyCode _dontAttack = KeyCode.S;
     KeyCode _Attack = KeyCode.A;
     //Input State
@@ -33,6 +38,11 @@ public class InputHandlerScript : MonoBehaviour
     public bool _cameraLeft;
     public bool _cameraRight;
     public bool _centerCamera;
+    public bool _selectWalkers;
+    public bool _selectRunners;
+    public bool _selectMutanks;
+    public bool _deSelect;
+
 
     public bool _mustAttack;
     public bool _attackToggle;
@@ -177,6 +187,22 @@ public class InputHandlerScript : MonoBehaviour
         {
             _continue = true;
         }
+
+        if (Input.GetKeyDown(_deSelectKey)) {
+            _deSelect = true;
+        }
+
+        else if (Input.GetKeyDown(_selectWalkersKey)) {
+            _selectWalkers = true;
+        }
+        else if (Input.GetKeyDown(_selectRunnersKey)) {
+            _selectRunners = true;
+        }
+        else if (Input.GetKeyDown(_selectMutanksKey)) {
+            _selectMutanks = true;
+        }
+        
+
         #endregion
     }
 }
