@@ -97,6 +97,7 @@ public class BarricadaScript : MonoBehaviour {
         }
     }
 
+
     public Vector3 AsignarSitio(GameObject zombie) {
         bool assigned = false;
         int contador = 0;
@@ -121,7 +122,12 @@ public class BarricadaScript : MonoBehaviour {
                 assigned = true;
             }
         }
-        return closestFreeSpot;
+        if (assigned)
+            return closestFreeSpot;
+        else {
+            Debug.Log("No cabe");
+            return closestFreeSpot;
+        }
     }
 
     //Función que esconde o muestra el circulo en función del parametro whot

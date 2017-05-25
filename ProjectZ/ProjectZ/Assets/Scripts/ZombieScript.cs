@@ -32,6 +32,7 @@ public class ZombieScript : MonoBehaviour
     public bool attackToggle;    //BOOLEANO DEL TOGGLE DE ATAQUE
 
     public bool goBarricade;    //BOOLEANO QUE GESTIONA SI EL ZOMBIE ESTA YENDO HACIA UNA BARRICADA
+    public bool keepGoingBarricade;
     public bool inBuilding;     //BOOLEANO QUE GESTIONA SI EL ZOMBIE SE ENCUENTRA EN UN EDIFICIO
     public bool movingToEnemy; //BOOLEANO QUE GESTIONA SI EL ZOMBIE ESTA YENDO HACIA UN ENEMIGO
     public bool defenseMode;    //BOOLEANO SOLO UTILIZADO POR LOS MUTANKS PARA SABER SI DEBE RECIBIR MENOS DAÑO Y SI DEBE PONERSE EN POSICION DEFENSA
@@ -91,6 +92,7 @@ public class ZombieScript : MonoBehaviour
         {
             ResetStuff("command");
             goBarricade = true;
+            Debug.Log("GoBarricade");
             barricada = laBarricada.GetComponentInParent<BarricadaScript>();
         }
     }
@@ -105,6 +107,7 @@ public class ZombieScript : MonoBehaviour
         }
         attackToggle = true;
         defenseMode = goBarricade = hasArrived = inBuilding = false;
+        Debug.Log("GobarricadeFalse");
         defenseTime = 1.5f;
         elAnimator = gameObject.GetComponent<Animator>();
         elAnimator.SetBool("moviendose", false);
@@ -169,9 +172,22 @@ public class ZombieScript : MonoBehaviour
         //SI EL ZOMBIE RECIBE UNA ORDEN
         if (orden == "command")
         {
-            GetComponent<ZombieAttack>().attacking = goBarricade = hasArrived = movingToEnemy = elMovimiento.countedOnce = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
+
+            GetComponent<ZombieAttack>().attacking = hasArrived = movingToEnemy = elMovimiento.countedOnce = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
             villagerToAttackOnClick = null;
             elAnimator.SetBool("atacando", false);
+  
+            if (!keepGoingBarricade) {
+                if (barricada != null) {
+                    barricada.GetComponent<BarricadaScript>()._atacantes.Remove(gameObject);
+                    barricada.VaciarSitio(barricadaSpot);
+                    barricada = null;
+                    barricadaSpot = 0;
+                }
+                Debug.Log("GobarricadeFalse");
+                goBarricade = false;
+            }
+
 
         }
         //SI NO QUEAN ENEMIGO
@@ -184,6 +200,12 @@ public class ZombieScript : MonoBehaviour
 
             Debug.Log("NoEnemies");
             villagerToAttackOnClick = null;
+            if (barricada != null) {
+                barricada.GetComponent<BarricadaScript>()._atacantes.Remove(gameObject);
+                barricada.VaciarSitio(barricadaSpot);
+                barricada = null;
+                barricadaSpot = 0;
+            }
         }
 
         //SI DEBEN PARAR DE MOVERSE

@@ -176,17 +176,13 @@ public class EventManager : MonoBehaviour {
             if (!GameLogicScript.gameLogic.isPaused) { 
 
             if (onEvent && currentEvent.isHappening) {
-                    Debug.Log("EventoNormal");
                 currentText.text = currentEvent.messages[currentEvent.currInteract];
                 setCanvas(true);
 
                 if (_input._continue) {
-                        Debug.Log("_continueNormal");
                     currentEvent.currInteract++;
-                        Debug.Log(currentEvent.currInteract);
                     if (currentEvent.currInteract < currentEvent.numInteracts) {
                         _input._continue = false;
-                            Debug.Log("ProsigueElTextoNormal");
                         }
                         else {
                         endCurrentEvent();
@@ -194,18 +190,16 @@ public class EventManager : MonoBehaviour {
                     }
                 }
             } else if (onSpecialEvent && currentEvent.isHappening) {
-                    Debug.Log("EventoEspecial");
+
 
                     currentText.text = currentEvent.messages[currentEvent.currInteract];
                 setCanvas(true);
 
                 if (_input._continue) {
-                        Debug.Log("_continueEspecial");
 
                         currentEvent.currInteract++;
                     if (currentEvent.currInteract < currentEvent.numInteracts) {
                         _input._continue = false;
-                            Debug.Log("ProsigueElTextoEspecial");
 
                         }
                         else {
