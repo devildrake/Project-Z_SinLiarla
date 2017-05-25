@@ -47,7 +47,7 @@ public class GameLogicScript : MonoBehaviour
     //Referenca al script de inputs
 
     public LayerMask mascaraRompible;
-
+    GameObject aZombieToAdd;
     public LayerMask mascaraTorreta;
 
     InputHandlerScript _input;//INSTANCIA DEL INPUT HANDLER,SE CARGA EN CADA CAMBIO DE ESCENA
@@ -79,6 +79,7 @@ public class GameLogicScript : MonoBehaviour
     // public Vector3 position3;
 
     public GameObject elPathfinder; //INSTANCIA DEL OBJETO DEL PATHFINDER
+    public float timeSelecting = 0;
 
     GameObject walker;  //"PUNTERO" AL PREFAB DEL WALKER
     GameObject soldier; //"PUNTERO" AL PREFAB DEL SOLDIER
@@ -245,6 +246,7 @@ public class GameLogicScript : MonoBehaviour
         _villagers.Clear();
         _zombies.Clear();
         _keptSelectedZombies.Clear();
+        Debug.Log("Vacia keptSelected");
         _selectedZombies.Clear();
     }
 
@@ -362,6 +364,8 @@ public class GameLogicScript : MonoBehaviour
 
                         if ((Input.GetMouseButtonDown(0)))
                         {
+
+
                             RaycastHit hit;
 
                             //Se crea la variable de rayo
@@ -377,18 +381,24 @@ public class GameLogicScript : MonoBehaviour
 
                             if (Physics.Raycast(ray, out hit, 80, mascaraZombies))
                             {
+                                    aZombieToAdd = null;
                                 GameObject aZombie;
+
                                 aZombie = hit.collider.gameObject;
-                                if (!_keptSelectedZombies.Contains(aZombie))
+                                    aZombieToAdd = aZombie;
+
+                                    if (!_keptSelectedZombies.Contains(aZombie))
                                 {
-                                    _keptSelectedZombies.Add(aZombie);
+                                        Debug.Log("Se añade keptSelected");
+                                        _keptSelectedZombies.Add(aZombie);
                                     //  aZombie.GetComponent<ZombieScript>().isSelected = true;
                                 }
                             }
 
                             if (Physics.Raycast(ray, out hit, 80, mascaraRompible))
                             {
-                                if (selectedBarricade != null)
+                                    aZombieToAdd = null;
+                                    if (selectedBarricade != null)
                                     selectedBarricade.GetComponentInParent<BarricadaScript>().ShowCircle(false);
                                 selectedBarricade = hit.collider.gameObject;
                                 selectedBarricade.GetComponentInParent<BarricadaScript>().ShowCircle(true);
@@ -587,6 +597,17 @@ public class GameLogicScript : MonoBehaviour
             //Si no estamos seleccionando, comprobamos que si se ha pulsado la tecla de selección
             if (_input._selectingBegins)
             {
+                if (!_input._keepSelection) {
+                    _keptSelectedZombies.Clear();
+                    Debug.Log("Vacia Por No Keep");
+                    if(!_keptSelectedZombies.Contains(aZombieToAdd))
+                        _keptSelectedZombies.Add(aZombieToAdd);
+                    aZombieToAdd = null;
+
+                }
+
+
+
                 RaycastHit hit;
                 Ray ray;
 
@@ -606,6 +627,7 @@ public class GameLogicScript : MonoBehaviour
         }
         else
         {
+            timeSelecting += Time.deltaTime;
             //Si ya hemos comenzado una selección, comprobamos que ésta no ha acabado
             if (_input._selectingEnds)
             {
@@ -640,29 +662,16 @@ public class GameLogicScript : MonoBehaviour
             if (_input._selectingBegins)
             {
                 //Si no mantenemos la selección ni la invertimos y comenzamos una nueva seleccion
-                if (!_input._keepSelection && !_input._invertSelection)
+                if (!_input._keepSelection && !_input._invertSelection&&timeSelecting>0.3)
                 {
                     //Desmarcamos los zombies 
-
-                    //AQUI FALTA CAMBIAR QUE DEJE DE APARECER EL CÍRCULO QUE AÚN ESTA POR INCLUÍR
-
-                    foreach (GameObject zombie in _selectedZombies)
-                    {
-                        if (zombie != null)
-                        {
-                           /* Component[] renders = zombie.GetComponentsInChildren(typeof(Renderer));
-                            foreach (Renderer render in renders)
-                                render.material.color -= Color.yellow;*/
-                        }
-                    }
-
                     //Limpiamos las listas de zombies seleccionados
                     _selectedZombies.Clear(); //Esta no es necesario limpiarla ya
                     foreach (GameObject z in _keptSelectedZombies) {
                         z.GetComponent<ZombieScript>().isSelected = false;
                     }
-                    _keptSelectedZombies.Clear();
-                    
+                    //_keptSelectedZombies.Clear();
+
                 }
 
                 //Indicamos que hemos empezado una selección
@@ -673,12 +682,14 @@ public class GameLogicScript : MonoBehaviour
         {
             if (_input._selectingEnds)
             {
+                timeSelecting = 0;
                 //Guardamos la lista actual de zombies seleccionados
                 foreach (GameObject zombie in _selectedZombies)
                     if (zombie != null)
                     {
                         _keptSelectedZombies.Add(zombie);
-                       // zombie.GetComponent<ZombieScript>().isSelected = true;
+
+                        // zombie.GetComponent<ZombieScript>().isSelected = true;
                     }
                 //Indicamos que hemos finalizado nuestra selección
                 _selecting = false;
@@ -774,7 +785,8 @@ public class GameLogicScript : MonoBehaviour
                         {
                             if (!_input._invertSelection)
                             {
-                                if (!zombiesInSelectionBox.Contains(zombie) && _selectedZombies.Contains(zombie))
+                                
+                                if (!zombiesInSelectionBox.Contains(zombie) && _selectedZombies.Contains(zombie)&&timeSelecting>0.3)
                                 {
                                     zombiesToRemove.Add(zombie);
                                 }
