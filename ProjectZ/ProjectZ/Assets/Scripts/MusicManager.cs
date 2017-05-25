@@ -42,6 +42,10 @@ public class MusicManager : MonoBehaviour
             DontDestroyOnLoad(gameObject); // Don't destroy this object
             Instance = this;
         }
+        else if (gameObject != this)
+        {
+            Destroy(gameObject);
+        }
         else
         {
             Debug.LogError("There is already a Music Manager in the scene.");
