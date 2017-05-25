@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 9a005ed3c68cf6049b1bea8308b855ac
+timeCreated: 1495708807
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Proyecto_Z_II
+  fontNames:
+  - Proyecto_Z_II
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
