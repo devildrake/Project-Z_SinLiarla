@@ -318,7 +318,7 @@ public class ZombieScript : MonoBehaviour
                                 else {
                                     elMovimiento.moving = false;
                                     elAnimator.SetBool("atacando", true);
-                                    PlaySound(5);//play groan 3
+                                    
                                     {
                                         contadorAtk += Time.deltaTime;
                                     }

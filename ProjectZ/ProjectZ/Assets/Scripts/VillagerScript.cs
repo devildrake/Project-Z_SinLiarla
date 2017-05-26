@@ -152,7 +152,7 @@ public class VillagerScript : MonoBehaviour
     public void gunNoises()
     {
         if (!GetComponent<AudioSource>().isPlaying)
-            PlaySound(2);//play groan 1
+            PlaySound(1);//play groan 1
 
     }
 
@@ -335,7 +335,7 @@ public class VillagerScript : MonoBehaviour
                         canMove = false;
                         elAnimator.SetBool("correr", false);
                         elAnimator.SetBool("atacando", true);
-                        PlaySound(1);
+                        //PlaySound(1);
                         villagerAttack.Attack(laVision.closestZombie);
                         villagerMovement.moving = false;
                         // AttackEnemy();
