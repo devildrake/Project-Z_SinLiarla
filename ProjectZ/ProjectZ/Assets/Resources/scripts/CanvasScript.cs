@@ -69,6 +69,15 @@ public class CanvasScript : MonoBehaviour {
         Application.Quit();
     }
 
+    public void Back() {
+        opcionesBase.SetActive(false);
+        menuState = state.MAIN_MENU;
+        //cuando se vuelve al menu principal se deben reactivar los botones
+        b1.GetComponent<Button>().interactable = true;
+        b2.GetComponent<Button>().interactable = true;
+        b3.GetComponent<Button>().interactable = true;
+    }
+
 
 
 
