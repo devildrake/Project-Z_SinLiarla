@@ -71,7 +71,11 @@ public class CameraScript : MonoBehaviour
 
     void Update()
     {
-        if (gameLogic.eventManager != null) { 
+        if (gameLogic.eventManager != null) {
+
+            if (objetoAFocusear == null) {
+                objetoAFocusear = GameObject.FindGameObjectWithTag("CameraFocus");
+            }
 
         if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
         {
@@ -81,8 +85,12 @@ public class CameraScript : MonoBehaviour
             }
             else if (_input._centerCamera)
             {
+                    if(mode==0)
                 gameObject.transform.position = new Vector3(GetPos(objetoAFocusear, 0), GetPos(gameObject, 1), GetPos(objetoAFocusear, 2) - 5);
-            }
+                    else if (mode == 1) {
+                        gameObject.transform.position = new Vector3(GetPos(objetoAFocusear, 0)-5, GetPos(gameObject, 1), GetPos(objetoAFocusear, 2));
+                    }
+                }
 
 
             //Declaramos un vector velocidad de la Cámara
