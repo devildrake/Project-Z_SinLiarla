@@ -175,7 +175,12 @@ public class ZombieScript : MonoBehaviour
         GetComponent<AudioSource>().Play();
     }
 
+    public void ZombieMakeMoan()
+    {
+        if(!GetComponent<AudioSource>().isPlaying)
+        PlaySound(2);//play groan 1
 
+    }
 
     //METODO QUE REINCIA LOS BOOLEANOS EN FUNCION DE LA ORDEN RECIBIDA
     public void ResetStuff(string orden)
@@ -188,7 +193,6 @@ public class ZombieScript : MonoBehaviour
             villagerToAttackOnClick = null;
             elAnimator.SetBool("atacando", false);
 
-            PlaySound(3);//play groan 1
 
             if (!keepGoingBarricade) {
                 if (barricada != null) {
@@ -430,7 +434,10 @@ public class ZombieScript : MonoBehaviour
             if (gameLogic.isPaused || gameLogic.eventManager.onEvent)
             {
                 elAnimator.speed = 0;
-                GetComponent<AudioSource>().Stop();
+                GetComponent<AudioSource>().Pause();
+            }else
+            {
+                GetComponent<AudioSource>().UnPause();
             }
         }
     }

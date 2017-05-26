@@ -46,6 +46,7 @@ public class VillagerScript : MonoBehaviour
     public bool alerted;
     float initSpeedAn;
 
+    public AudioClip[] audioClip; //array de soniditos
 
     List<GameObject> _nearbyPartners;
     public GameObject patrolPointObject;
@@ -143,6 +144,18 @@ public class VillagerScript : MonoBehaviour
         }
     }
 
+    void PlaySound(int clip)//funcion para hacer sonar el ruido
+    {
+        GetComponent<AudioSource>().clip = audioClip[clip];
+        GetComponent<AudioSource>().Play();
+    }
+
+    public void gunNoises()
+    {
+        if (!GetComponent<AudioSource>().isPlaying)
+            PlaySound(2);//play groan 1
+
+    }
 
     void Patrol()
     {
@@ -323,7 +336,7 @@ public class VillagerScript : MonoBehaviour
                         canMove = false;
                         elAnimator.SetBool("correr", false);
                         elAnimator.SetBool("atacando", true);
-
+                        PlaySound(1);
                         villagerAttack.Attack(laVision.closestZombie);
                         villagerMovement.moving = false;
                         // AttackEnemy();

@@ -493,6 +493,10 @@ public class GameLogicScript : MonoBehaviour
                                     //Esta i se utiliza de contador para repartir a los zombies alrededor del punto elegido como destino
                                     int i = 0;
 
+                                    if (_keptSelectedZombies.Count != 0)
+                                    {
+                                        _keptSelectedZombies[0].GetComponent<ZombieScript>().ZombieMakeMoan();
+                                    }
                                     //Por cada zombie en la lista de zombies seleccionados, se establece el movimiento final en funcion de la 
                                     //Cantidad de zombies que se han movido ya hacia el punto y van rotando en un angulo de 45 grados alrededor del punto
                                     foreach (GameObject zombie in _keptSelectedZombies) {
