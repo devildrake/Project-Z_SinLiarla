@@ -246,7 +246,6 @@ public class GameLogicScript : MonoBehaviour
         _villagers.Clear();
         _zombies.Clear();
         _keptSelectedZombies.Clear();
-        Debug.Log("Vacia keptSelected");
         _selectedZombies.Clear();
     }
 
@@ -648,7 +647,6 @@ public class GameLogicScript : MonoBehaviour
             {
                 if (!_input._keepSelection) {
                     _keptSelectedZombies.Clear();
-                    Debug.Log("Vacia Por No Keep");
                     if(!_keptSelectedZombies.Contains(aZombieToAdd))
                         _keptSelectedZombies.Add(aZombieToAdd);
                     aZombieToAdd = null;

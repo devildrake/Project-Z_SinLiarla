@@ -23,3 +23,6 @@ public class ReplaceGameObjects : ScriptableWizard {
         }
     }
 }
+//public class ReplaceGameObjects : MonoBehaviour {
+
+//}
