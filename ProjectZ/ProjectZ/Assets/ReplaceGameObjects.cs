@@ -12,7 +12,7 @@ public class ReplaceGameObjects : ScriptableWizard {
 
     void OnWizardCreate() {
         foreach (Transform t in Selection.transforms) {
-            GameObject newObject = (GameObject)EditorUtility.InstantiatePrefab(useGameObject);
+            GameObject newObject = (GameObject)PrefabUtility.InstantiatePrefab(useGameObject);
             Transform newT = newObject.transform;
             newT.position = t.position;
             newT.rotation = t.rotation;

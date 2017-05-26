@@ -122,6 +122,7 @@ public class EventManager : MonoBehaviour {
 
                 break;
             case 5:
+                eventList[7].hasHappened = false;
                 break;
 
         }
@@ -176,9 +177,42 @@ public class EventManager : MonoBehaviour {
 
             eventList[6].messages[0] = "Los supervivientes le han cogido demasiado cariño a las minas..";
 
-        }
-        else {
+            eventList[7].messages[0] = "Nivel 5";
 
+        }
+        else if (language == 1){
+
+            eventList[0].messages[0] = "Soo.. let's try this out";
+            eventList[0].messages[1] = "Click, hold and drag the left mouse button in order to select the units \nwithin the green rectangle, you may also left click on a zombie to select it";
+            eventList[0].messages[2] = "Selected units are highlighted by a selection circle, which changes its \ncolor depending on the zombie's current health";
+            eventList[0].messages[3] = "Right click somewhere to move the selected zombies there";
+            eventList[0].messages[4] = "Make that zombie go inside those three highlited areas to continue..";
+
+            eventList[1].messages[0] = "Zombies will attack whatever it is that they have nearby, but just in \ncase, make them go near humans you want to kill, they aren't geniuses..";
+            eventList[1].messages[1] = "Let's see how our beloved rottened take to kill a mere survivor";
+            eventList[1].messages[2] = "And while we're at it, let's try out mutanks..";
+            eventList[1].messages[3] = "Mutanks are those zombies with the gigantic arm, they're pretty slower,\n but also more resistant";
+            eventList[1].messages[4] = "And they can use their arm to defend demselves pretty efficiently";
+
+
+
+            eventList[2].messages[0] = "As you can see, killed humans turn into more zombies, although survivors\n just run away";
+            eventList[2].messages[1] = "Let's try that again with a soldier that can actually defend himself";
+
+            eventList[3].messages[0] = "Well.. seems we're al set up";
+            eventList[3].messages[1] = "Let's break down those barricades..";
+            eventList[3].messages[2] = "Right click on them to make selected zombies attack them";
+            eventList[3].messages[3] = "You can see how much health the barricade still has by left clicking on it";
+
+
+
+            eventList[4].messages[0] = "Hmm.. runners should be able to ignite the mines without getting hurt";
+
+            eventList[5].messages[0] = "It looks like runners are in good shape";
+
+            eventList[6].messages[0] = "Survivors really have taken a liking on mines..";
+
+            eventList[7].messages[0] = "Level 5";
         }
 
         currentText.gameObject.SetActive(true);

@@ -75,7 +75,6 @@ public class VillagerScript : MonoBehaviour
         villagerAttack = GetComponent<VillagerAttack>();
         hasTransformed = false;
         initSpeedAn = elAnimator.speed;
-        Renderer render = this.gameObject.GetComponentInChildren<Renderer>();
         
         switch (tipo){
             case humanClass.villager:
