@@ -66,6 +66,8 @@ public class ZombieScript : MonoBehaviour
     public GameObject villagerToAttackOnClick;
     public GameObject turretToAttack;
 
+    public AudioClip[] audioClip; //array de soniditos
+
     //METODO QUE COMPRUEBA SI EL ZOMBIE SIGUE VIVO
     bool CheckAlive()
     {
@@ -166,6 +168,15 @@ public class ZombieScript : MonoBehaviour
     }
 
 
+
+    void PlaySound(int clip)//funcion para hacer sonar el ruido
+    {
+        GetComponent<AudioSource>().clip = audioClip[clip];
+        GetComponent<AudioSource>().Play();
+    }
+
+
+
     //METODO QUE REINCIA LOS BOOLEANOS EN FUNCION DE LA ORDEN RECIBIDA
     public void ResetStuff(string orden)
     {
@@ -176,7 +187,9 @@ public class ZombieScript : MonoBehaviour
             GetComponent<ZombieAttack>().attacking = hasArrived = movingToEnemy = elMovimiento.countedOnce = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
             villagerToAttackOnClick = null;
             elAnimator.SetBool("atacando", false);
-  
+
+            PlaySound(3);//play groan 1
+
             if (!keepGoingBarricade) {
                 if (barricada != null) {
                     barricada.GetComponent<BarricadaScript>()._atacantes.Remove(gameObject);
@@ -301,6 +314,7 @@ public class ZombieScript : MonoBehaviour
                                 else {
                                     elMovimiento.moving = false;
                                     elAnimator.SetBool("atacando", true);
+                                    PlaySound(5);//play groan 3
                                     {
                                         contadorAtk += Time.deltaTime;
                                     }
@@ -357,6 +371,7 @@ public class ZombieScript : MonoBehaviour
             }
             else {
                 elAnimator.SetBool("isAlive", false);
+                PlaySound(2);//play groan 1
                 Destroy(gameObject, 4.0f);
             }
 
@@ -409,12 +424,13 @@ public class ZombieScript : MonoBehaviour
             }
         } }
 
-        //EN CASO DE ESTAR PAUSADO PONE LA VELOCIDAD DE ANIMACION A 0
+        //EN CASO DE ESTAR PAUSADO PONE LA VELOCIDAD DE ANIMACION A 0 y para el sonido
         if (gameLogic.eventManager != null)
         {
             if (gameLogic.isPaused || gameLogic.eventManager.onEvent)
             {
                 elAnimator.speed = 0;
+                GetComponent<AudioSource>().Stop();
             }
         }
     }
