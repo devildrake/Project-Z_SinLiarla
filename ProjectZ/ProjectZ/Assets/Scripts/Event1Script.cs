@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Event1Script : MonoBehaviour {
     public GameLogicScript gameLogic;
+    public GameObject animacionSeleccion;
     public GameObject spawner;
     public bool[] hasHappened;
     bool once = false;
@@ -12,6 +13,7 @@ public class Event1Script : MonoBehaviour {
     public GameObject[] puntosDePatrulla = new GameObject[6];
     // Use this for initialization
     void Start() {
+        animacionSeleccion.SetActive(false);
         gameLogic = GameLogicScript.gameLogic;
         gameLogic.ClearLists();
 
@@ -47,6 +49,7 @@ public class Event1Script : MonoBehaviour {
         {
             once = true;
             gameLogic.eventManager.activateEvent(0);
+                animacionSeleccion.SetActive(true);
         }
         if (objetosZona[0] != null && objetosZona[1] != null && objetosZona[2] != null && gameLogic.eventManager.eventList[0].hasHappened) {
             if (objetosZona[0].GetComponent<ZonaTutorial>().steppedOn && objetosZona[1].GetComponent<ZonaTutorial>().steppedOn && objetosZona[2].GetComponent<ZonaTutorial>().steppedOn)
@@ -55,14 +58,14 @@ public class Event1Script : MonoBehaviour {
 
                 if (gameLogic.eventManager.eventList[1].hasHappened && !hasHappened[1] && !gameLogic.isPaused && !gameLogic.eventManager.onEvent)
                 {
-                    if (gameLogic != null)
+                        if (gameLogic != null)
                     {
                         for (int i = 0; i < 3; i++)
                         {
                             objetosZona[i].GetComponent<ZonaTutorial>().DestroyThis();
                         }
-
-                        gameLogic.SpawnVillager(spawner.GetComponent<EdificioCreaSoldiers>().spawnPoint);
+                            animacionSeleccion.SetActive(false);
+                            gameLogic.SpawnVillager(spawner.GetComponent<EdificioCreaSoldiers>().spawnPoint);
                         gameLogic._villagers[0].GetComponent<VillagerScript>().patrolPointObject = spawner.GetComponent<EdificioCreaSoldiers>().specialPatrolPoint;
                         gameLogic.SpawnWalker(new Vector3(2.5f, 0.0249f, -9.5f));
                         gameLogic.SpawnWalker(new Vector3(6f, 0.0249f, -9.5f));
@@ -75,7 +78,8 @@ public class Event1Script : MonoBehaviour {
                         {
                             objetosZona[i].GetComponent<ZonaTutorial>().DestroyThis();
                         }
-                        gameLogic = GameLogicScript.gameLogic;
+
+                            gameLogic = GameLogicScript.gameLogic;
                         gameLogic.SpawnVillager(spawner.GetComponent<EdificioCreaSoldiers>().spawnPoint);
                         gameLogic._villagers[0].GetComponent<VillagerScript>().patrolPointObject = spawner.GetComponent<EdificioCreaSoldiers>().specialPatrolPoint;
                             //gameLogic.SpawnWalker(new Vector3(2.5f, 0.0249f, -9.5f));

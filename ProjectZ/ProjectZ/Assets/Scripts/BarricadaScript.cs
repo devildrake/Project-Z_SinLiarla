@@ -125,7 +125,6 @@ public class BarricadaScript : MonoBehaviour {
         if (assigned)
             return closestFreeSpot;
         else {
-            Debug.Log("No cabe");
             return closestFreeSpot;
         }
     }
