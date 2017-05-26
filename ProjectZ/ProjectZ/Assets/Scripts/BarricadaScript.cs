@@ -101,7 +101,7 @@ public class BarricadaScript : MonoBehaviour {
     public Vector3 AsignarSitio(GameObject zombie) {
         bool assigned = false;
         int contador = 0;
-        Vector3 closestFreeSpot = new Vector3(0, 0, 0);
+        Vector3 closestFreeSpot = gameObject.transform.position;
         ordenarArray(_posicionesOrdenadas, zombie);
         while (!assigned && contador < 5) {
             if (_posiciones[contador].ocupado)
@@ -135,7 +135,7 @@ public class BarricadaScript : MonoBehaviour {
     }
 
     public void loseHp() {
-        health -= 5;
+        health -= 10;
     }
     // Update is called once per frame
     void Update() {
