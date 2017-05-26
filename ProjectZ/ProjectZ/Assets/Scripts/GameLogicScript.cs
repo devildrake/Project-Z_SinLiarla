@@ -586,7 +586,7 @@ public class GameLogicScript : MonoBehaviour
     }
 
     //Un método que devuelve un booleano de forma ineficiente para no tener que escribir todo el codigo de negación
-    bool IsNotAlive(GameObject z)
+    public bool IsNotAlive(GameObject z)
     {
         if (z != null)
         {
