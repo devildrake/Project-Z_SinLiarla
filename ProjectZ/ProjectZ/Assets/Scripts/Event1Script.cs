@@ -10,6 +10,7 @@ public class Event1Script : MonoBehaviour {
     public bool[] hasHappened;
     bool once = false;
     public GameObject[] objetosZona = new GameObject[3];
+    public GameObject runAwayPoint;
     public GameObject[] puntosDePatrulla = new GameObject[6];
     // Use this for initialization
     void Start() {

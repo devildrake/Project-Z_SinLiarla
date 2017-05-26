@@ -203,6 +203,14 @@ public class VillagerScript : MonoBehaviour
         }
     }
 
+    bool isCloseEnough(GameObject a, float lindar) {
+        if (Mathf.Abs((a.transform.position - gameObject.transform.position).magnitude) < lindar) {
+            return true;
+        }
+        else return false;
+    }
+
+
     public void LookTowards(Vector3 where)
     {
         gameObject.transform.LookAt(where);
@@ -273,7 +281,7 @@ public class VillagerScript : MonoBehaviour
             {
                 if (runAway)
                 {
-                    if (gameObject.transform.position != gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject.transform.position)
+                    if (!isCloseEnough (gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject,0.2f))
                     {
 
                         movSpeed = 1.2f;

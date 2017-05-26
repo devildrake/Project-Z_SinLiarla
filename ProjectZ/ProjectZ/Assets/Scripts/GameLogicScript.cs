@@ -421,7 +421,6 @@ public class GameLogicScript : MonoBehaviour
 
                                 if (Physics.Raycast(ray, out hit, 80, mascaraVillagers)) {
                                     foreach (GameObject z in _keptSelectedZombies) {
-                                        Debug.Log("ResetPorVillager");
                                         z.GetComponent<ZombieScript>().ResetStuff("command");
                                         z.GetComponent<ZombieScript>().keepGoingBarricade = false;
                                         z.GetComponent<ZombieMovement>().MoveTo(hit.collider.gameObject.transform.position);
@@ -438,7 +437,6 @@ public class GameLogicScript : MonoBehaviour
                                 else if (Physics.Raycast(ray, out hit, 80, mascaraRompible)) {
                                     GameObject laBarricada = hit.collider.gameObject;
                                     foreach (GameObject z in _keptSelectedZombies) {
-                                        //z.GetComponent<ZombieMovement>().moving = false;
                                         z.GetComponent<ZombieMovement>().wasCommanded = false;
                                         z.GetComponent<ZombieScript>().hasArrived = true;
                                         if (z.GetComponent<ZombieScript>().goBarricade && z.GetComponent<ZombieScript>().barricada != null)
