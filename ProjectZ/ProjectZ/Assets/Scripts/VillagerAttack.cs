@@ -68,8 +68,13 @@ public class VillagerAttack : MonoBehaviour
                         }
                         else{
                             zombieToAttack.health -= theVillager.attack;
+                            //theVillager.gunNoises();
                             attackTimer = 0;
                         }
+
+                        if (attackTimer >= theVillager.attackSpeed - 0.5f)
+                            theVillager.gunNoises();
+
                     }
                 }
 
@@ -86,9 +91,11 @@ public class VillagerAttack : MonoBehaviour
         //esta implementado como un sistema de particulas y se activa y desactiva
         //utilizando el booleano "attacking"
         if (attacking) {
+            if(!boomParticles.isPlaying)
             boomParticles.Play();
         }
         else {
+            if(boomParticles.isPlaying)
             boomParticles.Stop();
         }
         elAnimator.SetBool("atacando", attacking);

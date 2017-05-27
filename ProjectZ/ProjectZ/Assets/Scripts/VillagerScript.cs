@@ -45,6 +45,7 @@ public class VillagerScript : MonoBehaviour
     public bool hasAlerted;
     public bool alerted;
     float initSpeedAn;
+    float prevsfxv;
 
     public AudioClip[] audioClip; //array de soniditos
 
@@ -123,6 +124,9 @@ public class VillagerScript : MonoBehaviour
         }
     }
 
+    public void UpdateVolume(float sfxv) {
+        GetComponent<AudioSource>().volume = sfxv;
+    }
 
     bool CheckAlive()
     {
@@ -379,7 +383,7 @@ public class VillagerScript : MonoBehaviour
             else
             {
                 gameObject.SetActive(false);
-
+                PlaySound(0);
                 Destroy(gameObject, 3.0f);
             }
         }

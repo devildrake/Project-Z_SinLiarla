@@ -12,7 +12,7 @@ public class MusicManager : MonoBehaviour
     public static MusicManager Instance;	        // Singleton
     [SerializeField]
     private float
-        volume;
+        volume, sfxVolume;
 
     public float Volume
     {
@@ -24,6 +24,15 @@ public class MusicManager : MonoBehaviour
         {
             volume = value;
             source.volume = value;
+        }
+    }
+
+    public float SFXVolume {
+        get {
+            return sfxVolume;
+        }
+        set {
+            sfxVolume = value;
         }
     }
 

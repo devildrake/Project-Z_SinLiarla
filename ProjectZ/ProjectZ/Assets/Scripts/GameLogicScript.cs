@@ -29,7 +29,7 @@ public class GameLogicScript : MonoBehaviour
 
     //vertical position of the gameobject
     private float yAxis;
-
+    private float prevSFXVolume;
     public bool loadingScene = false;
     public bool hasGamedOver = false;
     public bool waitAFrame = false;
@@ -91,6 +91,19 @@ public class GameLogicScript : MonoBehaviour
     GameObject villager;//"PUNTERO" AL PREFAB DEL VILLAGER
 
     public EventManager eventManager; //INSTANCIA DE LA CLASE EVENTMANAGER
+    public MusicManager musicManager;
+
+    
+    private bool muted;
+    public bool Muted {
+        get {
+            return muted;
+        }
+        set {
+            muted = value;
+        }
+    }
+    public bool prevMuted;
 
     #region MetodosDeAparicion
 
@@ -191,12 +204,13 @@ public class GameLogicScript : MonoBehaviour
     //INICIALIZA LAS VARIABLES PERTINENTES Y ASIGNA LOS PREFABS Y LAS INSTANCIAS DE LOS OBJETOS ESPECIALES (PAUSESCRIPT,PATHFINDER)
     void Start()
     {
+        prevMuted = false;
         defeatCounter = 0;
 
         camara = FindObjectOfType<CameraScript>();
 
         eventManager = EventManager.eventManager;
-
+        musicManager = MusicManager.Instance;
         //eventManager.SetEvents(eventos,10);
 
         elPathfinder = GameObject.FindGameObjectWithTag("A*");
@@ -244,6 +258,10 @@ public class GameLogicScript : MonoBehaviour
 
     void Update()
     {
+        if(prevMuted != muted) {
+            prevMuted = muted;
+        }
+
         if (!waitAFrame)
         {
             waitAFrame = true;
@@ -291,14 +309,27 @@ public class GameLogicScript : MonoBehaviour
                 eventManager = EventManager.eventManager;
         }
 
+            if (musicManager == null)
+                musicManager = MusicManager.Instance;
+
         //Por encima de todo lo demás se maneja el booleano del pausado
         if (eventManager != null && !eventManager.onEvent && Input.GetKeyDown(KeyCode.Escape))
         {
             changePause();
         }
 
-        //EN CASO DE QUE NO ESTE PAUSADO, EL FUNCONAMIENTO NORMAL CONSISTE EN ACTUALIZAR LAS SELECCIONES Y REALIZAR LOS RAYCASTS EN FUNCION DEL CLICK IZQUIERDO
-        //EL CLICK DERECHO MUEVE A LOS ZOMBIES SELECCIONADOS HACIA LA POSICION SOBRE LA CUAL SE HACE CLICK DERECHO
+            //EN CASO DE QUE NO ESTE PAUSADO, EL FUNCONAMIENTO NORMAL CONSISTE EN ACTUALIZAR LAS SELECCIONES Y REALIZAR LOS RAYCASTS EN FUNCION DEL CLICK IZQUIERDO
+            //EL CLICK DERECHO MUEVE A LOS ZOMBIES SELECCIONADOS HACIA LA POSICION SOBRE LA CUAL SE HACE CLICK DERECHO
+
+            if (musicManager.SFXVolume != prevSFXVolume&&!muted) {
+                SetSFXVolume(musicManager.SFXVolume);
+                prevSFXVolume = musicManager.SFXVolume;
+            }else if (muted) {
+                prevSFXVolume = musicManager.SFXVolume;
+                SetSFXVolume(0);
+            }
+
+
 
         //LA VARIABLE QUE ES EL OBJETO SOBRE EL CUAL LA CAMARA SE CONCENTRA ES EL ZOMBIE EN LA POSICION 0 DE LA LISTA DE _keptSelectedZombies
 
@@ -320,6 +351,11 @@ public class GameLogicScript : MonoBehaviour
                     {
                         eventManager = EventManager.eventManager;
                     }
+
+
+                    if (musicManager == null)
+                        musicManager = MusicManager.Instance;
+
                     if (eventManager != null) { 
                     if (!eventManager.onEvent)
                     {
@@ -860,6 +896,21 @@ public class GameLogicScript : MonoBehaviour
                         DeselectZombie(zombie);
                     }
                 }
+
+            }
+        }
+    }
+
+    void SetSFXVolume(float sfxv) {
+        foreach (GameObject z in _zombies) {
+            if (z.GetComponent<ZombieScript>() != null) {
+                z.GetComponent<ZombieScript>().UpdateVolume(sfxv);
+            }
+        }
+
+        foreach(GameObject v in _villagers) {
+            if (v.GetComponent<VillagerScript>() != null) {
+                v.GetComponent<ZombieScript>().UpdateVolume(sfxv);
 
             }
         }

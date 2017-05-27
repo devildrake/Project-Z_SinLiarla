@@ -65,7 +65,6 @@ public class ZombieScript : MonoBehaviour
     Vector3 barricadePlace; //PUNTO DE LA BARRICADA AL QUE IR AL ATACARLA
     public GameObject villagerToAttackOnClick;
     public GameObject turretToAttack;
-
     public AudioClip[] audioClip; //array de soniditos
 
     //METODO QUE COMPRUEBA SI EL ZOMBIE SIGUE VIVO
@@ -99,6 +98,9 @@ public class ZombieScript : MonoBehaviour
         }
     }
 
+    public void UpdateVolume(float sfxv) {
+        GetComponent<AudioSource>().volume = sfxv;
+    }
     //METODO QUE INICIALIZA LAS VARIABLES, Y MODIFICA LAS STATS DEL ZOMBIE EN FUNCION DE SU TIPO
     void Start()
     {
