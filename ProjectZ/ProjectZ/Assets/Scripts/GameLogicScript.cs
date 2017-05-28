@@ -320,15 +320,27 @@ public class GameLogicScript : MonoBehaviour
 
             //EN CASO DE QUE NO ESTE PAUSADO, EL FUNCONAMIENTO NORMAL CONSISTE EN ACTUALIZAR LAS SELECCIONES Y REALIZAR LOS RAYCASTS EN FUNCION DEL CLICK IZQUIERDO
             //EL CLICK DERECHO MUEVE A LOS ZOMBIES SELECCIONADOS HACIA LA POSICION SOBRE LA CUAL SE HACE CLICK DERECHO
+            if (musicManager != null) {
+                if (musicManager.SFXVolume != prevSFXVolume && !muted) {
+                    SetSFXVolume(musicManager.SFXVolume);
+                    prevSFXVolume = musicManager.SFXVolume;
+                }
+                else if (muted) {
+                    prevSFXVolume = musicManager.SFXVolume;
+                    SetSFXVolume(0);
+                }
+            }else {
+                musicManager = MusicManager.Instance;
+                if (musicManager.SFXVolume != prevSFXVolume && !muted) {
+                    SetSFXVolume(musicManager.SFXVolume);
+                    prevSFXVolume = musicManager.SFXVolume;
+                }
+                else if (muted) {
+                    prevSFXVolume = musicManager.SFXVolume;
+                    SetSFXVolume(0);
+                }
 
-            if (musicManager.SFXVolume != prevSFXVolume&&!muted) {
-                SetSFXVolume(musicManager.SFXVolume);
-                prevSFXVolume = musicManager.SFXVolume;
-            }else if (muted) {
-                prevSFXVolume = musicManager.SFXVolume;
-                SetSFXVolume(0);
             }
-
 
 
         //LA VARIABLE QUE ES EL OBJETO SOBRE EL CUAL LA CAMARA SE CONCENTRA ES EL ZOMBIE EN LA POSICION 0 DE LA LISTA DE _keptSelectedZombies
