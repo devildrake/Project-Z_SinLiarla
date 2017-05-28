@@ -23,6 +23,7 @@ public class MusicManager : MonoBehaviour
         set
         {
             volume = value;
+            if(source!=null)
             source.volume = value;
         }
     }
