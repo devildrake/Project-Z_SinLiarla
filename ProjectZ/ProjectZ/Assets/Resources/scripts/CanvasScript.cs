@@ -49,7 +49,8 @@ public class CanvasScript : MonoBehaviour {
     }
 
     public void Continuar(){
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+        SceneManager.LoadScene(FindObjectOfType<SaverScript>().GetLevel());
     }
 
     public void Opciones() {
@@ -63,6 +64,8 @@ public class CanvasScript : MonoBehaviour {
 
     public void ResetGame() {
         //TODO elimina todo el progreso guardado y reinicia el juego.
+        FindObjectOfType<SaverScript>().SetLevel(1);
+
     }
 
     public void SalirApp() {
