@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SaverScript : MonoBehaviour {
-    float savedSFXVolume, savedVolume;
-    int savedLevel;
+    public float savedSFXVolume, savedVolume;
+    public int savedLevel;
     public static SaverScript saver;
+    public bool hasLoaded = false;
     // Use this for initialization
 
     void Awake() {
@@ -43,12 +45,29 @@ void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
     Debug.Log("Level Loaded");
     Debug.Log(scene.name);
     Debug.Log(mode);
-        if (scene.name == "Tutorial") {
-            GameLogicScript gameLogic = FindObjectOfType<GameLogicScript>();
-            MusicManager musicManager = FindObjectOfType<MusicManager>();
 
-            musicManager.Volume = savedVolume;
-            musicManager.SFXVolume = savedSFXVolume;
+        if (scene.name == "menu") {
+            //MusicManager musicManager = FindObjectOfType<MusicManager>();
+            LoadPrefs();
+            GameObject.FindGameObjectWithTag("SfxSlider").GetComponent<Slider>().value = savedSFXVolume;
+            GameObject.FindGameObjectWithTag("VolumeSlider").GetComponent<Slider>().value = savedVolume;
+
+            //musicManager.Volume = savedVolume;
+            //musicManager.SFXVolume = savedSFXVolume;
+
+
+        }
+
+
+        if (scene.name == "Tutorial") {
+            // GameLogicScript gameLogic = FindObjectOfType<GameLogicScript>();
+            //MusicManager musicManager = FindObjectOfType<MusicManager>();
+
+
+            GameObject.FindGameObjectWithTag("SfxSlider").GetComponent<Slider>().value = savedSFXVolume;
+            GameObject.FindGameObjectWithTag("VolumeSlider").GetComponent<Slider>().value = savedVolume;
+            //musicManager.Volume = savedVolume;
+            //musicManager.SFXVolume = savedSFXVolume;
 
         }
 
@@ -71,10 +90,29 @@ public void SaveCurrentPrefs(float vol, float sfx, int l) {
     }
 
     public void LoadPrefs() {
+        hasLoaded = true;
+        if (!PlayerPrefs.HasKey("sfxVolume")) {
+            PlayerPrefs.SetFloat("sfxVolume", 0.7f);
+        }
+
+        if (!PlayerPrefs.HasKey("musicVolume"))
+            PlayerPrefs.SetFloat("musicVolume", 0.7f);
+
+        if (!PlayerPrefs.HasKey("CurrentLevel"))
+            PlayerPrefs.SetFloat("CurrentLevel", 1);
+
+        
+
+        savedSFXVolume = PlayerPrefs.GetFloat("sfxVolume", 0.7f);
+        savedVolume =  PlayerPrefs.GetFloat("musicVolume", 0.7f);
+        savedLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+
+        if(savedLevel == 0) {
+            savedLevel = 1;
+        }
+
         Debug.Log("LoadingProgress");
-        PlayerPrefs.GetFloat("sfxVolume", savedSFXVolume);
-        PlayerPrefs.GetFloat("musicVolume", savedVolume);
-        PlayerPrefs.GetInt("CurrentLevel", savedLevel);
+
     }
 
     public void SetLevel(int l) {
