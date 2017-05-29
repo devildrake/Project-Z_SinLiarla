@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Event1Script : MonoBehaviour {
     public GameLogicScript gameLogic;
     public GameObject animacionSeleccion;
+    public GameObject objetoVida;
     public GameObject spawner;
     public bool[] hasHappened;
     bool once = false;
@@ -15,6 +16,7 @@ public class Event1Script : MonoBehaviour {
     // Use this for initialization
     void Start() {
         animacionSeleccion.SetActive(false);
+        objetoVida.SetActive(false);
         gameLogic = GameLogicScript.gameLogic;
         gameLogic.ClearLists();
 
@@ -38,6 +40,12 @@ public class Event1Script : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+
+        if (gameLogic._keptSelectedZombies.Count != 0&&!hasHappened[0]) {
+            animacionSeleccion.SetActive(false);
+        }
+
+
         if (gameLogic == null)
         {
             gameLogic = GameLogicScript.gameLogic;
@@ -51,13 +59,18 @@ public class Event1Script : MonoBehaviour {
             once = true;
             gameLogic.eventManager.activateEvent(0);
                 animacionSeleccion.SetActive(true);
+                objetoVida.SetActive(true);
+                gameLogic.camara.DisableMovement();
         }
         if (objetosZona[0] != null && objetosZona[1] != null && objetosZona[2] != null && gameLogic.eventManager.eventList[0].hasHappened) {
             if (objetosZona[0].GetComponent<ZonaTutorial>().steppedOn && objetosZona[1].GetComponent<ZonaTutorial>().steppedOn && objetosZona[2].GetComponent<ZonaTutorial>().steppedOn)
             {
                 gameLogic.eventManager.activateEvent(1);
+                    animacionSeleccion.SetActive(false);
+                    objetoVida.SetActive(false);
+                    gameLogic.camara.EnableMovement();
 
-                if (gameLogic.eventManager.eventList[1].hasHappened && !hasHappened[1] && !gameLogic.isPaused && !gameLogic.eventManager.onEvent)
+                    if (gameLogic.eventManager.eventList[1].hasHappened && !hasHappened[1] && !gameLogic.isPaused && !gameLogic.eventManager.onEvent)
                 {
                         if (gameLogic != null)
                     {
@@ -66,6 +79,7 @@ public class Event1Script : MonoBehaviour {
                             objetosZona[i].GetComponent<ZonaTutorial>().DestroyThis();
                         }
                             animacionSeleccion.SetActive(false);
+                            objetoVida.SetActive(false);
                             gameLogic.SpawnVillager(spawner.GetComponent<EdificioCreaSoldiers>().spawnPoint);
                         gameLogic._villagers[0].GetComponent<VillagerScript>().patrolPointObject = spawner.GetComponent<EdificioCreaSoldiers>().specialPatrolPoint;
                         gameLogic.SpawnWalker(new Vector3(2.5f, 0.0249f, -9.5f));
@@ -83,8 +97,6 @@ public class Event1Script : MonoBehaviour {
                             gameLogic = GameLogicScript.gameLogic;
                         gameLogic.SpawnVillager(spawner.GetComponent<EdificioCreaSoldiers>().spawnPoint);
                         gameLogic._villagers[0].GetComponent<VillagerScript>().patrolPointObject = spawner.GetComponent<EdificioCreaSoldiers>().specialPatrolPoint;
-                            //gameLogic.SpawnWalker(new Vector3(2.5f, 0.0249f, -9.5f));
-                            //gameLogic.SpawnWalker(new Vector3(6f, 0.0249f, -9.5f));
                             gameLogic.SpawnWalker(new Vector3(2.5f, 0.0249f, -9.5f));
                             gameLogic.SpawnWalker(new Vector3(6f, 0.0249f, -9.5f));
                             gameLogic.SpawnMutank(new Vector3(-0.5f, 0.0249f, -9.5f));

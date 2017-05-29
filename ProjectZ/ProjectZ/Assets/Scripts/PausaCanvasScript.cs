@@ -7,12 +7,14 @@ public class PausaCanvasScript : MonoBehaviour {
     public GameLogicScript gameLogic;
     public GameObject confirmacionA;
     public GameObject confirmacionB;
+    public GameObject colorGris;
     // Use this for initialization
     void Start() {
         gameLogic = GameLogicScript.gameLogic;
         gameLogic.elPausaScript = this;
         menuPausa = GameObject.FindGameObjectWithTag("Pause");
         menuPausa.SetActive(false);
+        colorGris.SetActive(false);
 
     }
 
@@ -25,12 +27,14 @@ public class PausaCanvasScript : MonoBehaviour {
         if (gameLogic.isPaused)
         {
             menuPausa.SetActive(true);
+            colorGris.SetActive(true);
         }else
         {
             confirmacionA.SetActive(false);
             confirmacionB.SetActive(false);
             menuPausa.SetActive(false);
-                
+            colorGris.SetActive(false);
+
         }
-	}
+    }
 }

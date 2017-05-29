@@ -19,6 +19,7 @@ public class GameLogicScript : MonoBehaviour
 
     int defeatCounter;          //CONTADOR DE DERROTAS
 
+
     public bool isPaused;   //BOOLEANO GENERAL QUE SUSTITUYE AL TIMESCALE = 0
 
 
@@ -92,6 +93,7 @@ public class GameLogicScript : MonoBehaviour
 
     public EventManager eventManager; //INSTANCIA DE LA CLASE EVENTMANAGER
     public MusicManager musicManager;
+
 
     
     private bool muted;
@@ -321,23 +323,23 @@ public class GameLogicScript : MonoBehaviour
             //EN CASO DE QUE NO ESTE PAUSADO, EL FUNCONAMIENTO NORMAL CONSISTE EN ACTUALIZAR LAS SELECCIONES Y REALIZAR LOS RAYCASTS EN FUNCION DEL CLICK IZQUIERDO
             //EL CLICK DERECHO MUEVE A LOS ZOMBIES SELECCIONADOS HACIA LA POSICION SOBRE LA CUAL SE HACE CLICK DERECHO
             if (musicManager != null) {
-                if (musicManager.SFXVolume != prevSFXVolume && !muted) {
-                    SetSFXVolume(musicManager.SFXVolume);
+                if (musicManager.SFXVolume != prevSFXVolume && !muted) {    
+                    //SetSFXVolume(musicManager.SFXVolume);
                     prevSFXVolume = musicManager.SFXVolume;
                 }
                 else if (muted) {
                     prevSFXVolume = musicManager.SFXVolume;
-                    SetSFXVolume(0);
+                    //SetSFXVolume(0);
                 }
             }else {
                 musicManager = MusicManager.Instance;
                 if (musicManager.SFXVolume != prevSFXVolume && !muted) {
-                    SetSFXVolume(musicManager.SFXVolume);
+                   //SetSFXVolume(musicManager.SFXVolume);
                     prevSFXVolume = musicManager.SFXVolume;
                 }
                 else if (muted) {
                     prevSFXVolume = musicManager.SFXVolume;
-                    SetSFXVolume(0);
+                   //SetSFXVolume(0);
                 }
 
             }

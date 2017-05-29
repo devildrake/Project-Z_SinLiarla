@@ -26,7 +26,15 @@ public class CameraScript : MonoBehaviour
     GameObject targetObject;
     //Manejador de input
     InputHandlerScript _input;
+    bool canMove = true;
 
+    public void DisableMovement() {
+        canMove = false;
+    }
+
+    public void EnableMovement() {
+        canMove = true;
+    }
     private void Awake()
     {
         mode = 0;
@@ -111,6 +119,7 @@ public class CameraScript : MonoBehaviour
                 cameraVector.x = -CAMERA_SPEED;
 
             //Movemos la cámara en el vector que hemos especificado
+            if(canMove)
             transform.Translate(cameraVector * Time.deltaTime, Space.World);
         }
     }

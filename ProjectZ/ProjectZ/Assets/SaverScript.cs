@@ -9,6 +9,8 @@ public class SaverScript : MonoBehaviour {
     public int savedLevel;
     public static SaverScript saver;
     public bool hasLoaded = false;
+    bool faltaMusicSlider = false;
+    bool faltaFXSlider = false;
     // Use this for initialization
 
     void Awake() {
@@ -24,12 +26,29 @@ public class SaverScript : MonoBehaviour {
     void Start () {
         LoadPrefs();
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
+    // Update is called once per frame
+    void Update() {
+        if (faltaFXSlider) {
+            if (GameObject.FindGameObjectWithTag("SfxSlider") != null) {
+                GameObject.FindGameObjectWithTag("SfxSlider").GetComponent<Slider>().value = savedSFXVolume;
+                faltaFXSlider = false;
+            }
+            else {
+                faltaFXSlider = true;
+            }
+        }
 
+        if (faltaMusicSlider) {
+            if (GameObject.FindGameObjectWithTag("VolumeSlider") != null) {
+                GameObject.FindGameObjectWithTag("VolumeSlider").GetComponent<Slider>().value = savedVolume;
+                faltaMusicSlider = false;
+            }
+            else {
+                faltaMusicSlider = true;
+            }
+        }
+    }
 
     void OnEnable() {
     //Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.
@@ -49,9 +68,19 @@ void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name == "menu") {
             //MusicManager musicManager = FindObjectOfType<MusicManager>();
             LoadPrefs();
-            GameObject.FindGameObjectWithTag("SfxSlider").GetComponent<Slider>().value = savedSFXVolume;
-            GameObject.FindGameObjectWithTag("VolumeSlider").GetComponent<Slider>().value = savedVolume;
+            if (GameObject.FindGameObjectWithTag("SfxSlider") != null) {
+                GameObject.FindGameObjectWithTag("SfxSlider").GetComponent<Slider>().value = savedSFXVolume;
+            }
+            else {
+                faltaFXSlider = true;
+            }
 
+            if (GameObject.FindGameObjectWithTag("VolumeSlider") != null) {
+                GameObject.FindGameObjectWithTag("VolumeSlider").GetComponent<Slider>().value = savedVolume;
+            }
+            else {
+                faltaMusicSlider = true;
+            }
             //musicManager.Volume = savedVolume;
             //musicManager.SFXVolume = savedSFXVolume;
 
@@ -63,9 +92,18 @@ void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
             // GameLogicScript gameLogic = FindObjectOfType<GameLogicScript>();
             //MusicManager musicManager = FindObjectOfType<MusicManager>();
 
+            if (GameObject.FindGameObjectWithTag("SfxSlider") != null) {
+                GameObject.FindGameObjectWithTag("SfxSlider").GetComponent<Slider>().value = savedSFXVolume;
+            }
+            else {
+                faltaFXSlider = true;
+            }
 
-            GameObject.FindGameObjectWithTag("SfxSlider").GetComponent<Slider>().value = savedSFXVolume;
-            GameObject.FindGameObjectWithTag("VolumeSlider").GetComponent<Slider>().value = savedVolume;
+            if (GameObject.FindGameObjectWithTag("VolumeSlider") != null) {
+                GameObject.FindGameObjectWithTag("VolumeSlider").GetComponent<Slider>().value = savedVolume;
+            }else {
+                faltaMusicSlider = true;
+            }
             //musicManager.Volume = savedVolume;
             //musicManager.SFXVolume = savedSFXVolume;
 
