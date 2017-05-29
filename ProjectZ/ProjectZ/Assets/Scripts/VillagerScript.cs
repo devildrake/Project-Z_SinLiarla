@@ -61,14 +61,17 @@ public class VillagerScript : MonoBehaviour
     // Use this for initialization
     void Start(){
 
-        if (runAwayObject == null)
+  
+        if(GameObject.FindGameObjectWithTag("RunAwayPoint")!=null)
         {
-            runAWayPoint = new Vector3(0, 0, 0);
+            runAWayPoint = GameObject.FindGameObjectWithTag("RunAwayPoint").transform.position;
         }
-        else
-        {
+        else if (runAwayObject == null) {
+            runAWayPoint = new Vector3(0, 0, 0);
+        }else {
             runAWayPoint = runAwayObject.transform.position;
         }
+
         distanciaAlerta = 20;
         gameLogic = GameLogicScript.gameLogic;
         runAway = false;
@@ -246,9 +249,8 @@ public class VillagerScript : MonoBehaviour
         {
             if (gameObject.GetComponent<VillagerAttack>().attacking)
             {
-    GetComponentInParent<VillagerMovement>().LookTowards(gameObject.GetComponent<VillagerAttack>().zombieToAttack.transform.position);
-
-    quadFeedback.SetActive(true);
+                GetComponentInParent<VillagerMovement>().LookTowards(gameObject.GetComponent<VillagerAttack>().zombieToAttack.transform.position);
+                quadFeedback.SetActive(true);
                 quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[2];
             }
             else if (goingToCheck) {
@@ -266,9 +268,6 @@ public class VillagerScript : MonoBehaviour
         {
             elAnimator.SetBool("correr", villagerMovement.moving);
         }
-
-
-
         if (!gameLogic._villagers.Contains(gameObject) && confirmAlive)
         {
             gameLogic._villagers.Add(gameObject);
@@ -293,16 +292,15 @@ public class VillagerScript : MonoBehaviour
 
             if (confirmAlive)
             {
-                if (runAway&&gameLogic._bases[0]!=null&&runAWayPoint!= new Vector3(0,0,0))
+
+                    if (runAway&&gameLogic._bases[0]!=null&&runAWayPoint!= new Vector3(0,0,0))
                 {
-                        Debug.Log("Dawg");
 
                         if (!isCloseEnough (gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject,0.2f))
                     {
-                            Debug.Log("Run nigga run");
                         movSpeed = 1.2f;
                         goingToPat = false;
-                        villagerMovement.MoveTo(gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject.transform.position);
+                        villagerMovement.MoveTo(runAWayPoint);
                         elAnimator.SetBool("correr", true);
                         freeRoam = false;
 

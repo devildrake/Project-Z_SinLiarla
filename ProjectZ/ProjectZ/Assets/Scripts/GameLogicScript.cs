@@ -126,14 +126,12 @@ public class GameLogicScript : MonoBehaviour
         GameObject villagerToSpawn = Instantiate(villager, unaPos, Quaternion.identity) as GameObject;
         villagerToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.villager;
         _villagers.Add(villagerToSpawn);
-        Debug.Log(unaPos);
 
     }
 
     public void SpawnSoldier(Vector3 patrolPos, Vector3 unaPos)
     {
         unaPos.y = 0.02499896f;
-        Debug.Log(unaPos);
 
         GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
         GameObject anEmptyGameObject = new GameObject();
@@ -156,7 +154,6 @@ public class GameLogicScript : MonoBehaviour
     public void SpawnSoldier(Vector3 unaPos) {
         unaPos.y = 0.02499896f;
 
-        Debug.Log(unaPos);
 
         GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
         soldierToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
@@ -427,7 +424,6 @@ public class GameLogicScript : MonoBehaviour
 
                                     if (!_keptSelectedZombies.Contains(aZombie))
                                 {
-                                        Debug.Log("Se añade keptSelected");
                                         _keptSelectedZombies.Add(aZombie);
                                     //  aZombie.GetComponent<ZombieScript>().isSelected = true;
                                 }
