@@ -106,15 +106,6 @@ public class VillagerScript : MonoBehaviour
                 movSpeed = 2;
                 //render.material.color += Color.green;
                 break;
-            //case humanClass.turret:
-            //    theAttackRange = 6;
-            //    health = 100;
-            //    attack = 20;
-            //    defense = 20;
-            //    attackSpeed = 2.5f;
-            //    movSpeed = 0;
-            //    render.material.color = Color.red;
-            //    break;
         }
 
         maxHealth = health;
@@ -352,7 +343,7 @@ public class VillagerScript : MonoBehaviour
                         }
                     }
 
-                    if (elAtaque.enemyInRange)
+                    if (elAtaque.enemyInRange&&tipo == humanClass.soldier)
                     {
                         canMove = false;
                         elAnimator.SetBool("correr", false);
@@ -367,10 +358,6 @@ public class VillagerScript : MonoBehaviour
                         elAnimator.SetBool("correr", false);
                         elAnimator.SetBool("moviendose", true);
                         freeRoam = true;
-                        canMove = true;
-                    }
-                    else
-                    {
                         canMove = true;
                     }
                     if (canMove && freeRoam && !goingToCheck)

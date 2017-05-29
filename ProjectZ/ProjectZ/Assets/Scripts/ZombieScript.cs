@@ -193,6 +193,11 @@ public class ZombieScript : MonoBehaviour {
 
         }
         //SI NO QUEAN ENEMIGO
+
+        else if (orden == "DeadHuman") {
+
+        }
+
         else if (orden == "NoEnemies") {
 
             GetComponent<ZombieAttack>().attacking = movingToEnemy = elMovimiento.countedOnce = elMovimiento.moving = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
