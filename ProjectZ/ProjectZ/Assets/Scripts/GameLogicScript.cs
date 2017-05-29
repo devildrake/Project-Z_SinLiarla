@@ -60,7 +60,7 @@ public class GameLogicScript : MonoBehaviour
     public List<GameObject> _bases;
     public List<GameObject> _barricadas;
     public List<GameObject> _torretas;
-
+    public bool specialScene;
     //Lista de villagers
 
     public List<GameObject> _villagers;
@@ -146,9 +146,6 @@ public class GameLogicScript : MonoBehaviour
     public void SpawnSoldier(Vector3 unaPos, GameObject unObjetoDePatrulla)
     {
         unaPos.y = 0.02499896f;
-
-
-        Debug.Log(unaPos);
 
         GameObject soldierToSpawn = Instantiate(soldier, unaPos, Quaternion.identity) as GameObject;
         soldierToSpawn.GetComponent<VillagerScript>().tipo = VillagerScript.humanClass.soldier;
@@ -282,7 +279,7 @@ public class GameLogicScript : MonoBehaviour
         //COMPRUEBA SI NO QUEDAN ZOMBIES, EN CUYO CASO, SE CONSIDERA QUE EL JUGADOR HA PERDIDO, SE REINICIA EL NIVEL PASANDO POR ESCENAINTER Y SE AUMENTA EL
         //CONTADOR DE DERROTAS
 
-        if (_zombies.Count == 0 && !hasGamedOver)
+        if (_zombies.Count == 0 && !hasGamedOver&&!specialScene)
         {
             defeatCounter++;
             ClearLists();

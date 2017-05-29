@@ -34,10 +34,13 @@ public class ZombieAttack : MonoBehaviour
                     atHuman = true;
                     enemyToAttack = anEnemy.GetComponent<VillagerScript>();
                     GetComponentInParent<ZombieMovement>().LookTowards(enemyToAttack.transform.position);
+                }else {
+                    GetComponentInChildren<ZombieScript>().ResetStuff("DeadHuman");
                 }
             }
             else
             {
+                GetComponentInChildren<ZombieScript>().ResetStuff("DeadHuman");
                 if (anEnemy.GetComponent<BarricadaScript>() != null)
                 {
                     barricade = anEnemy;
@@ -72,6 +75,9 @@ public class ZombieAttack : MonoBehaviour
                             elAnimator.SetBool("atacando", true);
                             enemyToAttack.health -= enemyToAttack.attack;
                             attackTimer = 0;
+                                if (!enemyToAttack.isAlive) {
+                                    GetComponentInChildren<ZombieScript>().ResetStuff("DeadHuman");
+                                }
                         }
                     }
                 }

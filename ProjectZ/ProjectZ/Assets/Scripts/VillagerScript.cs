@@ -86,7 +86,8 @@ public class VillagerScript : MonoBehaviour
         villagerAttack = GetComponent<VillagerAttack>();
         hasTransformed = false;
         initSpeedAn = elAnimator.speed;
-        
+
+        canMove = true;
         switch (tipo){
             case humanClass.villager:
                 theAttackRange = 1;
@@ -231,6 +232,14 @@ public class VillagerScript : MonoBehaviour
             } else {
                 quadFeedback.SetActive(true);
             }
+
+            if (health != maxHealth) {
+                canMove = false;
+                elAnimator.SetBool("isHit", true);
+
+            }
+
+
         }
         // controla los sprites de feedback del soldier
         else if (tipo == humanClass.soldier)
@@ -267,7 +276,7 @@ public class VillagerScript : MonoBehaviour
         if (gameLogic.eventManager != null)
         {
             if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
-        {
+            {
 
             if (elAnimator.speed == 0)
             {
@@ -286,9 +295,11 @@ public class VillagerScript : MonoBehaviour
             {
                 if (runAway&&gameLogic._bases[0]!=null&&runAWayPoint!= new Vector3(0,0,0))
                 {
-                    if (!isCloseEnough (gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject,0.2f))
-                    {
+                        Debug.Log("Dawg");
 
+                        if (!isCloseEnough (gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject,0.2f))
+                    {
+                            Debug.Log("Run nigga run");
                         movSpeed = 1.2f;
                         goingToPat = false;
                         villagerMovement.MoveTo(gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject.transform.position);
@@ -353,7 +364,7 @@ public class VillagerScript : MonoBehaviour
                         villagerMovement.moving = false;
                         // AttackEnemy();
                     }
-                    else if (!laVision.enemyInSight && !goingToCheck)
+                    else if (!laVision.enemyInSight && !goingToCheck&&tipo==humanClass.soldier)
                     {
                         elAnimator.SetBool("correr", false);
                         elAnimator.SetBool("moviendose", true);

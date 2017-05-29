@@ -195,6 +195,13 @@ public class ZombieScript : MonoBehaviour {
         //SI NO QUEAN ENEMIGO
 
         else if (orden == "DeadHuman") {
+            elMovimiento.moving = false;
+            elMovimiento.wasCommanded = false;
+            gameObject.GetComponent<ZombieScript>().hasArrived = true;
+            if (gameObject.GetComponent<ZombieScript>().goBarricade && gameObject.GetComponent<ZombieScript>().barricada != null)
+                elMovimiento.LookTowards(gameObject.GetComponent<ZombieScript>().barricada.transform.position);
+            gameObject.GetComponent<ZombieScript>().canAttack = true;
+
 
         }
 
