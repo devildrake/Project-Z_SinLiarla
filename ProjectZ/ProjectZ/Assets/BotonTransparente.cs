@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class BotonTransparente : MonoBehaviour {
-	// Use this for initialization
+    // Use this for initialization
+    private Button mySelfButton;
 	void Start () {
-            gameObject.GetComponent<Button>().onClick.AddListener(delegate { Continue(); });
-
+        //gameObject.GetComponent<Button>().onClick.AddListener(delegate { Continue(); });
+        mySelfButton = gameObject.GetComponent<Button>();
     }
 
     void Continue() {
@@ -19,6 +20,8 @@ public class BotonTransparente : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-	}
+        if (Input.GetMouseButtonUp(0)) {
+            mySelfButton.onClick.AddListener(() => Continue());
+        }
+    }
 }

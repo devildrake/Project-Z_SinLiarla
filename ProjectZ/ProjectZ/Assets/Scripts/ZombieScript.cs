@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ZombieScript : MonoBehaviour
-{
+public class ZombieScript : MonoBehaviour {
     //ENUM QUE GESTIONA EL TIPO DE ZOMBIE DEL QUE SE TRATA
     public enum zombieClass { walker, runner, mutank }
 
@@ -68,29 +67,22 @@ public class ZombieScript : MonoBehaviour
     public AudioClip[] audioClip; //array de soniditos
 
     //METODO QUE COMPRUEBA SI EL ZOMBIE SIGUE VIVO
-    bool CheckAlive()
-    {
-        if (gameObject != null)
-        {
-            if (isAlive)
-            {
-                if (health <= 0)
-                {
+    bool CheckAlive() {
+        if (gameObject != null) {
+            if (isAlive) {
+                if (health <= 0) {
                     isAlive = false;
                 }
             }
             return isAlive;
 
-        }else
-        {
+        } else {
             return false;
         }
     }
     //METODO QUE REINCIA TODOS LOS BOOLEANOS PERTINENTES PARA QUE EL ZOMBIE ATAQUE UNA BARRICADA
-    public void attackBarricade(GameObject laBarricada)
-    {
-        if (laBarricada != null)
-        {
+    public void attackBarricade(GameObject laBarricada) {
+        if (laBarricada != null) {
             ResetStuff("command");
             goBarricade = true;
             Debug.Log("GoBarricade");
@@ -102,11 +94,9 @@ public class ZombieScript : MonoBehaviour
         GetComponent<AudioSource>().volume = sfxv;
     }
     //METODO QUE INICIALIZA LAS VARIABLES, Y MODIFICA LAS STATS DEL ZOMBIE EN FUNCION DE SU TIPO
-    void Start()
-    {
+    void Start() {
         gameLogic = GameLogicScript.gameLogic;
-        if (!gameLogic._zombies.Contains(gameObject))
-        {
+        if (!gameLogic._zombies.Contains(gameObject)) {
             gameLogic._zombies.Add(gameObject);
         }
         attackToggle = true;
@@ -129,8 +119,7 @@ public class ZombieScript : MonoBehaviour
         confirmAlive = isAlive = true;
         initSpeedAn = elAnimator.speed;
 
-        switch (tipo)
-        {
+        switch (tipo) {
             case zombieClass.walker:
                 health = 100;
                 attack = 10;
@@ -161,10 +150,8 @@ public class ZombieScript : MonoBehaviour
     }
 
     //METODO DE PREVENCION DE ERRORES PARA QUE LOS ZOMBIES NO FLOTEN NI SE HUNDAN
-    void heightCheck()
-    {
-        if (gameObject.transform.position.y > originalPos.y)
-        {
+    void heightCheck() {
+        if (gameObject.transform.position.y > originalPos.y) {
             gameObject.transform.position = groundPos;
         }
     }
@@ -177,19 +164,16 @@ public class ZombieScript : MonoBehaviour
         GetComponent<AudioSource>().Play();
     }
 
-    public void ZombieMakeMoan()
-    {
-        if(!GetComponent<AudioSource>().isPlaying)
-        PlaySound(2);//play groan 1
+    public void ZombieMakeMoan() {
+        if (!GetComponent<AudioSource>().isPlaying)
+            PlaySound(2);//play groan 1
 
     }
 
     //METODO QUE REINCIA LOS BOOLEANOS EN FUNCION DE LA ORDEN RECIBIDA
-    public void ResetStuff(string orden)
-    {
+    public void ResetStuff(string orden) {
         //SI EL ZOMBIE RECIBE UNA ORDEN
-        if (orden == "command")
-        {
+        if (orden == "command") {
 
             GetComponent<ZombieAttack>().attacking = hasArrived = movingToEnemy = elMovimiento.countedOnce = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
             villagerToAttackOnClick = null;
@@ -209,8 +193,7 @@ public class ZombieScript : MonoBehaviour
 
         }
         //SI NO QUEAN ENEMIGO
-        else if (orden == "NoEnemies")
-        {
+        else if (orden == "NoEnemies") {
 
             GetComponent<ZombieAttack>().attacking = movingToEnemy = elMovimiento.countedOnce = elMovimiento.moving = gameObject.GetComponent<ZombieAttack>().atBarricade = gameObject.GetComponent<ZombieAttack>().atHuman = canAttack = false;
             hasArrived = true;
@@ -226,39 +209,52 @@ public class ZombieScript : MonoBehaviour
         }
 
         //SI DEBEN PARAR DE MOVERSE
-        else if (orden == "StopMoving")
-        {
+        else if (orden == "StopMoving") {
             elAnimator.SetBool("atacando", false);
 
             villagerToAttackOnClick = null;
             //TO DO
         }
+
+        else if (orden == "BarricadeNoMore") {
+            canMove = true;
+            GetComponent<ZombieAttack>().attacking = false;
+            movingToEnemy = false;
+            elMovimiento.countedOnce = false;
+            elMovimiento.moving = false;
+            gameObject.GetComponent<ZombieAttack>().atBarricade = false;
+            canAttack = true;
+        }
     }
 
     //COMPRUEBA SI HAY REFERENCIAS NULAS, EN CASO DE QUE EL ZOMBIE NO ESTE EN LAS LISTAS, SE INTRODUCE
-    void Update()
-    {
+    void Update() {
         if (gameLogic == null) {
             gameLogic = GameLogicScript.gameLogic;
-        }
-
-        if (!gameLogic._zombies.Contains(gameObject) && isAlive)
-        {
+        }else {
+            
+            
+        if (!gameLogic._zombies.Contains(gameObject) && isAlive) {
             gameLogic._zombies.Add(gameObject);
 
         }
-        if (gameLogic.eventManager != null)
-        {
+        if (gameLogic.eventManager != null) {
             if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent) {
+                    if (elMovimiento != null) {
+                        if (elMovimiento.wasCommanded) {
+                            ResetStuff("command");
+                        }
+                    }else {
+                        elMovimiento = gameObject.GetComponent<ZombieMovement>();
+                    }
 
-                if (elMovimiento.wasCommanded) {
-                    ResetStuff("command");
-                }
-
-                if (elAnimator.speed == 0) {
-                    elAnimator.speed = initSpeedAn;
-                }
-
+                    if (elAnimator != null) {
+                        if (elAnimator.speed == 0) {
+                            elAnimator.speed = initSpeedAn;
+                        }
+                    }else {
+                        elAnimator = gameObject.GetComponent<Animator>();
+                    }
                 //ESTA REGION DE AQUI GESTIONA EL COMPORTAMIENTO ESPECIAL DEL MUTANK
                 #region comportamiento Mutank
                 if (tipo == zombieClass.mutank) {
@@ -289,8 +285,6 @@ public class ZombieScript : MonoBehaviour
 
                 }
                 #endregion
-
-
                 if (elMovimiento.moving) //Codigo que pone true el booleano del animador "moviendose" cuando moving es true
                 {
                     elAnimator.SetBool("spawn", false);
@@ -307,34 +301,40 @@ public class ZombieScript : MonoBehaviour
                 if (confirmAlive) {
                     if (turretToAttack == null) {
                         contadorAtkTor = 0;
-                        if (goBarricade) {
-                            if (barricada != null) {
-                                if (gameLogic.CalcularDistancia(barricada.gameObject, gameObject) > theAttackRange) {
-                                    if (!barricada._atacantes.Contains(gameObject)) {
-                                        barricadePlace = barricada.AsignarSitio(gameObject);
-                                        barricadaSpot = barricada.aPlaceToAssign;
-                                        barricada._atacantes.Add(gameObject);
+                            if (goBarricade) {
+                                if (barricada != null) {
+                                    if(barricada.health > 0) { 
+                                    if (gameLogic.CalcularDistancia(barricada.gameObject, gameObject) > theAttackRange) {
+                                        if (!barricada._atacantes.Contains(gameObject)) {
+                                            barricadePlace = barricada.AsignarSitio(gameObject);
+                                            barricadaSpot = barricada.aPlaceToAssign;
+                                            barricada._atacantes.Add(gameObject);
+                                            elMovimiento.LookTowards(barricada.transform.position);
+                                        }
+                                        elMovimiento.MoveTo(barricadePlace);
                                     }
-                                    elMovimiento.MoveTo(barricadePlace);
-                                }
-                                else {
-                                    elMovimiento.moving = false;
-                                    elAnimator.SetBool("atacando", true);
-                                    
-                                    {
-                                        contadorAtk += Time.deltaTime;
-                                    }
+                                    else {
+                                        elMovimiento.moving = false;
+                                        elAnimator.SetBool("atacando", true);
 
-                                    if (contadorAtk > attackSpeed) {
-                                        contadorAtk = 0;
-                                        barricada.loseHp();
+                                        {
+                                            contadorAtk += Time.deltaTime;
+                                        }
+
+                                        if (contadorAtk > attackSpeed) {
+                                            contadorAtk = 0;
+                                            barricada.loseHp();
+                                        }
                                     }
-                                }
+                                    }else {
+                                        ResetStuff("BarricadeNoMore");
+                                    }
                             }
                             else {
                                 elAnimator.SetBool("atacando", false);
+                                    ResetStuff("BarricadeNoMore");
+                                }
                             }
-                        }
                         //Código de que hace el zombie normalmente
                         if (isSelected) {
                             /*Renderer theRenderer = gameObject.GetComponentInChildren<Renderer>();
@@ -344,23 +344,22 @@ public class ZombieScript : MonoBehaviour
                         else {
                             elCirculo.SetActive(false);
                         }
-                }
-                    else 
-                    {
+                    }
+                    else {
 
                         canAttack = false;
                         canMove = false;
-                        if (gameLogic.CalcularDistancia(gameObject, turretToAttack)>theAttackRange)
-                        elMovimiento.MoveTo(turretToAttack.transform.position);
+                        if (gameLogic.CalcularDistancia(gameObject, turretToAttack.GetComponentInChildren<EmptyForTurret>().gameObject) > theAttackRange)
+                            elMovimiento.MoveTo(turretToAttack.GetComponentInChildren<EmptyForTurret>().gameObject.transform.position);
 
-                        else{
+                        else {
                             if (attackToggle) {
                                 if (tipo == zombieClass.runner) {
                                     turretToAttack.GetComponent<TorretaScript>().health -= 50;
                                     health = 0;
 
                                 }
-                            }else {
+                            } else {
                                 contadorAtkTor += Time.deltaTime;
 
                                 if (contadorAtkTor > attackSpeed) {
@@ -374,74 +373,99 @@ public class ZombieScript : MonoBehaviour
                         }
 
                     }
-            }
-            else {
-                elAnimator.SetBool("isAlive", false);
-                PlaySound(2);//play groan 1
-                Destroy(gameObject, 4.0f);
-            }
+                }
+                else {
+                    elAnimator.SetBool("isAlive", false);
+                    PlaySound(2);//play groan 1
+                    Destroy(gameObject, 4.0f);
+                }
 
-            //EN CASO DE QUE LOS ZOMBIES NO TENGAN UNA ORDEN PENDIENTE PUEDEN MOVERSE LIBREMENTE, Y SI HAY ENEMIGOS CERCA Y PUEDEN ATACARLES
-            //VAN HACIA ELLOS 
-            if (!elMovimiento.wasCommanded)
-            {
-                canMove = true;
-                if (laVision.enemyInSight) {
-                    if (!elAtaqueRange.enemyInRange) {
-                        if (canAttack) {
-                            if (canMove && attackToggle) {
-                                if (laVision.closestEnemy != null) {
-                                    if (laVision.closestEnemy.transform.position != prevTargetPos) {
+                //EN CASO DE QUE LOS ZOMBIES NO TENGAN UNA ORDEN PENDIENTE PUEDEN MOVERSE LIBREMENTE, Y SI HAY ENEMIGOS CERCA Y PUEDEN ATACARLES
+                //VAN HACIA ELLOS 
+                if (!elMovimiento.wasCommanded) {
+                    canMove = true;
+                    if (laVision.enemyInSight) {
+                        if (!elAtaqueRange.enemyInRange) {
+                            if (canAttack) {
+                                if (canMove && attackToggle) {
+                                    if (laVision.closestEnemy != null) {
+                                        if (laVision.closestEnemy.transform.position != prevTargetPos) {
+                                            movingToEnemy = false;
+                                        }
+                                        prevTargetPos = laVision.closestEnemy.transform.position;
+                                        if (!movingToEnemy) {
+                                            movingToEnemy = true;
+                                            elMovimiento.MoveTo(laVision.closestEnemy.transform.position);
+                                        }
+                                    }
+                                    else {
                                         movingToEnemy = false;
+                                        elAnimator.SetBool("atacando", false);
                                     }
-                                    prevTargetPos = laVision.closestEnemy.transform.position;
-                                    if (!movingToEnemy)
-                                    {
-                                        movingToEnemy = true;
-                                        elMovimiento.MoveTo(laVision.closestEnemy.transform.position);
-                                    }
-                                }
-                                else
-                                {
-                                    movingToEnemy = false;
-                                    elAnimator.SetBool("atacando", false);
                                 }
                             }
                         }
                     }
                 }
-            }
-            else
-            {
-                canMove = false;
-                movingToEnemy = false;
-                elAnimator.SetBool("atacando", false);
-            }
+                else {
+                    canMove = false;
+                    movingToEnemy = false;
+                    elAnimator.SetBool("atacando", false);
+                }
 
-            //ESTO MODIFICA EL COLOR DEL CIRCULO EN FUNCION DEL PORCENTAJE DE VIDA
-            if (health / maxHealth * 100 <= 20)
-            {
-                elCirculo.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-            }
-            else if (health / maxHealth * 100 <= 50)
-            {
+                //ESTO MODIFICA EL COLOR DEL CIRCULO EN FUNCION DEL PORCENTAJE DE VIDA
+                if (health / maxHealth * 100 <= 20) {
+                    elCirculo.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                }
+                else if (health / maxHealth * 100 <= 50) {
 
-                elCirculo.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-            }
-        } }
+                    elCirculo.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+                }
+            } }
 
         //EN CASO DE ESTAR PAUSADO PONE LA VELOCIDAD DE ANIMACION A 0 y para el sonido
-        if (gameLogic.eventManager != null)
-        {
-            if (gameLogic.isPaused || gameLogic.eventManager.onEvent)
-            {
+        if (gameLogic.eventManager != null) {
+            if (gameLogic.isPaused || gameLogic.eventManager.onEvent) {
                 elAnimator.speed = 0;
                 GetComponent<AudioSource>().Pause();
-            }else
-            {
+            } else {
                 GetComponent<AudioSource>().UnPause();
             }
         }
     }
+        if (gameLogic == null) {
+            Debug.Log("Vision Nula");
+        }
 
+        if (gameLogic.eventManager == null) {
+            Debug.Log("eventManager Nula");
+
+        }
+
+        if (elAnimator == null) {
+            Debug.Log("elAnimator Nula");
+
+        }
+
+        if (barricada == null&&goBarricade) {
+            Debug.Log("barricada Nula");
+
+        }
+
+        if (elCirculo == null) {
+            Debug.Log("elCirculo Nula");
+
+        }
+
+        if (elMovimiento == null) {
+            Debug.Log("elMovimiento Nula");
+
+        }
+
+        if (laVision == null) {
+            Debug.Log("laVision Nula");
+
+        }
+
+    }
 }

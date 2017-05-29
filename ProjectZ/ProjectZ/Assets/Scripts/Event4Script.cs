@@ -48,9 +48,6 @@ public class Event4Script : MonoBehaviour {
         if(gameLogic.camara==null)
         gameLogic.camara = FindObjectOfType<CameraScript>();
 
-        Debug.Log(camara.gameObject.transform.position);
-        
-
         if (!hasHappened[0]) {
             gameLogic.eventManager.activateEvent(6);
             hasHappened[0] = true;

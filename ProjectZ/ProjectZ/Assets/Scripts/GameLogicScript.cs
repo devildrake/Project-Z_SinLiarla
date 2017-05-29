@@ -493,8 +493,9 @@ public class GameLogicScript : MonoBehaviour
                                         z.GetComponent<ZombieScript>().attackBarricade(laBarricada);
                                         z.GetComponent<ZombieScript>().keepGoingBarricade = true;
 
-                                        if (z.GetComponent<ZombieScript>().goBarricade && z.GetComponent<ZombieScript>().barricada != null)
-                                            z.GetComponent<ZombieMovement>().LookTowards(gameObject.GetComponent<ZombieScript>().barricada.transform.position);
+                                        //if (z.GetComponent<ZombieScript>().goBarricade && z.GetComponent<ZombieScript>().barricada != null) {
+                                        //    z.GetComponent<ZombieMovement>().LookTowards(gameObject.GetComponent<ZombieScript>().barricada.transform.position);
+                                        //}
 
                                         if (z.GetComponent<ZombieScript>().turretToAttack != null) {
                                             if (z.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>() != null)
