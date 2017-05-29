@@ -333,7 +333,7 @@ public class GameLogicScript : MonoBehaviour
                 }
             }else {
                 musicManager = MusicManager.Instance;
-                if (musicManager.SFXVolume != prevSFXVolume && !muted) {
+                if (musicManager!=null&&musicManager.SFXVolume != prevSFXVolume && !muted) {
                    //SetSFXVolume(musicManager.SFXVolume);
                     prevSFXVolume = musicManager.SFXVolume;
                 }
@@ -489,12 +489,13 @@ public class GameLogicScript : MonoBehaviour
                                     foreach (GameObject z in _keptSelectedZombies) {
                                         z.GetComponent<ZombieMovement>().wasCommanded = false;
                                         z.GetComponent<ZombieScript>().hasArrived = true;
+    
+                                        z.GetComponent<ZombieScript>().attackBarricade(laBarricada);
+                                        z.GetComponent<ZombieScript>().keepGoingBarricade = true;
+
                                         if (z.GetComponent<ZombieScript>().goBarricade && z.GetComponent<ZombieScript>().barricada != null)
                                             z.GetComponent<ZombieMovement>().LookTowards(gameObject.GetComponent<ZombieScript>().barricada.transform.position);
 
-
-                                        z.GetComponent<ZombieScript>().attackBarricade(laBarricada);
-                                        z.GetComponent<ZombieScript>().keepGoingBarricade = true;
                                         if (z.GetComponent<ZombieScript>().turretToAttack != null) {
                                             if (z.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>() != null)
                                                 z.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>()._targetingZombies.Remove(gameObject);
@@ -506,15 +507,18 @@ public class GameLogicScript : MonoBehaviour
                                 }
                                 else if (Physics.Raycast(ray, out hit, 80, mascaraTorreta)) {
                                     GameObject laTorreta = hit.collider.gameObject;
-                                    foreach (GameObject z in _keptSelectedZombies) {
-                                        z.GetComponent<ZombieScript>().keepGoingBarricade = false;
-                                        z.GetComponent<ZombieScript>().turretToAttack = laTorreta;
-                                        if (!laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Contains(z)&&laTorreta.GetComponent<TorretaScript>().alive) {
-                                            laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Add(z);
+                                    foreach (GameObject z in _keptSelectedZombies)
+                                    {
+                                        if (laTorreta != null)
+                                        {
+                                            z.GetComponent<ZombieScript>().keepGoingBarricade = false;
+                                            z.GetComponent<ZombieScript>().turretToAttack = laTorreta;
+                                            if (!laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Contains(z) && laTorreta.GetComponentInChildren<TorretaScript>().alive)
+                                            {
+                                                laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Add(z);
+                                            }
                                         }
                                     }
-
-
                                 }
 
 

@@ -37,7 +37,8 @@ public class VillagerScript : MonoBehaviour
     public humanClass tipo;
 
     public Vector3 groundPos;
-
+    public Vector3 runAWayPoint;
+    public GameObject runAwayObject;
     public Vector3 originalPos;
     public Vector3 patrolPoint;
     public bool freeRoam;
@@ -59,6 +60,15 @@ public class VillagerScript : MonoBehaviour
 
     // Use this for initialization
     void Start(){
+
+        if (runAwayObject == null)
+        {
+            runAWayPoint = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            runAWayPoint = runAwayObject.transform.position;
+        }
         distanciaAlerta = 20;
         gameLogic = GameLogicScript.gameLogic;
         runAway = false;
@@ -283,7 +293,7 @@ public class VillagerScript : MonoBehaviour
 
             if (confirmAlive)
             {
-                if (runAway)
+                if (runAway&&gameLogic._bases[0]!=null&&runAWayPoint!= new Vector3(0,0,0))
                 {
                     if (!isCloseEnough (gameLogic._bases[0].GetComponent<EdificioCreaSoldiers>().spawnPointObject,0.2f))
                     {

@@ -163,9 +163,7 @@ public class TorretaScript : MonoBehaviour {
 
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.tag == "Zn") {
-            Debug.Log("A");
             if (!_zombiesInArea.Contains(other.gameObject)) {
-                Debug.Log("B");
                 _zombiesInArea.Add(other.gameObject);
             }
         }   
