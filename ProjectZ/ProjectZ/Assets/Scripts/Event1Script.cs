@@ -134,7 +134,7 @@ public class Event1Script : MonoBehaviour {
 
         if (gameLogic.eventManager.eventList[3].hasHappened && gameLogic._villagers.Count == 0) {
                 gameLogic.currentLevel = 2;
-                SceneManager.LoadScene(2);
+                SceneManager.LoadScene("EscenaInter");
                 FindObjectOfType<SaverScript>().SetLevel(gameLogic.currentLevel);
                 FindObjectOfType<SaverScript>().SaveCurrentPrefs();
 

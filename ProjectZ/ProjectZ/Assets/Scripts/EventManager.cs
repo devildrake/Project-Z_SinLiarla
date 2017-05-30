@@ -20,7 +20,7 @@ public class EventManager : MonoBehaviour {
     public Assets.Scripts.Evento[] eventList;
 
     //Número de eventos totales
-    int numEvents = 10;
+    int numEvents = 11;
 
     //Evento actual
     public Assets.Scripts.Evento currentEvent;
@@ -61,6 +61,10 @@ public class EventManager : MonoBehaviour {
         return anEvent;
     }
 
+    public void ResetAll() {
+        for (int i = 0; i < 11; i++) {
+            eventList[i].hasHappened = false;
+} }
     //Método que activa el evento en la posicion which del array de evento
     public void activateEvent(int which) {
         if (!eventList[which].hasHappened && !eventList[which].isHappening && !onEvent && eventList[which].tipo == Assets.Scripts.Evento.tipoEvento.NORMAL) {
@@ -107,24 +111,31 @@ public class EventManager : MonoBehaviour {
                 eventList[1].hasHappened = false;
                 eventList[2].hasHappened = false;
                 eventList[3].hasHappened = false;
-
-                break;
-            case 2:
                 eventList[4].hasHappened = false;
 
                 break;
-            case 3:
+            case 2:
                 eventList[5].hasHappened = false;
 
                 break;
-            case 4:
+            case 3:
                 eventList[6].hasHappened = false;
 
                 break;
-            case 5:
+            case 4:
                 eventList[7].hasHappened = false;
-                break;
 
+                break;
+            case 5:
+                eventList[8].hasHappened = false;
+
+                break;
+            case 6:
+                eventList[9].hasHappened = false;
+                break;
+            case 7:
+                eventList[10].hasHappened = false;
+                break;
         }
     }
 
@@ -145,6 +156,7 @@ public class EventManager : MonoBehaviour {
         eventList[7] = CrearEvento(1, Assets.Scripts.Evento.tipoEvento.NORMAL);
         eventList[8] = CrearEvento(1, Assets.Scripts.Evento.tipoEvento.NORMAL);
         eventList[9] = CrearEvento(1, Assets.Scripts.Evento.tipoEvento.NORMAL);
+        eventList[10] = CrearEvento(1, Assets.Scripts.Evento.tipoEvento.NORMAL);
 
         if (language == 0) {
             eventList[0].messages[0] = "Bueeno.. veamos si esto funciona...";
@@ -177,7 +189,15 @@ public class EventManager : MonoBehaviour {
 
             eventList[6].messages[0] = "Los supervivientes le han cogido demasiado cariño a las minas..";
 
-            eventList[7].messages[0] = "Nivel 5";
+            eventList[7].messages[0] = "Nivel 4";
+
+            eventList[8].messages[0] = "Nivel 5";
+
+            eventList[9].messages[0] = "Nivel 6";
+
+            eventList[10].messages[0] = "Nivel 7";
+
+
 
         }
         else if (language == 1){

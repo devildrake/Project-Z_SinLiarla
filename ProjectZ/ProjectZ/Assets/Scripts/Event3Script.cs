@@ -28,7 +28,7 @@ public class Event3Script : MonoBehaviour {
         else {
             if (gameLogic._villagers.Count == 0 && hasHappened[0]) {
                 gameLogic.currentLevel = 4;
-                SceneManager.LoadScene(4);
+                SceneManager.LoadScene("EscenaInter");
             }
         }
     }

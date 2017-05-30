@@ -26,13 +26,13 @@ public class Event7Script : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (!hasHappened[0]) {
-            gameLogic.eventManager.activateEvent(8);
+            gameLogic.eventManager.activateEvent(10);
             hasHappened[0] = true;
         }
         else {
             if (gameLogic._villagers.Count == 0 && hasHappened[0]) {
                 gameLogic.currentLevel = 8;
-                SceneManager.LoadScene(7);
+                SceneManager.LoadScene("EscenaGameOver");
             }
         }
     }

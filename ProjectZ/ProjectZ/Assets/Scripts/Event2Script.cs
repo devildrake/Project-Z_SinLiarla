@@ -80,11 +80,10 @@ public class Event2Script : MonoBehaviour {
 
                 }
                 if (eventManager.eventList[5].hasHappened) {
-
                         gameLogic.currentLevel = 3;
-                        SceneManager.LoadScene(3);
+                        SceneManager.LoadScene("EscenaInter");
                     }
-            }
+                }
         }
     }
 }

@@ -22,13 +22,13 @@ public class Event5Script : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (!hasHappened[0]) {
-            gameLogic.eventManager.activateEvent(7);
+            gameLogic.eventManager.activateEvent(8);
             hasHappened[0] = true;
         }
         else {
             if (gameLogic._villagers.Count == 0 && hasHappened[0]) {
                 gameLogic.currentLevel = 6;
-                SceneManager.LoadScene(8);
+                SceneManager.LoadScene("EscenaInter");
             }
         }
     }

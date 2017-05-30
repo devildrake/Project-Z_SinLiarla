@@ -30,14 +30,14 @@ public class Event6Script : MonoBehaviour {
     {
         if (!hasHappened[0])
         {
-            gameLogic.eventManager.activateEvent(8);
+            gameLogic.eventManager.activateEvent(9);
             hasHappened[0] = true;
         }
         else {
             if (gameLogic._villagers.Count == 0 && hasHappened[0])
             {
                 gameLogic.currentLevel = 7;
-                SceneManager.LoadScene(8);
+                SceneManager.LoadScene("EscenaInter");
             }
         }
     }

@@ -49,13 +49,13 @@ public class Event4Script : MonoBehaviour {
         gameLogic.camara = FindObjectOfType<CameraScript>();
 
         if (!hasHappened[0]) {
-            gameLogic.eventManager.activateEvent(6);
+            gameLogic.eventManager.activateEvent(7);
             hasHappened[0] = true;
         }
         else {
             if (gameLogic._villagers.Count == 0 && hasHappened[0]) {
                 gameLogic.currentLevel = 5;
-                SceneManager.LoadScene(5);
+                SceneManager.LoadScene("EscenaInter");
             }
         }
     }   
