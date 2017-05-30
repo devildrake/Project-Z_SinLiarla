@@ -34,7 +34,7 @@ public class Event6Script : MonoBehaviour {
             hasHappened[0] = true;
         }
         else {
-            if (gameLogic._villagers.Count == 0 && hasHappened[0])
+            if (gameLogic._villagers.Count == 0 && hasHappened[0]&&gameLogic.eventManager.eventList[9].hasHappened)
             {
                 gameLogic.currentLevel = 7;
                 SceneManager.LoadScene("EscenaInter");

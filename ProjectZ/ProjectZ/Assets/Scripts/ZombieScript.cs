@@ -56,6 +56,7 @@ public class ZombieScript : MonoBehaviour {
     public Vector3 puntoCasa;   //A_BORRAR
     public Vector3 targetPosition; //POSICION A LA QUE SE QUIERE MOVER EL ZOMBIE
     public Vector3 prevTargetPos;  //POSICION PREVIA A LA QUE SE QUERIA MOVER EL ZOMBIE
+    public GameObject objetoSpriteFeedBack;
     VisionRangeZombie laVision;     //INSTANCIA DEL HIJO QUE GESTIONA EL RANGO DE VISION
     AttackRangeZombie elAtaqueRange;    //INSTANCIA DEL HIJO QUE GESTIONA EL RANGO DE ATAQUE
     ZombieMovement elMovimiento;    //INSTANCIA DEL SCRIPT HERMANO QUE GESTIONA EL MOVIMIENTO
@@ -147,6 +148,7 @@ public class ZombieScript : MonoBehaviour {
                 break;
         }
         maxHealth = health;
+
     }
 
     //METODO DE PREVENCION DE ERRORES PARA QUE LOS ZOMBIES NO FLOTEN NI SE HUNDAN
@@ -435,7 +437,16 @@ public class ZombieScript : MonoBehaviour {
 
                     elCirculo.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
                 }
-            } }
+
+                    if (objetoSpriteFeedBack != null) {
+                        Debug.Log("NotNull");
+                        objetoSpriteFeedBack.SetActive(!attackToggle);
+                    }
+
+
+            }
+
+        }
 
         //EN CASO DE ESTAR PAUSADO PONE LA VELOCIDAD DE ANIMACION A 0 y para el sonido
         if (gameLogic.eventManager != null) {
