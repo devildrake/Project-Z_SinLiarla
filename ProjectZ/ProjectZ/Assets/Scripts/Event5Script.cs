@@ -14,7 +14,9 @@ public class Event5Script : MonoBehaviour {
         if (gameLogic.camara == null) {
             gameLogic.camara = FindObjectOfType<CameraScript>();
         }
-        gameLogic.camara.transform.position = new Vector3(-14.3277f, 6.3f, -17.712f);
+
+        //gameLogic.camara.transform.position = new Vector3(-14.3277f, 6.3f, -17.712f);
+        gameLogic.camara.transform.position = new Vector3(-24.0f, 6.3f, -26.9f);
         gameLogic.camara.SetOrgPos();
         gameLogic.ClearLists();
     }

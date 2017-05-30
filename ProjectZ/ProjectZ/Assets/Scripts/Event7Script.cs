@@ -14,6 +14,7 @@ public class Event7Script : MonoBehaviour {
         if (gameLogic.camara == null) {
             gameLogic.camara = FindObjectOfType<CameraScript>();
         }
+        gameLogic.camara.SetPos(new Vector3(-11.4f, 6.3f, 8.7f));
         gameLogic.camara.SetOrgPos();
         gameLogic.ClearLists();
         gameLogic.camara.TOPLIMIT = 20;

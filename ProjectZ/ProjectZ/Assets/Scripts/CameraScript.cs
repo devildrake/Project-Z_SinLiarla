@@ -79,6 +79,10 @@ public class CameraScript : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha5)) {
+            Debug.Log(gameObject.transform.position);
+        }
+
         if (gameLogic.eventManager != null) {
 
             if (objetoAFocusear == null) {
