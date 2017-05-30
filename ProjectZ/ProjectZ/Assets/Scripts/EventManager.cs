@@ -150,7 +150,7 @@ public class EventManager : MonoBehaviour {
         eventList[1] = CrearEvento(5, Assets.Scripts.Evento.tipoEvento.NORMAL);
         eventList[2] = CrearEvento(2, Assets.Scripts.Evento.tipoEvento.NORMAL);
         eventList[3] = CrearEvento(4, Assets.Scripts.Evento.tipoEvento.NORMAL);
-        eventList[4] = CrearEvento(1, Assets.Scripts.Evento.tipoEvento.NORMAL);
+        eventList[4] = CrearEvento(2, Assets.Scripts.Evento.tipoEvento.NORMAL);
         eventList[5] = CrearEvento(1, Assets.Scripts.Evento.tipoEvento.NORMAL);
         eventList[6] = CrearEvento(1, Assets.Scripts.Evento.tipoEvento.NORMAL);
         eventList[7] = CrearEvento(1, Assets.Scripts.Evento.tipoEvento.NORMAL);
@@ -166,8 +166,8 @@ public class EventManager : MonoBehaviour {
             eventList[0].messages[4] = "Mueve al zombie a las tres zonas para continuar..";
 
             eventList[1].messages[0] = "Los zombies deberían atacar a todo lo que encuentren, pero son estupidos.. por si acaso acercalos";
-            eventList[1].messages[1] = "Veamos cuanto tardan mis queridos podridos en acabar con un superviviente..";
-            eventList[1].messages[2] = "Y de paso probamos el mutank..";
+            eventList[1].messages[1] = "Nuestro objetivo siempre es el mismo.. matar a todos los humanos";
+            eventList[1].messages[2] = "Es un buen momento para presentar al mutank..";
             eventList[1].messages[3] = "Los mutanks son los zombies con el brazo gigante, son más lentos, pero tambien más resistentes";
             eventList[1].messages[4] = "Y con ese enorme brazo desproporcionado.. no hay quien los confunda";
 
@@ -183,7 +183,8 @@ public class EventManager : MonoBehaviour {
 
 
 
-            eventList[4].messages[0] = "Hmm.. los runners deberian poder pasar ese campo de minas sin problemas";
+            eventList[4].messages[0] = "Los runners son capaces de esquivar minas antes de que puedan hacerles daño al explotar";
+            eventList[4].messages[1] = "Parece que tendrás que llamar la atención de esos humanos de uno en uno para poder avanzar";
 
             eventList[5].messages[0] = "Parece que los runners estan en forma.. heheheh";
 
@@ -227,6 +228,8 @@ public class EventManager : MonoBehaviour {
 
 
             eventList[4].messages[0] = "Hmm.. runners should be able to ignite the mines without getting hurt";
+            eventList[4].messages[1] = "Parece que tendrás que llamar la atención de esos humanos de uno en uno para poder avanzar";
+
 
             eventList[5].messages[0] = "It looks like runners are in good shape";
 
