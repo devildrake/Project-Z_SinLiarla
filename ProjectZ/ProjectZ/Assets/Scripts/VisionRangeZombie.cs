@@ -31,12 +31,9 @@ public class VisionRangeZombie : MonoBehaviour
 
     void OnTriggerExit(Collider col)
     {
-        if (col.tag == "Enemy")
-        {
-            _enemiesInRange.Remove(col.gameObject);
-            if (_enemiesInRange.Count == 0)
-            {
-                enemyInSight = false;
+        if (col.tag == "Enemy") {
+            if (_enemiesInRange.Contains(col.gameObject)) {
+                _enemiesInRange.Remove(col.gameObject);
             }
         }
     }
@@ -70,7 +67,11 @@ public class VisionRangeZombie : MonoBehaviour
 
     bool IsNotAlive(GameObject z)
     {
-        return !z.GetComponent<VillagerScript>().isAlive;
+        if (z.GetComponent<VillagerScript>() != null) {
+            return !z.GetComponent<VillagerScript>().isAlive;
+        }else {
+            return true;
+        }
     }
 
     void CheckEnemyAlive()
@@ -79,15 +80,6 @@ public class VisionRangeZombie : MonoBehaviour
     }
     void Update()
     {
-
-        foreach(GameObject g in _enemiesInRange)
-        {
-            if (g == null)
-            {
-                _enemiesInRange.Remove(g);
-            }
-        }
-
         if (gameLogic.eventManager != null)
         {
             if (!gameLogic.isPaused && !gameLogic.eventManager.onEvent)
@@ -105,6 +97,13 @@ public class VisionRangeZombie : MonoBehaviour
                 closestEnemy = null;
             }
         } }
+        if (_enemiesInRange.Count == 0) {
+            enemyInSight = false;
+        }
+        else{
+            enemyInSight = true;
+        }
+
     }
 }
 

@@ -483,36 +483,37 @@ public class GameLogicScript : MonoBehaviour
                                 else if (Physics.Raycast(ray, out hit, 80, mascaraRompible)) {
                                     GameObject laBarricada = hit.collider.gameObject;
                                     foreach (GameObject z in _keptSelectedZombies) {
-                                        z.GetComponent<ZombieMovement>().wasCommanded = false;
-                                        z.GetComponent<ZombieScript>().hasArrived = true;
-    
-                                        z.GetComponent<ZombieScript>().attackBarricade(laBarricada);
-                                        z.GetComponent<ZombieScript>().keepGoingBarricade = true;
+                                        if (z.GetComponent<ZombieScript>() != null) {
+                                            z.GetComponent<ZombieMovement>().wasCommanded = false;
+                                            z.GetComponent<ZombieScript>().hasArrived = true;
 
-                                        //if (z.GetComponent<ZombieScript>().goBarricade && z.GetComponent<ZombieScript>().barricada != null) {
-                                        //    z.GetComponent<ZombieMovement>().LookTowards(gameObject.GetComponent<ZombieScript>().barricada.transform.position);
-                                        //}
+                                            z.GetComponent<ZombieScript>().attackBarricade(laBarricada);
+                                            z.GetComponent<ZombieScript>().keepGoingBarricade = true;
 
-                                        if (z.GetComponent<ZombieScript>().turretToAttack != null) {
-                                            if (z.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>() != null)
-                                                z.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>()._targetingZombies.Remove(gameObject);
+                                            //if (z.GetComponent<ZombieScript>().goBarricade && z.GetComponent<ZombieScript>().barricada != null) {
+                                            //    z.GetComponent<ZombieMovement>().LookTowards(gameObject.GetComponent<ZombieScript>().barricada.transform.position);
+                                            //}
+
+                                            if (z.GetComponent<ZombieScript>().turretToAttack != null) {
+                                                if (z.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>() != null)
+                                                    z.GetComponent<ZombieScript>().turretToAttack.GetComponentInChildren<TorretaScript>()._targetingZombies.Remove(gameObject);
+                                            }
+                                            z.GetComponent<ZombieScript>().turretToAttack = null;
+
                                         }
-                                        z.GetComponent<ZombieScript>().turretToAttack = null;
-                                        
                                     }
-
                                 }
                                 else if (Physics.Raycast(ray, out hit, 80, mascaraTorreta)) {
                                     GameObject laTorreta = hit.collider.gameObject;
                                     foreach (GameObject z in _keptSelectedZombies)
                                     {
-                                        if (laTorreta != null)
-                                        {
-                                            z.GetComponent<ZombieScript>().keepGoingBarricade = false;
-                                            z.GetComponent<ZombieScript>().turretToAttack = laTorreta;
-                                            if (!laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Contains(z) && laTorreta.GetComponentInChildren<TorretaScript>().alive)
-                                            {
-                                                laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Add(z);
+                                        if (z.GetComponent<ZombieScript>() != null) {
+                                            if (laTorreta != null) {
+                                                z.GetComponent<ZombieScript>().keepGoingBarricade = false;
+                                                z.GetComponent<ZombieScript>().turretToAttack = laTorreta;
+                                                if (!laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Contains(z) && laTorreta.GetComponentInChildren<TorretaScript>().alive) {
+                                                    laTorreta.GetComponentInChildren<TorretaScript>()._targetingZombies.Add(z);
+                                                }
                                             }
                                         }
                                     }
@@ -573,13 +574,15 @@ public class GameLogicScript : MonoBehaviour
                             if (_input._selectWalkers) {
                                 _keptSelectedZombies.Clear();
                                 foreach (GameObject z in _zombies) {
-                                    if (z.GetComponent<ZombieScript>().tipo == ZombieScript.zombieClass.walker) {
-                                        _keptSelectedZombies.Add(z);
-                                        z.GetComponent<ZombieScript>().isSelected = true;
+                                    if (z.GetComponent<ZombieScript>() != null) {
+                                        if (z.GetComponent<ZombieScript>().tipo == ZombieScript.zombieClass.walker) {
+                                            _keptSelectedZombies.Add(z);
+                                            z.GetComponent<ZombieScript>().isSelected = true;
 
-                                    }
-                                    else {
-                                        z.GetComponent<ZombieScript>().isSelected = false;
+                                        }
+                                        else {
+                                            z.GetComponent<ZombieScript>().isSelected = false;
+                                        }
                                     }
                                 }
                                 _input._selectWalkers = false;
@@ -587,13 +590,15 @@ public class GameLogicScript : MonoBehaviour
                             else if (_input._selectMutanks) {
                                 _keptSelectedZombies.Clear();
                                 foreach (GameObject z in _zombies) {
-                                    if (z.GetComponent<ZombieScript>().tipo == ZombieScript.zombieClass.mutank) {
-                                        _keptSelectedZombies.Add(z);
-                                        z.GetComponent<ZombieScript>().isSelected = true;
+                                    if (z.GetComponent<ZombieScript>() != null) {
+                                        if (z.GetComponent<ZombieScript>().tipo == ZombieScript.zombieClass.mutank) {
+                                            _keptSelectedZombies.Add(z);
+                                            z.GetComponent<ZombieScript>().isSelected = true;
 
-                                    }
-                                    else {
-                                        z.GetComponent<ZombieScript>().isSelected = false;
+                                        }
+                                        else {
+                                            z.GetComponent<ZombieScript>().isSelected = false;
+                                        }
                                     }
                                 }
                                 _input._selectMutanks = false;
@@ -601,15 +606,17 @@ public class GameLogicScript : MonoBehaviour
                             else if (_input._selectRunners) {
                                 _keptSelectedZombies.Clear();
                                 foreach (GameObject z in _zombies) {
-                                    if (z.GetComponent<ZombieScript>().tipo == ZombieScript.zombieClass.runner) {
-                                        _keptSelectedZombies.Add(z);
-                                        z.GetComponent<ZombieScript>().isSelected = true;
+                                    if (z.GetComponent<ZombieScript>() != null) { 
+                                        if (z.GetComponent<ZombieScript>().tipo == ZombieScript.zombieClass.runner) {
+                                            _keptSelectedZombies.Add(z);
+                                            z.GetComponent<ZombieScript>().isSelected = true;
 
-                                    }
-                                    else {
-                                        z.GetComponent<ZombieScript>().isSelected = false;
-                                    }
+                                        }
+                                        else {
+                                            z.GetComponent<ZombieScript>().isSelected = false;
+                                        }
                                 }
+                            }
                                 _input._selectRunners = false;
                             }
                             else if (_input._deSelect) {
@@ -834,17 +841,16 @@ public class GameLogicScript : MonoBehaviour
 
                     //Agregamos a la lista los zombies que se encuentran dentro del cuadro de selección
                     //Iteración realizada una vez por zombie en la lista de zombies
-                    foreach (GameObject zombie in _zombies)
-                    {
-                        if (!zombiesInSelectionBox.Contains(zombie) && (Camera.main.WorldToScreenPoint(zombie.transform.position).x >= selectionPlane.xMin && Camera.main.WorldToScreenPoint(zombie.transform.position).x <= selectionPlane.xMax && Camera.main.WorldToScreenPoint(zombie.transform.position).y >= selectionPlane.yMin && Camera.main.WorldToScreenPoint(zombie.transform.position).y <= selectionPlane.yMax))
-                        {
-                            zombiesInSelectionBox.Add(zombie);
-                          //  zombie.GetComponent<ZombieScript>().isSelected = true;
-                        }
-                        else
-                        {
+                    foreach (GameObject zombie in _zombies) {
+                        if (zombie.GetComponent<ZombieScript>() != null) {
+                            if (!zombiesInSelectionBox.Contains(zombie) && (Camera.main.WorldToScreenPoint(zombie.transform.position).x >= selectionPlane.xMin && Camera.main.WorldToScreenPoint(zombie.transform.position).x <= selectionPlane.xMax && Camera.main.WorldToScreenPoint(zombie.transform.position).y >= selectionPlane.yMin && Camera.main.WorldToScreenPoint(zombie.transform.position).y <= selectionPlane.yMax)) {
+                                zombiesInSelectionBox.Add(zombie);
+                                //  zombie.GetComponent<ZombieScript>().isSelected = true;
+                            }
+                            else {
                                 _selectedZombies.Remove(zombie);
                                 zombie.GetComponent<ZombieScript>().isSelected = false;
+                            }
                         }
                     }
                 }
