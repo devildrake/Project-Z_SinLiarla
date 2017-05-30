@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class VillagerScript : MonoBehaviour
@@ -50,7 +49,6 @@ public class VillagerScript : MonoBehaviour
 
     public AudioClip[] audioClip; //array de soniditos
 
-    List<GameObject> _nearbyPartners;
     public GameObject patrolPointObject;
     VillagerMovement villagerMovement;
     VillagerAttack villagerAttack;
@@ -211,7 +209,6 @@ public class VillagerScript : MonoBehaviour
             }
         }
     }
-
     bool isCloseEnough(GameObject a, float lindar) {
         if (Mathf.Abs((a.transform.position - gameObject.transform.position).magnitude) < lindar) {
             return true;
@@ -247,19 +244,20 @@ public class VillagerScript : MonoBehaviour
         // controla los sprites de feedback del soldier
         else if (tipo == humanClass.soldier)
         {
-            if (gameObject.GetComponent<VillagerAttack>().attacking)
-            {
-                GetComponentInParent<VillagerMovement>().LookTowards(gameObject.GetComponent<VillagerAttack>().zombieToAttack.transform.position);
-                quadFeedback.SetActive(true);
-                quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[2];
-            }
-            else if (goingToCheck) {
-                quadFeedback.SetActive(true);
-                quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[1];
-            }
+            if (quadFeedback != null) {
+                if (gameObject.GetComponent<VillagerAttack>().attacking) {
+                    GetComponentInParent<VillagerMovement>().LookTowards(gameObject.GetComponent<VillagerAttack>().zombieToAttack.transform.position);
+                    quadFeedback.SetActive(true);
+                    quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[2];
+                }
+                else if (goingToCheck) {
+                    quadFeedback.SetActive(true);
+                    quadFeedback.GetComponent<Renderer>().material = feedbackMaterials[1];
+                }
 
-            else {
-                quadFeedback.SetActive(false);
+                else {
+                    quadFeedback.SetActive(false);
+                }
             }
         }
 
@@ -317,28 +315,26 @@ public class VillagerScript : MonoBehaviour
                     }
                 }
                 else {
-                    if (patrolPointObject != null && patrolPoint != patrolPointObject.transform.position)
-                        patrolPoint = patrolPointObject.transform.position;
+                        if (patrolPointObject != null) {
+                            if(patrolPoint != patrolPointObject.transform.position)
+                                patrolPoint = patrolPointObject.transform.position;
+                        }
 
-
-                    if (laVision.enemyInSight)
-                    {
-                        if (tipo == humanClass.soldier)
-                        {
-                            alerted = true;
-                            freeRoam = false;
-                            elAnimator.SetBool("correr", true);
-                            if (canMove && laVision.closestZombie != null)
-                            {
-                                villagerMovement.MoveTo(laVision.closestZombie.transform.position);
+                        if (laVision != null) {
+                            if (laVision.enemyInSight) {
+                                if (tipo == humanClass.soldier) {
+                                    alerted = true;
+                                    freeRoam = false;
+                                    elAnimator.SetBool("correr", true);
+                                    if (canMove && laVision.closestZombie != null) {
+                                        villagerMovement.MoveTo(laVision.closestZombie.transform.position);
+                                    }
+                                }
+                                else if (tipo == humanClass.villager) {
+                                    runAway = true;
+                                }
                             }
                         }
-                        else if (tipo == humanClass.villager)
-                        {
-                            runAway = true;
-                        }
-                    }
-
                     if (tipo == humanClass.villager)
                     {
                         if (health != maxHealth)
@@ -350,24 +346,24 @@ public class VillagerScript : MonoBehaviour
 
                         }
                     }
+                        if (elAtaque != null) {
+                            if (elAtaque.enemyInRange && tipo == humanClass.soldier) {
+                                canMove = false;
+                                elAnimator.SetBool("correr", false);
+                                elAnimator.SetBool("atacando", true);
+                                //PlaySound(1);
+                                villagerAttack.Attack(laVision.closestZombie);
+                                villagerMovement.moving = false;
+                                // AttackEnemy();
+                            }
+                            else if (!laVision.enemyInSight && !goingToCheck && tipo == humanClass.soldier) {
+                                elAnimator.SetBool("correr", false);
+                                elAnimator.SetBool("moviendose", true);
+                                freeRoam = true;
+                                canMove = true;
+                            }
+                        }
 
-                    if (elAtaque.enemyInRange&&tipo == humanClass.soldier)
-                    {
-                        canMove = false;
-                        elAnimator.SetBool("correr", false);
-                        elAnimator.SetBool("atacando", true);
-                        //PlaySound(1);
-                        villagerAttack.Attack(laVision.closestZombie);
-                        villagerMovement.moving = false;
-                        // AttackEnemy();
-                    }
-                    else if (!laVision.enemyInSight && !goingToCheck&&tipo==humanClass.soldier)
-                    {
-                        elAnimator.SetBool("correr", false);
-                        elAnimator.SetBool("moviendose", true);
-                        freeRoam = true;
-                        canMove = true;
-                    }
                     if (canMove && freeRoam && !goingToCheck)
                     {
                         Patrol();

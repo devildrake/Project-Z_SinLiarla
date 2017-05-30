@@ -15,7 +15,6 @@ public class BotonTransparente : MonoBehaviour {
         if (GameLogicScript.gameLogic != null) {
             GameLogicScript.gameLogic.gameObject.GetComponent<InputHandlerScript>().makeContinueTrue();
         }
-
     }
 
     // Update is called once per frame
