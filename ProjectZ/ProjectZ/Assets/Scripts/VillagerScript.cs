@@ -288,8 +288,6 @@ public class VillagerScript : MonoBehaviour
             heightCheck();
             confirmAlive = CheckAlive();
 
-
-
             if (confirmAlive)
             {
 
@@ -311,6 +309,7 @@ public class VillagerScript : MonoBehaviour
                             {
                                 canMove = false;
                                 elAnimator.SetBool("isHit", true);
+                                    movSpeed = 0;
                                 elAnimator.SetBool("moviendose", false);
                                 elAnimator.SetBool("correr", false);
                             }

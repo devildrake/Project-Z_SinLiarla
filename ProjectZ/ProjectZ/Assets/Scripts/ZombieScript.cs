@@ -388,7 +388,7 @@ public class ZombieScript : MonoBehaviour {
                 }
                 else {
                     elAnimator.SetBool("isAlive", false);
-                    PlaySound(2);//play groan 1
+                    //PlaySound(2);//play groan 1
                     Destroy(gameObject, 4.0f);
                 }
 

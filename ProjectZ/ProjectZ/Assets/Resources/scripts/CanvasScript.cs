@@ -65,7 +65,7 @@ public class CanvasScript : MonoBehaviour {
     public void ResetGame() {
         //TODO elimina todo el progreso guardado y reinicia el juego.
         FindObjectOfType<SaverScript>().SetLevel(1);
-
+        FindObjectOfType<SaverScript>().SaveCurrentPrefs();
     }
 
     public void SalirApp() {
