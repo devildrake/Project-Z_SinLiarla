@@ -201,7 +201,9 @@ public class ZombieScript : MonoBehaviour {
             if (gameObject.GetComponent<ZombieScript>().goBarricade && gameObject.GetComponent<ZombieScript>().barricada != null)
                 elMovimiento.LookTowards(gameObject.GetComponent<ZombieScript>().barricada.transform.position);
             gameObject.GetComponent<ZombieScript>().canAttack = true;
-
+            villagerToAttackOnClick = null;
+            elAnimator.SetBool("atacando", false);
+            GetComponent<ZombieAttack>().attacking = false;
 
         }
 

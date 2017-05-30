@@ -14,8 +14,8 @@ public class SaverScript : MonoBehaviour {
     // Use this for initialization
 
     public enum LANGUAGE { SPANISH,ENGLISH};
-    public LANGUAGE currentLanguage;
-    LANGUAGE prevLang;
+    public LANGUAGE currentLanguage = LANGUAGE.SPANISH;
+    LANGUAGE prevLang = LANGUAGE.SPANISH;
     void Awake() {
         if (saver == null) {
             DontDestroyOnLoad(gameObject);
@@ -53,11 +53,15 @@ public class SaverScript : MonoBehaviour {
         }
 
         if (FindObjectOfType<Dropdown>()!=null){
-            if (prevLang != currentLanguage) {
+            if (currentLanguage == LANGUAGE.ENGLISH) {
                 if (FindObjectOfType<Dropdown>().value == 0) {
+
                     currentLanguage = LANGUAGE.SPANISH;
                 }
-                else {
+            }
+            else { 
+            if (FindObjectOfType<Dropdown>().value == 1) {
+
                     currentLanguage = LANGUAGE.ENGLISH;
                 }
                 prevLang = currentLanguage;
@@ -100,7 +104,10 @@ void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
             //musicManager.SFXVolume = savedSFXVolume;
 
 
-        }else {
+        }
+
+
+        else {
 
             if (GameObject.FindObjectOfType<EventManager>() != null) {
 
