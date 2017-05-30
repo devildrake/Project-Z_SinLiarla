@@ -9,10 +9,13 @@ public class SaverScript : MonoBehaviour {
     public int savedLevel;
     public static SaverScript saver;
     public bool hasLoaded = false;
-    bool faltaMusicSlider = false;
-    bool faltaFXSlider = false;
+        bool faltaMusicSlider = false;
+        bool faltaFXSlider = false;
     // Use this for initialization
 
+    public enum LANGUAGE { SPANISH,ENGLISH};
+    public LANGUAGE currentLanguage;
+    LANGUAGE prevLang;
     void Awake() {
         if (saver == null) {
             DontDestroyOnLoad(gameObject);
@@ -48,6 +51,20 @@ public class SaverScript : MonoBehaviour {
                 faltaMusicSlider = true;
             }
         }
+
+        if (FindObjectOfType<Dropdown>()!=null){
+            if (prevLang != currentLanguage) {
+                if (FindObjectOfType<Dropdown>().value == 0) {
+                    currentLanguage = LANGUAGE.SPANISH;
+                }
+                else {
+                    currentLanguage = LANGUAGE.ENGLISH;
+                }
+                prevLang = currentLanguage;
+            }
+        }
+
+
     }
 
     void OnEnable() {
@@ -61,9 +78,7 @@ void OnDisable() {
 }
 
 void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
-    Debug.Log("Level Loaded");
-    Debug.Log(scene.name);
-    Debug.Log(mode);
+
 
         if (scene.name == "menu") {
             //MusicManager musicManager = FindObjectOfType<MusicManager>();
@@ -83,6 +98,20 @@ void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
             }
             //musicManager.Volume = savedVolume;
             //musicManager.SFXVolume = savedSFXVolume;
+
+
+        }else {
+
+            if (GameObject.FindObjectOfType<EventManager>() != null) {
+
+                if(currentLanguage==LANGUAGE.SPANISH)
+                GameObject.FindObjectOfType<EventManager>().language = 0;
+
+                else
+                GameObject.FindObjectOfType<EventManager>().language = 1;
+
+
+            }
 
 
         }
@@ -148,9 +177,7 @@ public void SaveCurrentPrefs(float vol, float sfx, int l) {
         if(savedLevel == 0) {
             savedLevel = 1;
         }
-
-        Debug.Log("LoadingProgress");
-
+    
     }
 
     public void SetLevel(int l) {
