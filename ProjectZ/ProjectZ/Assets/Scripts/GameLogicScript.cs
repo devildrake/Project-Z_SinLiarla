@@ -36,6 +36,9 @@ public class GameLogicScript : MonoBehaviour
     public bool waitAFrame = false;
     //Las máscaras se indican en el inspector
 
+    public int walkerSpawnRatio = 10; //Si el numero entre 0 y 20 es menor de walkerSpawnRatio
+    public int runnerSpawnRatio = 16; //Si el numero entre 0 y 20 es menor de runnerSpawnRatio
+
     //Mascara para el suelo (mask1)
     public LayerMask mascaraSuelo;
 
@@ -664,10 +667,10 @@ public class GameLogicScript : MonoBehaviour
                 if (!v.GetComponent<VillagerScript>().isAlive && !v.GetComponent<VillagerScript>().hasTransformed) {
                     int que = Random.Range(0, 20);
                     v.GetComponent<VillagerScript>().hasTransformed = true;
-                    if (que < 10) {
+                    if (que < walkerSpawnRatio) {
                         SpawnWalker(v.transform.position);
                     }
-                    else if (que < 16) {
+                    else if (que < runnerSpawnRatio) {
                         SpawnRunner(v.transform.position);
                     }
                     else {
@@ -677,6 +680,11 @@ public class GameLogicScript : MonoBehaviour
         }
     }
         _villagers.RemoveAll(IsNotAlive);
+    }
+
+    public void SetSpawnRatios(int w, int r) {
+        walkerSpawnRatio = w;
+        runnerSpawnRatio = r;
     }
 
     //Funcion que dibuja la caja de seleccion
@@ -689,10 +697,11 @@ public class GameLogicScript : MonoBehaviour
             {
                 if (!_input._keepSelection) {
                     _keptSelectedZombies.Clear();
-                    if(!_keptSelectedZombies.Contains(aZombieToAdd))
-                        _keptSelectedZombies.Add(aZombieToAdd);
-                    aZombieToAdd = null;
-
+                    if (aZombieToAdd != null) {
+                        if (!_keptSelectedZombies.Contains(aZombieToAdd))
+                            _keptSelectedZombies.Add(aZombieToAdd);
+                        aZombieToAdd = null;
+                    }
                 }
 
 
