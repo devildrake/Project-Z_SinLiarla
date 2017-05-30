@@ -606,7 +606,7 @@ public class GameLogicScript : MonoBehaviour
                             else if (_input._selectRunners) {
                                 _keptSelectedZombies.Clear();
                                 foreach (GameObject z in _zombies) {
-                                    if (z.GetComponent<ZombieScript>() != null) { 
+                                    if (z.GetComponent<ZombieScript>() != null) {
                                         if (z.GetComponent<ZombieScript>().tipo == ZombieScript.zombieClass.runner) {
                                             _keptSelectedZombies.Add(z);
                                             z.GetComponent<ZombieScript>().isSelected = true;
@@ -615,9 +615,20 @@ public class GameLogicScript : MonoBehaviour
                                         else {
                                             z.GetComponent<ZombieScript>().isSelected = false;
                                         }
+                                    }
                                 }
-                            }
                                 _input._selectRunners = false;
+                            }
+                            else if (_input._selectAll) {
+                                _keptSelectedZombies.Clear();
+                                foreach (GameObject z in _zombies) {
+                                    if (z.GetComponent<ZombieScript>() != null) {
+                                        _keptSelectedZombies.Add(z);
+                                        z.GetComponent<ZombieScript>().isSelected = true;
+
+                                    }
+                                }
+                                _input._selectAll = false;
                             }
                             else if (_input._deSelect) {
                                 _input._deSelect = false;

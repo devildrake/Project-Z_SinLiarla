@@ -20,15 +20,20 @@ public class SliderScript : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         if (gameObject.tag == "VolumeSlider" && !hasBeenSet) {
-            if (FindObjectOfType<SaverScript>().hasLoaded) {
-                hasBeenSet = true;
-                gameObject.GetComponent<Slider>().value = FindObjectOfType<SaverScript>().savedVolume;
+            if (FindObjectOfType<SaverScript>() != null) {
+                if (FindObjectOfType<SaverScript>().hasLoaded) {
+                    hasBeenSet = true;
+                    gameObject.GetComponent<Slider>().value = FindObjectOfType<SaverScript>().savedVolume;
+                }
             }
-        }else if(gameObject.tag == "SfxSlider" && !hasBeenSet) {
+        }
+        else if (gameObject.tag == "SfxSlider" && !hasBeenSet) {
+            if (FindObjectOfType<SaverScript>() != null) { 
             if (FindObjectOfType<SaverScript>().hasLoaded) {
                 hasBeenSet = true;
                 gameObject.GetComponent<Slider>().value = FindObjectOfType<SaverScript>().savedSFXVolume;
             }
+        }
         }	
 	}
 }

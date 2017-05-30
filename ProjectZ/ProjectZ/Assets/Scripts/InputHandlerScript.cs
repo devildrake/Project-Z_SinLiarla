@@ -27,6 +27,7 @@ public class InputHandlerScript : MonoBehaviour
     KeyCode _selectRunnersKey = KeyCode.Alpha2;
     KeyCode _selectMutanksKey = KeyCode.Alpha3;
     KeyCode _deSelectKey = KeyCode.Backspace;
+    KeyCode _selectAllKey = KeyCode.Alpha4;
 
     KeyCode _dontAttack = KeyCode.S;
     KeyCode _Attack = KeyCode.A;
@@ -41,6 +42,7 @@ public class InputHandlerScript : MonoBehaviour
     public bool _selectWalkers;
     public bool _selectRunners;
     public bool _selectMutanks;
+    public bool _selectAll;
     public bool _deSelect;
 
 
@@ -200,6 +202,8 @@ public class InputHandlerScript : MonoBehaviour
         }
         else if (Input.GetKeyDown(_selectMutanksKey)) {
             _selectMutanks = true;
+        }else if (Input.GetKeyDown(_selectAllKey)) {
+            _selectAll = true;
         }
         
 
