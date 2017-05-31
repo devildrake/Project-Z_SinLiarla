@@ -10,7 +10,6 @@ public class Event5Script : MonoBehaviour {
     void Start() {
         hasHappened = new bool[1];
         gameLogic = GameLogicScript.gameLogic;
-        gameLogic.currentLevel = 3;
         if (gameLogic.camara == null) {
             gameLogic.camara = FindObjectOfType<CameraScript>();
         }
