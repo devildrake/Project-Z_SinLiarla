@@ -73,7 +73,7 @@ public class ZombieAttack : MonoBehaviour
                         else
                         {
                             elAnimator.SetBool("atacando", true);
-                            enemyToAttack.health -= enemyToAttack.attack;
+                            enemyToAttack.health -= GetComponent<ZombieScript>().attack;
                             attackTimer = 0;
                                 if (!enemyToAttack.isAlive) {
                                     GetComponentInChildren<ZombieScript>().ResetStuff("DeadHuman");

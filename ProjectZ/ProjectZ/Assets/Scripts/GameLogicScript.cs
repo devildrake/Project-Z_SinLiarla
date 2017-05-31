@@ -270,11 +270,6 @@ public class GameLogicScript : MonoBehaviour
             z.GetComponent<ZombieScript>().isSelected = true;
         }
 
-            if (Input.GetKeyDown(KeyCode.KeypadEnter)) {
-                gameLogic.currentLevel++;
-                SceneManager.LoadScene(currentLevel);
-            }
-
         //COMPRUEBA SI LAS INSTANCIAS DE LOS OBJETOS ESPECIALES SON NULAS, EN CASO DE SERLO, LAS REASIGNA
         //COMPRUEBA SI NO QUEDAN ZOMBIES, EN CUYO CASO, SE CONSIDERA QUE EL JUGADOR HA PERDIDO, SE REINICIA EL NIVEL PASANDO POR ESCENAINTER Y SE AUMENTA EL
         //CONTADOR DE DERROTAS
