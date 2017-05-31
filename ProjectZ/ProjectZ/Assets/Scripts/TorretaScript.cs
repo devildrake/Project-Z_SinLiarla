@@ -15,8 +15,8 @@ public class TorretaScript : MonoBehaviour {
     public bool hasChanged = false;
     public float health;
     public const float maxHealth = 100;
-    public float attackSpeed = 0.2f;
-    public float attackDamage = 1;
+    public float attackSpeed = 1.0f;
+    public float attackDamage = 20;
     private bool attacking;
     public ParticleSystem shoot;
 

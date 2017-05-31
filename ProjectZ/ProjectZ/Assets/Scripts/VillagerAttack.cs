@@ -67,7 +67,7 @@ public class VillagerAttack : MonoBehaviour
                             attackTimer += Time.deltaTime;
                         }
                         else{
-                            zombieToAttack.health -= theVillager.attack;
+                            zombieToAttack.health -= theVillager.attack-zombieToAttack.defense/2;
                             //theVillager.gunNoises();
                             attackTimer = 0;
                         }

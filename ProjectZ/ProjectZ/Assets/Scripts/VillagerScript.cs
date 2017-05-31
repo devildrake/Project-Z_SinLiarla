@@ -94,7 +94,7 @@ public class VillagerScript : MonoBehaviour
             case humanClass.villager:
                 theAttackRange = 1;
                 health = 100;
-                attack = 10;
+                attack = 0;
                 defense = 10;
                 attackSpeed = 0.5f;
                 movSpeed = Random.Range(0.8f,1.2f);
@@ -103,7 +103,7 @@ public class VillagerScript : MonoBehaviour
             case humanClass.soldier:
                 theAttackRange = 3;
                 health = 100;
-                attack = 10;
+                attack = 15;
                 defense = 10;
                 attackSpeed = 1.5f;
                 movSpeed = 2;

@@ -10,11 +10,14 @@ public class SliderScript : MonoBehaviour {
     }
     void Setvolume(float val) {
         if (MusicManager.Instance != null) {
-            if(gameObject.tag=="VolumeSlider")
-            MusicManager.Instance.Volume = val;
-            else if(gameObject.tag=="SfxSlider"){
-                MusicManager.Instance.SFXVolume = val;
-            }
+            if (gameObject.tag == "VolumeSlider")
+                //MusicManager.Instance.Volume = val;
+                if (FindObjectOfType<CameraScript>() != null)
+                    AudioListener.volume = val;
+                else if (gameObject.tag == "SfxSlider") {
+                    AudioListener.volume = val;
+                    //MusicManager.Instance.SFXVolume = val;
+                }
         }
     }
     // Update is called once per frame

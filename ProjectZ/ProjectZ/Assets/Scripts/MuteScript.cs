@@ -23,7 +23,7 @@ public class MuteScript : MonoBehaviour {
             return;
         }
         if (GameObject.FindGameObjectWithTag("MainCamera") != null) {
-            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioListener>().enabled = m;
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioListener>().enabled = m;            
         }
         else {
             Debug.Log("Couldn't find Camera");

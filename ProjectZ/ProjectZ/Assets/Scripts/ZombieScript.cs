@@ -119,7 +119,7 @@ public class ZombieScript : MonoBehaviour {
         elAtaqueRange = gameObject.GetComponentInChildren<AttackRangeZombie>();
         confirmAlive = isAlive = true;
         initSpeedAn = elAnimator.speed;
-        GetComponent<AudioSource>().volume = 0.2f;
+        GetComponent<AudioSource>().volume = 0.25f;
 
         switch (tipo) {
             case zombieClass.walker:
@@ -133,7 +133,7 @@ public class ZombieScript : MonoBehaviour {
             case zombieClass.runner:
                 health = 50;
                 attack = 5;
-                defense = 10;
+                defense = 5;
                 attackSpeed = 1.5f;
                 movSpeed = 3f;
                 theAttackRange = 0.8f;
@@ -142,7 +142,7 @@ public class ZombieScript : MonoBehaviour {
                 elAnimator.SetBool("ModoDefensa", false);
                 health = 300;
                 attack = 20;
-                defense = 10;
+                defense = 15;
                 attackSpeed = 0.5f;
                 movSpeed = 1.5f;
                 theAttackRange = 1f;
@@ -440,7 +440,6 @@ public class ZombieScript : MonoBehaviour {
                 }
 
                     if (objetoSpriteFeedBack != null) {
-                        Debug.Log("NotNull");
                         objetoSpriteFeedBack.SetActive(!attackToggle);
                     }
 
