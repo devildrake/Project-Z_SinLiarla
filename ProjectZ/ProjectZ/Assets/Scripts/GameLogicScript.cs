@@ -317,35 +317,37 @@ public class GameLogicScript : MonoBehaviour
             changePause();
         }
 
+        ////CODIGO DE MDIFICACIÓN DE SFX, DESCARTADO
+            //if (musicManager != null) {
+            //    if (musicManager.SFXVolume != prevSFXVolume && !muted) {    
+            //        //SetSFXVolume(musicManager.SFXVolume);
+            //        prevSFXVolume = musicManager.SFXVolume;
+            //    }
+            //    else if (muted) {
+            //        prevSFXVolume = musicManager.SFXVolume;
+            //        //SetSFXVolume(0);
+            //    }
+            //}else {
+            //    musicManager = MusicManager.Instance;
+            //    if (musicManager!=null&&musicManager.SFXVolume != prevSFXVolume && !muted) {
+            //       //SetSFXVolume(musicManager.SFXVolume);
+            //        prevSFXVolume = musicManager.SFXVolume;
+            //    }
+            //    else if (muted) {
+            //        prevSFXVolume = musicManager.SFXVolume;
+            //       //SetSFXVolume(0);
+            //    }
+
+            //}
+
+
             //EN CASO DE QUE NO ESTE PAUSADO, EL FUNCONAMIENTO NORMAL CONSISTE EN ACTUALIZAR LAS SELECCIONES Y REALIZAR LOS RAYCASTS EN FUNCION DEL CLICK IZQUIERDO
             //EL CLICK DERECHO MUEVE A LOS ZOMBIES SELECCIONADOS HACIA LA POSICION SOBRE LA CUAL SE HACE CLICK DERECHO
-            if (musicManager != null) {
-                if (musicManager.SFXVolume != prevSFXVolume && !muted) {    
-                    //SetSFXVolume(musicManager.SFXVolume);
-                    prevSFXVolume = musicManager.SFXVolume;
-                }
-                else if (muted) {
-                    prevSFXVolume = musicManager.SFXVolume;
-                    //SetSFXVolume(0);
-                }
-            }else {
-                musicManager = MusicManager.Instance;
-                if (musicManager!=null&&musicManager.SFXVolume != prevSFXVolume && !muted) {
-                   //SetSFXVolume(musicManager.SFXVolume);
-                    prevSFXVolume = musicManager.SFXVolume;
-                }
-                else if (muted) {
-                    prevSFXVolume = musicManager.SFXVolume;
-                   //SetSFXVolume(0);
-                }
 
-            }
+            //LA VARIABLE QUE ES EL OBJETO SOBRE EL CUAL LA CAMARA SE CONCENTRA ES EL ZOMBIE EN LA POSICION 0 DE LA LISTA DE _keptSelectedZombies
 
-
-        //LA VARIABLE QUE ES EL OBJETO SOBRE EL CUAL LA CAMARA SE CONCENTRA ES EL ZOMBIE EN LA POSICION 0 DE LA LISTA DE _keptSelectedZombies
-
-        //LA TECLA A Y S VARÍAN EL TOGGLE DE ATAQUE QUE CONSISTE EN DETERMINAR SI LOS ZOMBIES DEBEN O NO ATACAR A LOS HUMANOS CERCANOS AL ACABAR SU MOVIMIENTO
-        if (!isPaused)
+            //LA TECLA A Y S VARÍAN EL TOGGLE DE ATAQUE QUE CONSISTE EN DETERMINAR SI LOS ZOMBIES DEBEN O NO ATACAR A LOS HUMANOS CERCANOS AL ACABAR SU MOVIMIENTO
+            if (!isPaused)
         {
                 if (!loadingScene)
                 {
@@ -428,7 +430,6 @@ public class GameLogicScript : MonoBehaviour
                                     if (!_keptSelectedZombies.Contains(aZombie))
                                 {
                                         _keptSelectedZombies.Add(aZombie);
-                                    //  aZombie.GetComponent<ZombieScript>().isSelected = true;
                                 }
                             }
 
@@ -939,20 +940,20 @@ public class GameLogicScript : MonoBehaviour
         }
     }
 
-    void SetSFXVolume(float sfxv) {
-        foreach (GameObject z in _zombies) {
-            if (z.GetComponent<ZombieScript>() != null) {
-                z.GetComponent<ZombieScript>().UpdateVolume(sfxv);
-            }
-        }
+    //void SetSFXVolume(float sfxv) {
+    //    foreach (GameObject z in _zombies) {
+    //        if (z.GetComponent<ZombieScript>() != null) {
+    //            z.GetComponent<ZombieScript>().UpdateVolume(sfxv);
+    //        }
+    //    }
 
-        foreach(GameObject v in _villagers) {
-            if (v.GetComponent<VillagerScript>() != null) {
-                v.GetComponent<ZombieScript>().UpdateVolume(sfxv);
+    //    foreach(GameObject v in _villagers) {
+    //        if (v.GetComponent<VillagerScript>() != null) {
+    //            v.GetComponent<ZombieScript>().UpdateVolume(sfxv);
 
-            }
-        }
-    }
+    //        }
+    //    }
+    //}
 
     void SelectZombie(GameObject zombie)
     {

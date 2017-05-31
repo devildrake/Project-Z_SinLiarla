@@ -15,7 +15,6 @@ public class SaverScript : MonoBehaviour {
 
     public enum LANGUAGE { SPANISH,ENGLISH};
     public LANGUAGE currentLanguage = LANGUAGE.SPANISH;
-    LANGUAGE prevLang = LANGUAGE.SPANISH;
     void Awake() {
         if (saver == null) {
             DontDestroyOnLoad(gameObject);
@@ -64,7 +63,7 @@ public class SaverScript : MonoBehaviour {
 
                     currentLanguage = LANGUAGE.ENGLISH;
                 }
-                prevLang = currentLanguage;
+
             }
         }
 

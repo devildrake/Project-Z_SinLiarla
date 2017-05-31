@@ -147,7 +147,7 @@ public class EventManager : MonoBehaviour {
         currentText = gameObject.GetComponentInChildren<Text>();
         eventList = new Assets.Scripts.Evento[numEvents];
         eventList[0] = CrearEvento(5, Assets.Scripts.Evento.tipoEvento.ESPECIAL);
-        eventList[1] = CrearEvento(5, Assets.Scripts.Evento.tipoEvento.NORMAL);
+        eventList[1] = CrearEvento(6, Assets.Scripts.Evento.tipoEvento.NORMAL);
         eventList[2] = CrearEvento(2, Assets.Scripts.Evento.tipoEvento.NORMAL);
         eventList[3] = CrearEvento(5, Assets.Scripts.Evento.tipoEvento.NORMAL);
         eventList[4] = CrearEvento(4, Assets.Scripts.Evento.tipoEvento.NORMAL);
@@ -167,10 +167,11 @@ public class EventManager : MonoBehaviour {
 
 
             eventList[1].messages[0] = "Los zombies deberían atacar a todo lo que encuentren, pero son estupidos.. por si acaso acercalos";
-            eventList[1].messages[1] = "Nuestro objetivo siempre es el mismo.. matar a todos los humanos";
-            eventList[1].messages[2] = "Es un buen momento para presentar al mutank..";
-            eventList[1].messages[3] = "Los mutanks son los zombies con el brazo gigante, son más lentos, pero tambien más resistentes";
-            eventList[1].messages[4] = "Y con ese enorme brazo desproporcionado.. no hay quien los confunda";
+            eventList[1].messages[1] = "Aunque si pulsas S, los zombies pasarán a moverse a donde les digas, pero \nsin atacar anadie, para revertir al estado inicial pulsa A";
+            eventList[1].messages[2] = "Nuestro objetivo siempre es el mismo.. matar a todos los humanos";
+            eventList[1].messages[3] = "Es un buen momento para presentar al mutank..";
+            eventList[1].messages[4] = "Los mutanks son los zombies con el brazo gigante, son más lentos, pero tambien más resistentes";
+            eventList[1].messages[5] = "Y con ese enorme brazo desproporcionado.. no hay quien los confunda";
 
 
 
@@ -214,10 +215,11 @@ public class EventManager : MonoBehaviour {
             eventList[0].messages[4] = "Make that zombie go inside those three highlited areas to continue..";
 
             eventList[1].messages[0] = "Zombies will attack whatever it is that they have nearby, but just in \ncase, make them go near humans you want to kill, they aren't geniuses..";
-            eventList[1].messages[1] = "Let's see how our beloved rottened take to kill a mere survivor";
-            eventList[1].messages[2] = "And while we're at it, let's try out mutanks..";
-            eventList[1].messages[3] = "Mutanks are those zombies with the gigantic arm, they're pretty slower,\n but also more resistant";
-            eventList[1].messages[4] = "And they can use their arm to defend demselves pretty efficiently";
+            eventList[1].messages[1] = "If you press S, though, selected zombies will merely move where you \ntell them to without attacking, to get them back to the normal state press A ";
+            eventList[1].messages[2] = "Let's see how our beloved rotten take to kill a mere survivor";
+            eventList[1].messages[3] = "And while we're at it, let's try out mutanks..";
+            eventList[1].messages[4] = "Mutanks are those zombies with the gigantic arm, they're pretty slower,\n but also more resistant";
+            eventList[1].messages[5] = "And they can use their arm to defend demselves pretty efficiently";
 
 
 
@@ -228,6 +230,7 @@ public class EventManager : MonoBehaviour {
             eventList[3].messages[1] = "Let's break down those barricades..";
             eventList[3].messages[2] = "Right click on them to make selected zombies attack them";
             eventList[3].messages[3] = "You can see how much health the barricade still has by left clicking on it";
+            eventList[3].messages[4] = "Objective: KILL ALL THE HUMANS";
 
 
 
@@ -235,8 +238,6 @@ public class EventManager : MonoBehaviour {
             eventList[4].messages[1] = "Parece que tendrás que llamar la atención de esos humanos de uno en uno para poder avanzar";
             eventList[4].messages[2] = "By the way, you can select all walkers with the 1 key, all runners with the 2 key, all mutanks with 3 key \nand all zombies with 4 key";
             eventList[4].messages[3] = "Objective: KILL ALL THE HUMANS";
-            eventList[3].messages[4] = "Objective: KILL ALL THE HUMANS";
-
 
             eventList[5].messages[0] = "It looks like runners are in good shape";
 
@@ -257,6 +258,8 @@ public class EventManager : MonoBehaviour {
         onEvent = false;
         onSpecialEvent = false;
     }
+
+    
 
     void Update() {
         if (GameLogicScript.gameLogic != null) {

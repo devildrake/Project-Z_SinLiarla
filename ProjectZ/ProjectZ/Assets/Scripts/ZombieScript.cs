@@ -91,9 +91,9 @@ public class ZombieScript : MonoBehaviour {
         }
     }
 
-    public void UpdateVolume(float sfxv) {
-        GetComponent<AudioSource>().volume = sfxv;
-    }
+    //public void UpdateVolume(float sfxv) {
+    //    GetComponent<AudioSource>().volume = sfxv;
+    //}
     //METODO QUE INICIALIZA LAS VARIABLES, Y MODIFICA LAS STATS DEL ZOMBIE EN FUNCION DE SU TIPO
     void Start() {
         gameLogic = GameLogicScript.gameLogic;
@@ -119,6 +119,7 @@ public class ZombieScript : MonoBehaviour {
         elAtaqueRange = gameObject.GetComponentInChildren<AttackRangeZombie>();
         confirmAlive = isAlive = true;
         initSpeedAn = elAnimator.speed;
+        GetComponent<AudioSource>().volume = 0.2f;
 
         switch (tipo) {
             case zombieClass.walker:

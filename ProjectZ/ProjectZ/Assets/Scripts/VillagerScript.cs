@@ -87,6 +87,7 @@ public class VillagerScript : MonoBehaviour
         villagerAttack = GetComponent<VillagerAttack>();
         hasTransformed = false;
         initSpeedAn = elAnimator.speed;
+        GetComponent<AudioSource>().volume = 0.2f;
 
         canMove = true;
         switch (tipo){
@@ -127,9 +128,9 @@ public class VillagerScript : MonoBehaviour
         }
     }
 
-    public void UpdateVolume(float sfxv) {
-        GetComponent<AudioSource>().volume = sfxv;
-    }
+    //public void UpdateVolume(float sfxv) {
+    //    GetComponent<AudioSource>().volume = sfxv;
+    //}
 
     bool CheckAlive()
     {
