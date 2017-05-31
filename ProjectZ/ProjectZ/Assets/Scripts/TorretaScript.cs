@@ -19,7 +19,8 @@ public class TorretaScript : MonoBehaviour {
     public float attackDamage = 20;
     private bool attacking;
     public ParticleSystem shoot;
-
+    public AudioSource booms;
+    public GameObject conoObject;
     // Use this for initialization
     void Start() {
         gameLogic = GameLogicScript.gameLogic;
@@ -27,7 +28,9 @@ public class TorretaScript : MonoBehaviour {
         health = maxHealth;
         attacking = false;
         shoot.Stop();
-    }
+             attackSpeed = 1.5f;
+      attackDamage = 20;
+}
 
     bool IsNotAlive(GameObject z) {
         if (z != null) {
@@ -111,21 +114,29 @@ public class TorretaScript : MonoBehaviour {
                             attacking = true;
                             contadorTiempoAtaque = 0;
                             closestZombie.GetComponent<ZombieScript>().health -= (attackDamage - closestZombie.GetComponent<ZombieScript>().defense / 2);
-                        }else {
+
+                        } else {
                             int que = Random.Range(0, 20);
                             if (que < 10) {
                                 attacking = true;
-                                contadorTiempoAtaque = 0;
                             }
                             else {
                                 attacking = true;
-                                contadorTiempoAtaque = 0;
                                 closestZombie.GetComponent<ZombieScript>().health -= (attackDamage - closestZombie.GetComponent<ZombieScript>().defense / 2);
 
                             }
                         }
+                            booms.Play();
+                        contadorTiempoAtaque = 0;
+
                     }
-                }else {
+
+                    conoObject.GetComponent<SpriteRenderer>().color = Color.red;
+
+                }
+                else {
+                    conoObject.GetComponent<SpriteRenderer>().color = Color.white;
+
                     contadorTiempoAtaque = 0;
                     attacking = false;
                 }
